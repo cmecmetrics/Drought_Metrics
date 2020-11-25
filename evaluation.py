@@ -1,39 +1,31 @@
-import geopandas
-from rasterio import features
+from collections import defaultdict
+import math
+import os
+import pickle
+import random
+import warnings
+
 from affine import Affine
+from climate_indices import compute, indices
+import geopandas
+import matplotlib as mpl
+import matplotlib.cm as cm
+import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import datetime
-import netCDF4
-import xarray 
-import matplotlib.patches as mpatches
-import xesmf as xe
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-import math
-from mpl_toolkits.basemap import Basemap
-import warnings
-import os
-import matplotlib.patches as mpatches
-import matplotlib.cm as cm
+from rasterio import features
 import scipy
-from matplotlib.lines import Line2D
-from climate_indices import compute, indices, utils
 from scipy.stats import ks_2samp
-from scipy.stats import pearsonr
-from scipy.stats import ttest_ind, ttest_ind_from_stats
-from scipy.stats import t
-from sklearn.pipeline import make_pipeline
-from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-from collections import defaultdict
+from sklearn.decomposition import PCA
 from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-import random
-import seaborn as sns
-import json
-import pickle
+import xarray
+import xesmf as xe
+
 warnings.filterwarnings("ignore")
 
 def add_matrix_NaNs(regridder):
@@ -42,22 +34,22 @@ def add_matrix_NaNs(regridder):
     num_nonzeros = np.diff(M.indptr)
     M[num_nonzeros == 0, 0] = np.NaN
     regridder.weights = scipy.sparse.coo_matrix(M)
-    return regridder    
- 
+    return regridder
+
 
 class evaluation():
-    # init 
+    # init
     def __init__(self):
         print('This is a package to evaluate precipitation simulation performance based on test and observe dataset!\n')
-    
+
     #functions used in interpolation
     def transform_from_latlon(self,lat, lon):
         lat = np.asarray(lat)
         lon = np.asarray(lon)
         trans = Affine.translation(lon[0], lat[0])
         scale = Affine.scale(lon[1] - lon[0], lat[1] - lat[0])
-        return trans * scale    
-    
+        return trans * scale
+
     def rasterize(self,shapes, coords, latitude='latitude', longitude='longitude',
               fill=np.nan, **kwargs):
         transform = self.transform_from_latlon(coords[latitude], coords[longitude])
@@ -67,7 +59,7 @@ class evaluation():
                                     dtype=float, **kwargs)
         spatial_coords = {latitude: coords[latitude], longitude: coords[longitude]}
         return xarray.DataArray(raster, coords=spatial_coords, dims=(latitude, longitude))
-    
+
     #calculate functions
     def rmse(self,predictions, targets):
         return np.sqrt(((predictions - targets) ** 2).mean())
@@ -76,8 +68,8 @@ class evaluation():
         return np.exp(-x)
 
     def crmse(self,predictions,predictions_mean, targets,targets_mean):
-        return np.sqrt(((predictions - predictions_mean - targets + targets_mean) ** 2).mean())   
-    
+        return np.sqrt(((predictions - predictions_mean - targets + targets_mean) ** 2).mean())
+
     def z_test(self,data1,data2,variable1,variable2):
         mu_test = np.mean(data1[variable1])
         mu_ob = np.mean(data2[variable2])
@@ -104,11 +96,11 @@ class evaluation():
             print('Transfer precipitation units of test data from kg m-2 s-1 to mm/day! \n')
         else:
             print("Precipitation units of test data is already mm/day. \n")
-        
-        self.test = self.test.sortby(['lat','lon'])        
+
+        self.test = self.test.sortby(['lat','lon'])
         #assign model name, change if other attribute indicates data's model name
         self.model_name = self.test.source_id+' '+ self.test.variant_label
-        
+
         #if test.model indicates model name
         #self.model_name = self.test.model
 
@@ -117,7 +109,9 @@ class evaluation():
         self.observe['pr'] = self.observe[observe_pr_name]
         # transfer lon from 0to360 into -180to180
         if self.observe.lon.units == 'degrees_east':
-            self.observe = self.observe.assign_coords({"lon": (((self.observe.lon + 180) % 360) - 180)})
+            self.observe = self.observe.assign_coords(
+                {"lon": (((self.observe.lon + 180) % 360) - 180)}
+                )
             print('Transfer longitude units of observe data from degrees_east to degrees_west! \n')
         else:
             print('Longitude units of observe data is already degrees_west. \n')
@@ -127,7 +121,7 @@ class evaluation():
             self.observe['pr'] = self.observe['pr']* 86400
             print('Transfer precipitation units of observe data from kg m-2 s-1 to mm/day! \n')
         else:
-            print("Precipitation units of test observe is already mm/day. \n")            
+            print("Precipitation units of test observe is already mm/day. \n")
         self.observe = self.observe.sortby(['lat','lon'])
 
     def read_weightfile(self,weightfile_path,interpolation = False):
@@ -143,7 +137,7 @@ class evaluation():
                 print('Longitude units of weightfile is already degrees_west. \n')
 
             self.weightfile = self.weightfile.sortby(['lat','lon'])
-            
+
         else:
             self.weightfile = np.nan
 
@@ -159,7 +153,7 @@ class evaluation():
             test = test.assign_coords(lat_b=lat_b)
             lon_b = np.append(c,d)
             test = test.assign_coords(lon_b=lon_b)
-            
+
             #calclute lat_boundary and lon_boundary needed
             a = observe.lat + (observe.lat[1]-observe.lat[2])/2
             b = observe.lat[-1] -(observe.lat[1]-observe.lat[2])/2
@@ -169,8 +163,8 @@ class evaluation():
             lon_b = np.append(c,d)
             observe = observe.assign_coords(lat_b=lat_b)
             observe = observe.assign_coords(lon_b=lon_b)
-            
-            #calclute lat_boundary and lon_boundary needed            
+
+            #calclute lat_boundary and lon_boundary needed
             a = weightfile.lat + (weightfile.lat[1]-weightfile.lat[2])/2
             b = weightfile.lat[-1] -(weightfile.lat[1]-weightfile.lat[2])/2
             c = weightfile.lon + (weightfile.lon[1]-weightfile.lon[2])/2
@@ -190,7 +184,7 @@ class evaluation():
             regridder = add_matrix_NaNs(regridder)
             data_input = observe['pr']
             self.observe_interpolated = regridder(data_input)
-        
+
         else:
             self.observe_interpolated = self.observe['pr']
             self.test_interpolated = self.test['pr']
@@ -202,7 +196,7 @@ class evaluation():
         print("In the shp file, there are following regions:\n")
         print(state_ids)
         print('')
-    
+
     def mask_observe(self,shp_path,observe_interpolated,hu_name):
         states = geopandas.read_file(shp_path)
         shapes = zip(states.geometry, range(len(states)))
@@ -222,7 +216,7 @@ class evaluation():
         #unuse the mask
         #self.test_roi = test_interpolated
         self.hu_name = hu_name
-           
+
     # get the time range of two data's overlap range
     def data_time_range(self,test_roi,observe_roi):
         #find the overlap time of test and observe data
@@ -240,7 +234,7 @@ class evaluation():
         if observe_time_max < self.data_time_max:
             self.data_time_max = observe_time_max
         print('The time range of test and observe data is from '+str(self.data_time_min.item())+' to '+str(self.data_time_max.item())+"!\n")
-    
+
     # select the data within the time range we needed, the default setting is the overlap time range between two data
     def select_data(self,input_time_min=0,input_time_max = 0):
         if input_time_min>self.data_time_min and input_time_max<self.data_time_max:
@@ -249,7 +243,7 @@ class evaluation():
         else:
             print('Input time min and max should be within the range of data!!\n')
             print('Set data time as deafault due to the wrong time input!!\n')
-    
+
         ##change two datasets into the same time period
         self.test_roi  = self.test_roi[self.test_roi['time.year']>=self.data_time_min]
         self.test_roi  = self.test_roi[self.test_roi['time.year']<=self.data_time_max]
@@ -260,13 +254,13 @@ class evaluation():
         #transfer date to year-month
         self.test_roi['time']= self.test_roi['time'].dt.strftime('%Y-%m')
         self.observe_roi['time']= self.observe_roi['time'].dt.strftime('%Y-%m')
-        
-        #transfer data to dataframe and drop na 
+
+        #transfer data to dataframe and drop na
         self.test_df = self.test_roi.to_dataframe().dropna(how='any')
         self.observe_df = self.observe_roi.to_dataframe().dropna(how='any')
-        
+
         #tidy data at each grid
-        self.test_df_reset = self.test_df.reset_index() 
+        self.test_df_reset = self.test_df.reset_index()
         self.data_df = self.test_df_reset
         self.observe_df_reset = self.observe_df.reset_index()
         self.data_df = pd.merge(self.test_df_reset,self.observe_df_reset, on=['time','lat','lon','states'])
@@ -287,16 +281,16 @@ class evaluation():
 
         self.data_df_1 = pd.merge(self.data_df,self.test_monthly_mean, on=['lat','lon','month'])
         self.data_df_1 = pd.merge(self.data_df_1,self.observe_monthly_mean, on=['lat','lon','month'])
-        
+
         ##tidy regional mean data
         self.test_regional_mean = self.data_df_1.groupby(['time']).pr.mean()
         self.test_regional_mean = pd.DataFrame(self.test_regional_mean.rename("test_regional_mean")).reset_index()
         self.test_regional_mean['year'] = pd.DatetimeIndex(self.test_regional_mean['time']).year
-        
+
         self.observe_regional_mean = self.data_df_1.groupby(['time']).pr_observe.mean()
         self.observe_regional_mean = pd.DataFrame(self.observe_regional_mean.rename("observe_regional_mean")).reset_index()
         self.observe_regional_mean['year'] = pd.DatetimeIndex(self.observe_regional_mean['time']).year
-    
+
     #calculate spi of test data
     def test_spi(self):
         gamma = indices.Distribution.gamma
@@ -305,11 +299,11 @@ class evaluation():
 
         start_year = min(self.test_regional_mean.year)
         end_year = max(self.test_regional_mean.year)
-                    
+
         #set vaild limit of SPI
         vaild_min = -3.09
         vaild_max = 3.09
-        
+
         #regional spi
         self.test_regional_spi = pd.DataFrame(columns=['SPI3','SPI6','SPI12','SPI36'], index=date)
         for scale, col in zip([3,6,12,36], self.test_regional_spi.columns):
@@ -323,7 +317,7 @@ class evaluation():
             #clip the data between -3.09 and 3.09 as suggested
             self.test_regional_spi[col] = np.clip(self.test_regional_spi[col], vaild_min, vaild_max)
         self.test_regional_spi['model'] = self.model_name
-        
+
         #spi at each grid
         #renormalized by observed data
         #test_spi6 = self.data_df.groupby(['lat','lon']).apply(lambda x: indices.spi(x['pr'],6, gamma, start_year,start_year, end_year, period)).rename('spi6').reset_index()
@@ -333,9 +327,9 @@ class evaluation():
         self.test_spi6.columns = ['lat','lon','time_num','spi6']
         #clip the data between -3.09 and 3.09 as suggested
         self.test_spi6.spi6 = np.clip(self.test_spi6.spi6, vaild_min, vaild_max)
-        
+
         self.test_spi6['time'] = self.data_df.time.unique()[self.test_spi6.time_num]
-        #renormalized by observed data        
+        #renormalized by observed data
         #test_spi36 = self.data_df.groupby(['lat','lon']).apply(lambda x: indices.spi(x['pr'],36, gamma, start_year,start_year, end_year, period)).rename('spi36').reset_index()
         test_spi36 = self.data_df.groupby(['lat','lon']).apply(lambda x: ((indices.spi(x['pr'],36, gamma, start_year,start_year, end_year, period)*x['pr'].std() + x['pr'].mean())-x['pr_observe'].mean())/x['pr_observe'].std()).rename('spi36').reset_index()
         self.test_spi36 = test_spi36.set_index(['lat', 'lon'])['spi36'].apply(pd.Series).stack()
@@ -353,7 +347,7 @@ class evaluation():
 
         start_year = min(self.observe_regional_mean.year)
         end_year = max(self.observe_regional_mean.year)
-        
+
         #regional spi
         self.observe_regional_spi = pd.DataFrame(columns=['SPI3_observe','SPI6_observe','SPI12_observe','SPI36_observe'], index=date)
         for scale, col in zip([3,6,12,36], self.observe_regional_spi.columns):
@@ -365,13 +359,13 @@ class evaluation():
         self.observe_spi6 = self.observe_spi6.reset_index()
         self.observe_spi6.columns = ['lat','lon','time_num','spi6']
         self.observe_spi6['time'] = self.data_df.time.unique()[self.observe_spi6.time_num]
-        
+
         observe_spi36 = self.data_df.groupby(['lat','lon']).apply(lambda x: indices.spi(x['pr_observe'],36, gamma, start_year,start_year, end_year, period)).rename('spi36').reset_index()
         self.observe_spi36 = observe_spi36.set_index(['lat', 'lon'])['spi36'].apply(pd.Series).stack()
         self.observe_spi36 = self.observe_spi36.reset_index()
         self.observe_spi36.columns = ['lat','lon','time_num','spi36']
         self.observe_spi36['time'] = self.data_df.time.unique()[self.observe_spi36.time_num]
-           
+
     #Get metrics in our paper
     def data_metrics(self):
         self.data_mean = self.data_df.groupby(['lat','lon']).mean().reset_index()
@@ -382,9 +376,9 @@ class evaluation():
         print('Data 99th percentile precipitation at each grid:\n')
         print(self.data_mean)
         print('\n')
-        
+
         #a. Monthly means
-        #1.K-S test max distance of monthly regional precipitation 
+        #1.K-S test max distance of monthly regional precipitation
         self.regional_precipitation_ks_distance = ks_2samp(self.test_regional_mean.test_regional_mean,self.observe_regional_mean.observe_regional_mean)[0]
         ### a=0.05, c = 1.731
         n = len(self.test_regional_mean)
@@ -394,7 +388,7 @@ class evaluation():
         self.regional_precipitation_ks_distance_score = self.regional_precipitation_ks_distance / D_thershold
 
         print('1.The score of K-S test max distance of monthly regional precipitation',self.regional_precipitation_ks_distance_score)
-        print('\n')          
+        print('\n')
 
         #2.K-S Test’s max distance of regional SPI6.
         self.data_spi = pd.merge(self.test_regional_spi,self.observe_regional_spi,on=['time'])
@@ -408,8 +402,8 @@ class evaluation():
         self.spi6_max_distance_score = self.spi6_max_distance.spi6_max_distance[0] / D_thershold
 
         print("2.The score of K-S Test’s max distance of regional SPI6",self.spi6_max_distance_score)
-        print('\n')    
-        
+        print('\n')
+
         #3.K-S Test’s max distance of regional SPI36.
         self.data_spi36 = self.data_spi.dropna(subset=["SPI36"])
         self.spi36_max_distance = self.data_spi36.groupby(['model']).apply(lambda x: ks_2samp(x['SPI36'],x['SPI36_observe'])[0]).rename('spi36_max_distance').reset_index()
@@ -423,7 +417,7 @@ class evaluation():
 
         print("3.The score K-S Test’s max distance of regional SPI36 ",self.spi36_max_distance_score)
         print('\n')
-        
+
         # b. Seasonality
         #4. The mean of K-S Test max distance of regional precipitation at each month
         ## Use to avoid considering the impact of seasonality
@@ -456,8 +450,8 @@ class evaluation():
         self.long_term_monthly_mean_ks_distance_score = ks_2samp(self.long_term_monthly_regional_mean.pr_mean,self.long_term_monthly_regional_mean.pr_observe_mean)[0]/D_thershold
 
         print("5.The score K-S Test of long term regional mean",self.long_term_monthly_mean_ks_distance_score)
-        print('\n')  
-        
+        print('\n')
+
         #Drought coverage
         #6.K-S Test’s max distance of dry region ratio
         ##Dry month is defined as the month with SPI6 less than -1
@@ -471,9 +465,9 @@ class evaluation():
         self.observe_dry_month['observe_dry_month'] = 0
         self.dry_threshold = -1
         self.observe_dry_month.loc[self.observe_dry_month.spi6 <= self.dry_threshold, 'observe_dry_month'] = 1
-        self.observe_dry_ratio = self.observe_dry_month.groupby(['time']).observe_dry_month.mean().rename('dry_ratio').reset_index()        
+        self.observe_dry_ratio = self.observe_dry_month.groupby(['time']).observe_dry_month.mean().rename('dry_ratio').reset_index()
         self.dry_ratio_max_distance = ks_2samp(self.test_dry_ratio.dry_ratio,self.observe_dry_ratio.dry_ratio)
-        self.dry_ratio_rmse = self.rmse(self.test_dry_ratio.dry_ratio,self.observe_dry_ratio.dry_ratio)   
+        self.dry_ratio_rmse = self.rmse(self.test_dry_ratio.dry_ratio,self.observe_dry_ratio.dry_ratio)
         ### a=0.05, c = 1.731
         n = len(self.test_dry_ratio)
         m = len(self.observe_dry_ratio)
@@ -485,20 +479,20 @@ class evaluation():
         print("6.The score of K-S Test’s max distance of drought coverage ",self.dry_ratio_max_distance_score)
         print('Drought coverage is the number of grids with spi6 less than -1 divided by the total number of grids')
         print('\n')
-            
+
         #7. Z-test on the proportion of dry months.
         self.test_regional_dry_month = self.test_regional_spi
         self.test_regional_dry_month['test_regional_dry_month'] = 0
         self.dry_threshold = -1
-        self.test_regional_dry_month.loc[self.test_regional_dry_month.SPI6 <= self.dry_threshold, 'test_regional_dry_month'] = 1        
-        
+        self.test_regional_dry_month.loc[self.test_regional_dry_month.SPI6 <= self.dry_threshold, 'test_regional_dry_month'] = 1
+
         self.observe_regional_dry_month = self.observe_regional_spi
         self.observe_regional_dry_month['observe_regional_dry_month'] = 0
-        self.observe_regional_dry_month.loc[self.observe_regional_dry_month.SPI6_observe <= self.dry_threshold, 'observe_regional_dry_month'] = 1        
-        
+        self.observe_regional_dry_month.loc[self.observe_regional_dry_month.SPI6_observe <= self.dry_threshold, 'observe_regional_dry_month'] = 1
+
         self.test_regional_dry_month.dropna(subset = ["SPI6"], inplace=True)
         self.observe_regional_dry_month.dropna(subset = ["SPI6_observe"], inplace=True)
-        
+
         self.regional_dry_month_difference = self.test_regional_dry_month.test_regional_dry_month.sum() - self.observe_regional_dry_month.observe_regional_dry_month.sum()
         p1 = self.test_regional_dry_month.test_regional_dry_month.sum()/len(self.test_regional_dry_month)
         p2 = self.observe_regional_dry_month.observe_regional_dry_month.sum()/len(self.observe_regional_dry_month)
@@ -551,15 +545,15 @@ class evaluation():
         self.annual_dry_month_score = self.z_annual_dry_month/z_threshold
         print('9.The score of Annual dry month z test:', self.annual_dry_month_score)
         print('\n')
-        
+
         #10.K-S Test max distance of the drought durations
         ###let's calculate test and obverved consecutive drought durations firstly.
 
         j=1
         self.test_consecutive_regional_dry_month =  pd.DataFrame(columns=['dry_time','duration'],index = list(range(1,len(self.test_regional_dry_month))))
-        for i in list(range(0,len(self.test_regional_dry_month))) : 
+        for i in list(range(0,len(self.test_regional_dry_month))) :
             if i == 0:
-                if self.test_regional_dry_month.loc[i+1].test_regional_dry_month==0 and self.test_regional_dry_month.loc[i].test_regional_dry_month==1: 
+                if self.test_regional_dry_month.loc[i+1].test_regional_dry_month==0 and self.test_regional_dry_month.loc[i].test_regional_dry_month==1:
                     self.test_consecutive_regional_dry_month.loc[j].duration = 1
                     self.test_consecutive_regional_dry_month.loc[j].dry_time = self.test_regional_dry_month.loc[i].time
                     j = j+1
@@ -586,12 +580,12 @@ class evaluation():
                     self.test_consecutive_regional_dry_month.loc[j]=1
                     self.test_consecutive_regional_dry_month.loc[j].dry_time = self.test_regional_dry_month.loc[i+1-self.test_consecutive_regional_dry_month.loc[j].duration].time
         self.test_consecutive_regional_dry_month = self.test_consecutive_regional_dry_month.dropna(how='any')
-        
+
         j=1
         self.observe_consecutive_regional_dry_month =  pd.DataFrame(columns=['dry_time','duration'],index = list(range(1,len(self.observe_regional_dry_month))))
-        for i in list(range(0,len(self.observe_regional_dry_month))) : 
+        for i in list(range(0,len(self.observe_regional_dry_month))) :
             if i == 0:
-                if self.observe_regional_dry_month.loc[i+1].observe_regional_dry_month==0 and self.observe_regional_dry_month.loc[i].observe_regional_dry_month==1: 
+                if self.observe_regional_dry_month.loc[i+1].observe_regional_dry_month==0 and self.observe_regional_dry_month.loc[i].observe_regional_dry_month==1:
                     self.observe_consecutive_regional_dry_month.loc[j].duration = 1
                     self.observe_consecutive_regional_dry_month.loc[j].dry_time = self.observe_regional_dry_month.loc[i].time
                     j = j+1
@@ -618,18 +612,18 @@ class evaluation():
                     self.observe_consecutive_regional_dry_month.loc[j]=1
                     self.observe_consecutive_regional_dry_month.loc[j].dry_time = self.observe_regional_dry_month.loc[i+1-self.observe_consecutive_regional_dry_month.loc[j].duration].time
         self.observe_consecutive_regional_dry_month = self.observe_consecutive_regional_dry_month.dropna(how='any')
-        
+
         self.dry_dutaion_max_distance = ks_2samp(self.observe_consecutive_regional_dry_month.duration,self.test_consecutive_regional_dry_month.duration)[0]
         ### a=0.05, c = 1.731
         n = len(self.test_consecutive_regional_dry_month)
         m = len(self.observe_consecutive_regional_dry_month)
         c = 1.731
         D_thershold  = c * math.sqrt((n+m)/(n*m))
-        self.dry_dutaion_max_distance_score = self.dry_dutaion_max_distance / D_thershold       
+        self.dry_dutaion_max_distance_score = self.dry_dutaion_max_distance / D_thershold
 
         print("10.The score of K-S Test's max distance of drought duration",self.dry_dutaion_max_distance_score)
         print('\n')
-        
+
         #if use z test
         #n1 = len(self.test_consecutive_regional_dry_month)
         #n2 = len(self.observe_consecutive_regional_dry_month)
@@ -642,9 +636,9 @@ class evaluation():
         #z_threshold = 1.96
         #self.consecutive_dry_month_score_z = self.z_consecutive_dry_month/z_threshold
         #print('The score of z test', self.consecutive_dry_month_score_z)
-        
+
         #Drought probability
-        #11.Z-test on the probability of drought initiation 
+        #11.Z-test on the probability of drought initiation
         #Drought initiation
         self.n_test_non_dry = len(self.test_regional_dry_month[self.test_regional_dry_month['test_regional_dry_month']==0])
         self.n_test_drought_initiation = 0
@@ -669,12 +663,12 @@ class evaluation():
         self.z_drought_initiation = abs(self.p_test_drought_initiation - self.p_observe_drought_initiation)/np.sqrt(self.p_total_drought_initiation*(1-self.p_total_drought_initiation)*(1/self.n_test_non_dry+1/self.n_observe_non_dry))
         #The z-score associated with a 5% alpha level / 2 is 1.96.
         z_threshold = 1.96
-        self.drought_initiation_score = self.z_drought_initiation/z_threshold       
+        self.drought_initiation_score = self.z_drought_initiation/z_threshold
 
         print("11.The score of Z-test on the probability of drought initiation is ",self.drought_initiation_score)
-        print('\n')      
-        
-        #12. Z-test on the probability of drought termination  
+        print('\n')
+
+        #12. Z-test on the probability of drought termination
         #drought termination
         self.n_test_dry = len(self.test_regional_dry_month[self.test_regional_dry_month['test_regional_dry_month']==1])
         self.n_test_drought_termination = 0
@@ -682,7 +676,7 @@ class evaluation():
             if i+1 == len(self.test_regional_dry_month):
                 continue
             if self.test_regional_dry_month.loc[i+1]['test_regional_dry_month']==0 and self.test_regional_dry_month.loc[i]['test_regional_dry_month']==1:
-                self.n_test_drought_termination =  self.n_test_drought_termination + 1 
+                self.n_test_drought_termination =  self.n_test_drought_termination + 1
         self.p_test_drought_termination = self.n_test_drought_termination/self.n_test_dry
 
         self.n_observe_dry = len(self.observe_regional_dry_month[self.observe_regional_dry_month['observe_regional_dry_month']==1])
@@ -691,7 +685,7 @@ class evaluation():
             if i+1 == len(self.observe_regional_dry_month):
                 continue
             if self.observe_regional_dry_month.loc[i+1]['observe_regional_dry_month']==0 and self.observe_regional_dry_month.loc[i]['observe_regional_dry_month']==1:
-                self.n_observe_drought_termination =  self.n_observe_drought_termination + 1 
+                self.n_observe_drought_termination =  self.n_observe_drought_termination + 1
         self.p_observe_drought_termination = self.n_observe_drought_termination/self.n_observe_dry
 
         #here we use p_observe as p
@@ -701,17 +695,17 @@ class evaluation():
         z_threshold = 1.96
         self.drought_termination_score = self.z_drought_termination/z_threshold
         print("12.The score of  Z-test on the probability of drought termination: ",self.drought_termination_score)
-        print('\n')      
-        
+        print('\n')
+
         ##Total Score
         self.total_score = self.regional_precipitation_ks_distance_score + self.spi6_max_distance_score\
         +self.spi36_max_distance_score+self.ks_test_precipitatipn_each_month_mean_score+self.long_term_monthly_mean_ks_distance_score\
         +self.dry_ratio_max_distance_score+self.regional_dry_month_score+self.spi6_on_dry_month_max_distance_score\
         +self.annual_dry_month_score+self.drought_initiation_score+self.drought_termination_score
-        
+
         print("The Total Score is",self.total_score)
         print("\n")
-        
+
     # 5 Scores from ILAMB paper (https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2018MS001354)
     def bias_score(self):
         self.crms = self.data_df_1.groupby(['lat','lon']).apply(lambda x: self.rmse(x['pr'],x['pr_mean']))
@@ -721,7 +715,7 @@ class evaluation():
         self.data_bias['relative_bias'] = abs(self.data_bias['bias'])/self.data_bias['crms']
         self.data_bias['relative_bias_scored'] = self.scored(self.data_bias['relative_bias'])
         self.relative_bias_scored = np.mean(self.data_bias['relative_bias_scored'])
-        print('The relative bias score is '+ str(self.relative_bias_scored)+'\n')    
+        print('The relative bias score is '+ str(self.relative_bias_scored)+'\n')
     def rmse_score(self):
         self.data_rmse = self.data_df_1.groupby(['lat','lon']).apply(lambda x: self.rmse(x['pr'],x['pr_observe']))
         self.data_rmse = pd.DataFrame(self.data_rmse.rename("rmse")).reset_index()
@@ -731,16 +725,16 @@ class evaluation():
         self.data_crmse['rmse_scored'] = self.data_crmse['crmse'] / self.data_crmse['crms']
         self.data_crmse['rmse_scored'] = self.scored(self.data_crmse['rmse_scored'])
         self.rmse_scored = np.mean(self.data_crmse['rmse_scored'])
-        print('The RMSE score is '+ str(self.rmse_scored)+'\n')             
+        print('The RMSE score is '+ str(self.rmse_scored)+'\n')
     def phase_score(self):
-        self.observe_max = self.observe_monthly_mean.loc[self.observe_monthly_mean['pr_observe_mean'].groupby(['lon','lat']).idxmax()].reset_index() 
+        self.observe_max = self.observe_monthly_mean.loc[self.observe_monthly_mean['pr_observe_mean'].groupby(['lon','lat']).idxmax()].reset_index()
         self.observe_max = self.observe_max.rename(columns={'observe_month':'month'})
-        self.test_max = self.test_monthly_mean.loc[self.test_monthly_mean['pr_mean'].groupby(['lon','lat']).idxmax()].reset_index() 
+        self.test_max = self.test_monthly_mean.loc[self.test_monthly_mean['pr_mean'].groupby(['lon','lat']).idxmax()].reset_index()
         self.observe_max['month_test'] = self.test_max['month']
         self.observe_max['month_difference'] = self.observe_max['month_test'] - self.observe_max['month']
         self.observe_max['phase'] = 0.5*(1+np.cos(2*math.pi*self.observe_max['month_difference']/12))
         self.phase_scored = np.mean(self.observe_max['phase'])
-        print('The phase shift score is '+ str(self.phase_scored)+'\n')            
+        print('The phase shift score is '+ str(self.phase_scored)+'\n')
     def interannual_score(self):
         self.test_iav = self.data_df_1.groupby(['lat','lon']).apply(lambda x: self.rmse(x['pr'],x['pr_mean']))
         self.test_iav = pd.DataFrame(self.test_iav.rename("test_iav")).reset_index()
@@ -750,7 +744,7 @@ class evaluation():
         self.data_iav['iav_scored'] = ((self.data_iav['test_iav']-self.data_iav['observe_iav'] )/ self.data_iav['observe_iav'])
         self.data_iav['iav_scored'] = self.scored(self.data_iav['iav_scored'])
         self.iav_scored = np.mean(self.data_iav['iav_scored'])
-        print('The interannual variability score is '+ str(self.iav_scored)+'\n')         
+        print('The interannual variability score is '+ str(self.iav_scored)+'\n')
     def spatial_score(self):
         self.test_std = np.std(self.data_mean.pr)
         self.observe_std = np.std(self.data_mean.pr_observe)
@@ -760,7 +754,7 @@ class evaluation():
         self.test_pr_biase = self.test_regional_mean.test_regional_mean.mean() - self.test_regional_mean.observe_regional_mean.mean()
         self.test_pr_seasonal_std = np.std(self.test_monthly_regional_mean.pr_mean)
         self.test_pr_spatial_std = np.std(self.data_mean.pr)
-        print('The spatial distribution score is '+ str(self.spatial_scored)+'\n')      
+        print('The spatial distribution score is '+ str(self.spatial_scored)+'\n')
     # To get all 5 scores from ILAMB paper
     def overall_score(self):
         self.bias_score()
@@ -768,7 +762,7 @@ class evaluation():
         self.phase_score()
         self.interannual_score()
         self.spatial_score()
-        self.score_overall = (self.relative_bias_scored + 2 * self.rmse_scored + 
+        self.score_overall = (self.relative_bias_scored + 2 * self.rmse_scored +
                               self.phase_scored + self.iav_scored + self.spatial_scored) / 6
         print('For ' + self.model_name + ' model in '+ self.hu_name + ' the overall score from ILAMB paper is ',self.score_overall)
         print('\n')
@@ -776,7 +770,7 @@ class evaluation():
 
     # to show the scores on map if needed
     def score_map(self,data,variable_name):
-        
+
         val_pivot_df = data.pivot(index='lat', columns='lon', values=variable_name)
         lons = val_pivot_df.columns.values
         lats = val_pivot_df.index.values
@@ -791,20 +785,20 @@ class evaluation():
         m.drawcoastlines()
         m.drawstates()
         m.drawcountries()
-        x, y = np.meshgrid(lons,lats) 
-        px,py = m(x,y) 
+        x, y = np.meshgrid(lons,lats)
+        px,py = m(x,y)
         data_values = val_pivot_df.values
         masked_data = np.ma.masked_invalid(data_values)
         cmap = plt.cm.viridis
         m.pcolormesh(px, py, masked_data, cmap=cmap,  shading='flat')
 
         m.colorbar(label=variable_name)
-        
+
     # Plot the heat map of the principal metric evaluation
     def result_analysis(self,data,upper_limit = 2):
         #the name of the file of pricipal metrics got from PFA()
         column_name='output_principal_metrics_column_defined'
-        
+
         with open (column_name, 'rb') as fp:
             self.column_indices = pickle.load(fp)
         data_df = pd.DataFrame(self.multi_model).reset_index()
@@ -817,13 +811,13 @@ class evaluation():
 
         metrics_selected_nolimit = data_used.iloc[:,self.column_indices]
 
-        self.principal_metrics = pd.concat([self.principal_metrics, metrics_selected], axis=1)    
+        self.principal_metrics = pd.concat([self.principal_metrics, metrics_selected], axis=1)
         self.principal_metrics['Total Score'] = self.principal_metrics.iloc[:,2:len(self.principal_metrics.columns)].sum(axis=1)
-        self.principal_metrics = self.principal_metrics.sort_values('Total Score') 
+        self.principal_metrics = self.principal_metrics.sort_values('Total Score')
 
-        self.principal_metrics_nolimit = pd.concat([self.principal_metrics_nolimit, metrics_selected_nolimit], axis=1)    
+        self.principal_metrics_nolimit = pd.concat([self.principal_metrics_nolimit, metrics_selected_nolimit], axis=1)
         self.principal_metrics_nolimit['Total Score'] = self.principal_metrics['Total Score']
-        self.principal_metrics_nolimit = self.principal_metrics_nolimit.sort_values('Total Score') 
+        self.principal_metrics_nolimit = self.principal_metrics_nolimit.sort_values('Total Score')
 
         params = {'legend.fontsize': 20,
                   'legend.handlelength': 3}
@@ -832,7 +826,7 @@ class evaluation():
         #df = pickle.load(file)
         df = self.principal_metrics_nolimit
         df = df.rename(columns={'Total Score':'Total Score'})
-        
+
         # show the name of each metric
         df = df.rename(columns={'Metric A1':'A1. Mean Precip.',
                           'Metric A2':'A2. Mean SPI6',
@@ -877,20 +871,20 @@ class evaluation():
                 if z <=(df.shape[1]-1):
                     ax.text(j, i, '{:0.2f}'.format(z), ha='center', va='center',fontsize=15)
                 else:
-                    ax.text(j, i, '{:0.2f}'.format(z), ha='center', va='center',fontsize=15, color='white')    
+                    ax.text(j, i, '{:0.2f}'.format(z), ha='center', va='center',fontsize=15, color='white')
 
         plt.xticks(range(len(df.columns)), df.columns,fontsize=18)
         plt.yticks(range(len(df)),df.index,fontsize=16)
         plt.xticks(rotation=270)
 
         plt.savefig('output/heatmap of principal metrics'+str(self.hu_name)+'.pdf', bbox_inches='tight')
-        
+
     # Conduct PFA to select principal metrics used over the evaluation region
     def PFA(self,pca_threshold=0.95):
 
         label_size = 24
-        mpl.rcParams['xtick.labelsize'] = label_size 
-        mpl.rcParams['ytick.labelsize'] = label_size 
+        mpl.rcParams['xtick.labelsize'] = label_size
+        mpl.rcParams['ytick.labelsize'] = label_size
         #PCA part
         data_df = pd.DataFrame(self.multi_model).reset_index()
         data_used = data_df.iloc[:,3:len(self.multi_model.columns)]
@@ -930,12 +924,12 @@ class evaluation():
         plt.axhline(y=0.95, color='r', linestyle='--')
         plt.text(0.55, 1, '95% variance explained', color = 'red', fontsize=26)
         plt.text(self.n_used-1.8, 0.85, 'the number of components selected', color = 'red', fontsize=26)
-        ax.xaxis.grid(b=True, which='major', color='black', linestyle='--', alpha=.6) 
+        ax.xaxis.grid(b=True, which='major', color='black', linestyle='--', alpha=.6)
 
         plt.savefig('output__PFA in '+str(self.hu_name)+'.pdf')
 
         random.seed(1)
-        
+
         class PFA(object):
             def __init__(self, n_features, q=None):
                 self.q = q
@@ -962,7 +956,7 @@ class evaluation():
 
                 self.indices_ = [sorted(f, key=lambda x: x[1])[0][0] for f in dists.values()]
                 self.features_ = X[:, self.indices_]
-                
+
         #select the columns of the metrics
         data_used = data_df.iloc[:,3:len(self.multi_model.columns)]
 
@@ -975,7 +969,7 @@ class evaluation():
             self.column_indices = pfa.indices_
         print('The principal metrics selected by PFA: ')
         self.PFA_select = data_used.iloc[:,self.column_indices].columns
-        
+
         with open('output_principal_metrics_column_defined', 'wb') as fp:
             pickle.dump(self.column_indices, fp)
 
@@ -984,12 +978,12 @@ class evaluation():
         #set upper limit to 2
         upper_limit = 2
         metrics_selected[metrics_selected > upper_limit] = 2
-        self.principal_metrics = pd.concat([self.principal_metrics, metrics_selected], axis=1)  
+        self.principal_metrics = pd.concat([self.principal_metrics, metrics_selected], axis=1)
         self.principal_metrics['Total Score'] = self.principal_metrics.iloc[:,2:len(self.principal_metrics.columns)].sum(axis=1)
-        self.principal_metrics = self.principal_metrics.sort_values('Total Score')    
+        self.principal_metrics = self.principal_metrics.sort_values('Total Score')
         self.principal_metrics_json = self.principal_metrics.set_index('model').to_json()
-        
-    # read the Principal Metrics columns defined by PFA and select Principal Metrics from all Metrics 
+
+    # read the Principal Metrics columns defined by PFA and select Principal Metrics from all Metrics
     def PM_selection(self,column_name='output_principal_metrics_column_defined',upper_limit=2):
         with open (column_name, 'rb') as fp:
             self.column_indices = pickle.load(fp)
@@ -999,16 +993,16 @@ class evaluation():
         metrics_selected = data_used.iloc[:,self.column_indices]
         #set upper limit to 2 in calculating the overall score
         metrics_selected[metrics_selected > upper_limit] = upper_limit
-        self.principal_metrics = pd.concat([self.principal_metrics, metrics_selected], axis=1)    
+        self.principal_metrics = pd.concat([self.principal_metrics, metrics_selected], axis=1)
         self.principal_metrics['Total Score'] = self.principal_metrics.iloc[:,2:len(self.principal_metrics.columns)].sum(axis=1)
-        self.principal_metrics = self.principal_metrics.sort_values('Total Score') 
+        self.principal_metrics = self.principal_metrics.sort_values('Total Score')
         self.principal_metrics_json = self.principal_metrics.set_index('model').to_json()
         with open('output/Principal metrics in '+str(self.hu_name)+'.json', 'w') as f:
-            f.write(self.principal_metrics_json)          
-            
-    # Loop over all NetCDF files under a directory and make the plots 
+            f.write(self.principal_metrics_json)
+
+    # Loop over all NetCDF files under a directory and make the plots
     def evaluate_multi_model(self,test_path,test_pr_name,observe_path,observe_pr_name,weightfile_path,hu_name,shp_path,interpolation=False):
-        
+
         file_num = 0
         fileList = os.listdir(test_path)
 
@@ -1016,11 +1010,11 @@ class evaluation():
             print(file)
             if file.endswith(".nc"):
                 test_path_file = test_path+file
-                file_num = file_num +1 
+                file_num = file_num +1
                 print("The "+str(file_num)+'th run: Read and evaluate ' + file)
                 self.read_test_data(test_path_file,test_pr_name)
                 self.read_observe_data(observe_path,observe_pr_name)
-                self.read_weightfile(weightfile_path,interpolation)  
+                self.read_weightfile(weightfile_path,interpolation)
                 self.interpolate(self.test,self.observe,self.weightfile,interpolation,interpolate_type='conservative')
                 self.read_shp(shp_path)
                 self.mask_observe(shp_path,self.observe_interpolated,hu_name)
@@ -1031,7 +1025,7 @@ class evaluation():
                 self.observe_spi()
                 self.data_metrics()
                 self.overall_score()
-                
+
 
                 #save Metrics data into dict
                 dict0 = [{
@@ -1040,19 +1034,19 @@ class evaluation():
                     "Metric A1":self.regional_precipitation_ks_distance_score,
                     "Metric A2":self.spi6_max_distance_score,
                     "Metric A3":self.spi36_max_distance_score,
-                    "Metric B1":self.ks_test_precipitatipn_each_month_mean_score, 
-                    'Metric B2':self.long_term_monthly_mean_ks_distance_score,                    
+                    "Metric B1":self.ks_test_precipitatipn_each_month_mean_score,
+                    'Metric B2':self.long_term_monthly_mean_ks_distance_score,
                     "Metric C1":self.dry_ratio_max_distance_score,
                     "Metric D1":self.regional_dry_month_score,
                     'Metric D2':self.annual_dry_month_score,
                     'Metric E1':self.spi6_on_dry_month_max_distance_score,
                     'Metric F1':self.drought_initiation_score,
                     'Metric F2':self.drought_termination_score,
-                    "The Total Score":self.total_score                    
+                    "The Total Score":self.total_score
                     }]
                 multi_model0 = pd.DataFrame(dict0)
 
-                # Save some statistic needed of precipitation data 
+                # Save some statistic needed of precipitation data
                 multi_model_std0 = [{
                     'model' : self.model_name,
                     'hydrologic region' : self.hu_name,
@@ -1067,111 +1061,111 @@ class evaluation():
                     self.multi_model = multi_model0
                     self.multi_model_std = multi_model_std0
                     self.multi_model_regional_spi = self.test_regional_spi
-                                    
+
                 else:
-                    self.multi_model = pd.concat([self.multi_model, multi_model0])  
-                    self.multi_model_std = pd.concat([self.multi_model_std, multi_model_std0]) 
+                    self.multi_model = pd.concat([self.multi_model, multi_model0])
+                    self.multi_model_std = pd.concat([self.multi_model_std, multi_model_std0])
                     self.multi_model_regional_spi = pd.concat([self.multi_model_regional_spi,self.test_regional_spi])
 
         self.multi_model = self.multi_model.sort_values('The Total Score')
         self.multi_model_json = self.multi_model.set_index('model').to_json()
         with open('output/All metrics in '+str(self.hu_name)+'.json', 'w') as f:
-            f.write(self.multi_model_json)        
-                
+            f.write(self.multi_model_json)
+
     # plot the Taylor diagram
     def TaylorDiagram(self,stddev,corrcoef,refstd,fig,colors,model_name,normalize=True):
-            """Plot a Taylor diagram.
-            This is adapted from the code by Yannick Copin found here:
-            https://gist.github.com/ycopin/3342888
-            Parameters
-            ----------
-            stddev : numpy.ndarray
-                an array of standard deviations
-            corrcoeff : numpy.ndarray
-                an array of correlation coefficients
-            refstd : float
-                the reference standard deviation
-            fig : matplotlib figure
-                the matplotlib figure
-            colors : array
-                an array of colors for each element of the input arrays
-            normalize : bool, optional
-                disable to skip normalization of the standard deviation
-            """
-            from matplotlib.projections import PolarAxes
-            import mpl_toolkits.axisartist.floating_axes as FA
-            import mpl_toolkits.axisartist.grid_finder as GF
-            plt.rcParams.update({'font.size': 32})
-            plt.rc('xtick',labelsize=30)
-            plt.rc('ytick',labelsize=30)
-            # define transform
-            tr = PolarAxes.PolarTransform()
+        """Plot a Taylor diagram.
+        This is adapted from the code by Yannick Copin found here:
+        https://gist.github.com/ycopin/3342888
+        Parameters
+        ----------
+        stddev : numpy.ndarray
+            an array of standard deviations
+        corrcoeff : numpy.ndarray
+            an array of correlation coefficients
+        refstd : float
+            the reference standard deviation
+        fig : matplotlib figure
+            the matplotlib figure
+        colors : array
+            an array of colors for each element of the input arrays
+        normalize : bool, optional
+            disable to skip normalization of the standard deviation
+        """
+        from matplotlib.projections import PolarAxes
+        import mpl_toolkits.axisartist.floating_axes as FA
+        import mpl_toolkits.axisartist.grid_finder as GF
+        plt.rcParams.update({'font.size': 32})
+        plt.rc('xtick',labelsize=30)
+        plt.rc('ytick',labelsize=30)
+        # define transform
+        tr = PolarAxes.PolarTransform()
 
-            # correlation labels
-            rlocs = np.concatenate((np.arange(10)/10.,[0.95,0.99]))
-            tlocs = np.arccos(rlocs)
-            gl1   = GF.FixedLocator(tlocs)
-            tf1   = GF.DictFormatter(dict(zip(tlocs,map(str,rlocs))))
+        # correlation labels
+        rlocs = np.concatenate((np.arange(10)/10.,[0.95,0.99]))
+        tlocs = np.arccos(rlocs)
+        gl1   = GF.FixedLocator(tlocs)
+        tf1   = GF.DictFormatter(dict(zip(tlocs,map(str,rlocs))))
 
-            # standard deviation axis extent
-            if normalize:
-                stddev = stddev/refstd
-                refstd = 1.
-            smin = 0
-            smax = max(2.1,1.1*stddev[corrcoef>=0].max())
+        # standard deviation axis extent
+        if normalize:
+            stddev = stddev/refstd
+            refstd = 1.
+        smin = 0
+        smax = max(2.1,1.1*stddev[corrcoef>=0].max())
 
-            # add the curvilinear grid
-            ghelper = FA.GridHelperCurveLinear(tr,
-                                               extremes=(0,np.pi/2,smin,smax),
-                                               grid_locator1=gl1,
-                                               tick_formatter1=tf1)
-            ax = FA.FloatingSubplot(fig, 111, grid_helper=ghelper)
-            fig.add_subplot(ax)
+        # add the curvilinear grid
+        ghelper = FA.GridHelperCurveLinear(tr,
+                                           extremes=(0,np.pi/2,smin,smax),
+                                           grid_locator1=gl1,
+                                           tick_formatter1=tf1)
+        ax = FA.FloatingSubplot(fig, 111, grid_helper=ghelper)
+        fig.add_subplot(ax)
 
-            # adjust axes
-            ax.axis["top"].set_axis_direction("bottom")
-            ax.axis["top"].toggle(ticklabels=True,label=True)
-            ax.axis["top"].major_ticklabels.set_axis_direction("top")
-            ax.axis["top"].label.set_axis_direction("top")
-            ax.axis["top"].label.set_text("Correlation")
-            ax.axis["left"].set_axis_direction("bottom")
-            if normalize:
-                ax.axis["left"].label.set_text("Normalized standard deviation")
-            else:
-                ax.axis["left"].label.set_text("Standard deviation")
-            ax.axis["right"].set_axis_direction("top")
-            ax.axis["right"].toggle(ticklabels=True)
-            ax.axis["right"].major_ticklabels.set_axis_direction("left")
-            ax.axis["bottom"].set_visible(False)
-            ax.grid(True)
+        # adjust axes
+        ax.axis["top"].set_axis_direction("bottom")
+        ax.axis["top"].toggle(ticklabels=True,label=True)
+        ax.axis["top"].major_ticklabels.set_axis_direction("top")
+        ax.axis["top"].label.set_axis_direction("top")
+        ax.axis["top"].label.set_text("Correlation")
+        ax.axis["left"].set_axis_direction("bottom")
+        if normalize:
+            ax.axis["left"].label.set_text("Normalized standard deviation")
+        else:
+            ax.axis["left"].label.set_text("Standard deviation")
+        ax.axis["right"].set_axis_direction("top")
+        ax.axis["right"].toggle(ticklabels=True)
+        ax.axis["right"].major_ticklabels.set_axis_direction("left")
+        ax.axis["bottom"].set_visible(False)
+        ax.grid(True)
 
 
-            ax = ax.get_aux_axes(tr)
-            # Plot data
+        ax = ax.get_aux_axes(tr)
+        # Plot data
 
-            corrcoef = corrcoef.clip(-1,1)
-            for i in range(len(corrcoef)):
-                ax.plot(np.arccos(corrcoef[i]),stddev[i],marker='$%d$' % (i+1), color=colors[i],mew=0.6,ms=26,label = model_name[i])
+        corrcoef = corrcoef.clip(-1,1)
+        for i in range(len(corrcoef)):
+            ax.plot(np.arccos(corrcoef[i]),stddev[i],marker='$%d$' % (i+1), color=colors[i],mew=0.6,ms=26,label = model_name[i])
 
-            # Add reference point and stddev contour
-            l, = ax.plot([0],refstd,'k*',ms=30,mew=0.8)
-            t = np.linspace(0, np.pi/2)
-            r = np.zeros_like(t) + refstd
-            ax.plot(t,r, 'k--',linewidth=4)
+        # Add reference point and stddev contour
+        l, = ax.plot([0],refstd,'k*',ms=30,mew=0.8)
+        t = np.linspace(0, np.pi/2)
+        r = np.zeros_like(t) + refstd
+        ax.plot(t,r, 'k--',linewidth=4)
 
-            # centralized rms contours
-            rs,ts = np.meshgrid(np.linspace(smin,smax),
-                                np.linspace(0,np.pi/2))
-            rms = np.sqrt(refstd**2 + rs**2 - 2*refstd*rs*np.cos(ts))
-            contours = ax.contour(ts,rs,rms,5,colors='k',alpha=0.68)
-            ax.clabel(contours,fmt='%1.1f')
-            plt.rcParams.update({'font.size': 20})
-            plt.legend(bbox_to_anchor=(1.4, 1.03),handlelength=0, borderpad=0.8)
+        # centralized rms contours
+        rs,ts = np.meshgrid(np.linspace(smin,smax),
+                            np.linspace(0,np.pi/2))
+        rms = np.sqrt(refstd**2 + rs**2 - 2*refstd*rs*np.cos(ts))
+        contours = ax.contour(ts,rs,rms,5,colors='k',alpha=0.68)
+        ax.clabel(contours,fmt='%1.1f')
+        plt.rcParams.update({'font.size': 20})
+        plt.legend(bbox_to_anchor=(1.4, 1.03),handlelength=0, borderpad=0.8)
 
     # Conduct the Taylor diagram
     def make_taylor_diagram(self,fig = 0):
         if fig == 0:
-            fig = plt.figure(figsize=(18,18))  
+            fig = plt.figure(figsize=(18,18))
         self.multi_model_std['normalized std'] = self.multi_model_std['test std']/self.observe_std
         self.multi_model_std['Taylor score'] = np.exp((-1+self.multi_model_std['spatial correlation'])-(self.multi_model_std['normalized std']+1/self.multi_model_std['normalized std'] -2))
         self.multi_model_std = self.multi_model_std.sort_values('Taylor score',ascending=False)
