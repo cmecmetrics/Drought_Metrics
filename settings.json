@@ -1,0 +1,23 @@
+{
+    "coordinates":{},
+    "obslist": {
+        "obs_name": "CPC",
+        "version": ""
+    },
+    "info": "Settings used to run the Drought Metrics package through the CMEC interface.",
+    "settings": {
+        "async": "",
+        "description": "",
+        "driver": "cmec_drought_metrics.sh",
+        "name": "Drought_Metrics",
+        "long_name": "Drought_Metrics",
+        "runtime": {"Drought_Metrics": 1}
+    },
+    "varlist": {
+        "pr": {
+            "name": "precipitation_flux",
+            "frequency": "mon",
+            "units": "kg m-2 s-1"
+        }
+    }
+}
