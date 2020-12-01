@@ -149,17 +149,20 @@ def make_html(hu_name, out_path='.'):
     m3p = str(Path(out_path + '/' + m3d).absolute())
     m4d = 'principal_metrics_in_' + rgn_str + '_cmec.json'
     m4p = str(Path(out_path + '/' + m4d).absolute())
-    p1alt = 'Heatmap of principal metrics'
-    p1p = str(Path(out_path + '/heatmap_of_principal_metrics_' + rgn_str + '.jpeg').absolute())
-    p2alt = 'The number of principal components versus cumulative variance'
-    p2p = str(Path(out_path + '/output__PFA_in_' + '/' + rgn_str + '.jpeg').absolute())
-    p3alt = 'Taylor diagram'
-    p3p = str(Path(out_path + '/taylor_diagram_' + rgn_str + '.jpeg').absolute())
+    p1alt = 'PCA results'
+    p1p = str(Path(out_path + '/PCA_explained_variance_' + rgn_str + '.jpeg').absolute())
+    p2alt = 'Heatmap of principal metrics'
+    p2p = str(Path(out_path + '/heatmap_of_principal_metrics_' + rgn_str + '.jpeg').absolute())
+    p3alt = 'The number of principal components versus cumulative variance'
+    p3p = str(Path(out_path + '/output__PFA_in_' + rgn_str + '.jpeg').absolute())
+    p4alt = 'Taylor diagram'
+    p4p = str(Path(out_path + '/taylor_diagram_' + rgn_str + '.jpeg').absolute())
+
 
     html = f'<html>\
     <body>\
     <head><title>Drought Metrics {rgn_str}</title></head>\
-    <br><h1>Drought Metrics Output for {rgn_str}</h1>\
+    <br><h1>Drought Metrics Output for {hu_name}</h1>\
     <br><h2>Metrics files</h2>\
     <br><a href="file:///{m1p}">{m1d}</a>\
     <br><a href="file:///{m3p}">{m3d}</a>\
@@ -170,8 +173,12 @@ def make_html(hu_name, out_path='.'):
     <br>\
     <br><h2>Plots</h2>\
     <br><p><img src="file:///{p1p}" alt="{p1alt}"</p>\
+    <br>\
     <br><p><img src="file:///{p2p}" alt="{p2alt}"</p>\
+    <br>\
     <br><p><img src="file:///{p3p}" alt="{p3alt}"</p>\
+    <br>\
+    <br><p><img src="file:///{p4p}" alt="{p4alt}"</p>\
     </body>\
     </html>'
 
