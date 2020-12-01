@@ -16,7 +16,7 @@ python $CMEC_CODE_DIR/drought_metrics.py -test_path $testpath -obs_path $obspath
 # Make cmec outputs if drought metrics succeeds
 if [[ $? = 0 ]]; then
     echo "Creating CMEC output"
-    python $CMEC_CODE_DIR/dm_cmec.py -test_path $testpath -obs_path $obspath -log_path $logpath -hu_name "$region" -out_path $outpath
+    python $CMEC_CODE_DIR/dm_cmec_outputs.py -test_path $testpath -obs_path $obspath -log_path $logpath -hu_name "$region" -out_path $outpath
 else
     echo "Failure in drought_metrics.py"
 fi
