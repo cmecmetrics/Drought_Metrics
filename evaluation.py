@@ -1,6 +1,4 @@
 from collections import defaultdict
-from datetime import datetime, timezone
-import json
 import math
 import os
 import pickle
@@ -1120,6 +1118,8 @@ class evaluation():
 
         plt.savefig(
             out_path + '/heatmap_of_principal_metrics_' + str(self.hu_name).replace(' ','_') + '.pdf', bbox_inches='tight')
+        plt.savefig(
+            out_path + '/heatmap_of_principal_metrics_' + str(self.hu_name).replace(' ','_') + '.jpeg', bbox_inches='tight')
 
     # Conduct PFA to select principal metrics used over the evaluation region
     def PFA(self,out_path=".",pca_threshold=0.95):
@@ -1143,7 +1143,7 @@ class evaluation():
         plt.xlabel('PCA feature')
         plt.ylabel('variance')
         plt.xticks(features)
-        plt.show()
+        #plt.show()
 
         # Plot the explained variances
         features = range(pca.n_components_)
@@ -1170,6 +1170,7 @@ class evaluation():
         ax.xaxis.grid(b=True, which='major', color='black', linestyle='--', alpha=.6)
 
         plt.savefig(out_path + '/output__PFA_in_' + str(self.hu_name).replace(' ','_') + '.pdf')
+        plt.savefig(out_path + '/output__PFA_in_' + str(self.hu_name).replace(' ','_') + '.jpeg')
 
         random.seed(1)
 
@@ -1287,7 +1288,7 @@ class evaluation():
                     'Metric E1':self.spi6_on_dry_month_max_distance_score,
                     'Metric F1':self.drought_initiation_score,
                     'Metric F2':self.drought_termination_score,
-                    "The Total Score":self.total_score,
+                    "Total Score":self.total_score,
                     }]
                 multi_model0 = pd.DataFrame(dict0)
 
@@ -1313,51 +1314,9 @@ class evaluation():
                     self.multi_model_regional_spi = pd.concat(
                         [self.multi_model_regional_spi,self.test_regional_spi])
 
-        self.multi_model = self.multi_model.sort_values('The Total Score')
+        self.multi_model = self.multi_model.sort_values('Total Score')
         f = out_path + '/all_metrics_in_' + str(self.hu_name).replace(' ','_') + '.json'
         self.multi_model_json = self.multi_model.set_index('model').to_json(f, indent=2)
-        self.write_cmec_json(self.multi_model.set_index('model').transpose(),hu_name,out_path)
-
-    def write_cmec_json(self,multi_model_table,hu_name,out_path=''):
-        """Write cmec formatted json
-
-        Rearrange the multi model data, add other required cmec fields, and write to file.
-        Metrics names are hardcoded, so any changes to the output metric set will
-        require changes to this output function.
-
-        Args:
-            multi_model_table (df): Arranged metrics (row) x models (col)
-            hu_name (str): region name
-            out_path (str): path to output directory
-
-        Ana Ordonez 11/2020
-        """
-        cmec_json = {'Dimensions': {},'Results': {}, 'Provenance': ''}
-        json_structure = ['hydrologic region', 'model', 'metric']
-        region = {hu_name: {}}
-        metric = {'A1':'Mean Precip.',
-                   'A2':'Mean SPI6',
-                   'A3':'Mean SPI36',
-                   'B1':'Season Precip.',
-                   'B2':'LTMM',
-                   'C1':'Frac. Cover.',
-                   'D1':'Dry Frac.',
-                   'D2':'Dry Count',
-                   'E1':'Intensity',
-                   'F1':'Prob. Init.',
-                   'F2':'Prob. Term.',
-                   'The Total Score': 'Sum of scores'}
-        cmec_json['Provenance'] = 'Metrics generated ' + datetime.now(timezone.utc).isoformat()
-        cmec_json['Dimensions']['json_structure'] = json_structure
-        cmec_json['Dimensions']['region'] = region
-        cmec_json['Dimensions']['metric'] = metric
-        # Arrange results hierarchically
-        for rgn in region:
-            cmec_json['Results'][rgn] = {}
-            cmec_json['Results'][rgn] = multi_model_table['Metric A1':'The Total Score'].to_dict()
-        filepath = out_path + '/all_metrics_in_'+str(hu_name).replace(' ','_')+'_cmec.json'
-        with open(filepath,'w') as f:
-            json.dump(cmec_json, f, indent=2)
 
     # plot the Taylor diagram
     def TaylorDiagram(self,stddev,corrcoef,refstd,fig,colors,model_name,normalize=True):
@@ -1469,3 +1428,5 @@ class evaluation():
         self.multi_model_std.to_pickle(out_path + '/taylor_score_in_' + str(self.hu_name).replace(' ','_') + '.pkl')
 
         plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.pdf', bbox_inches='tight')
+        plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.jpeg', bbox_inches='tight')
+
