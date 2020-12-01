@@ -1144,6 +1144,7 @@ class evaluation():
         plt.ylabel('variance')
         plt.xticks(features)
         #plt.show()
+        plt.savefig(out_path + '/PCA_explained_variance_' + str(self.hu_name).replace(' ','_') + '.jpeg')
 
         # Plot the explained variances
         features = range(pca.n_components_)
