@@ -17,7 +17,7 @@ From the cmec-driver directory:
 - Create the following directories: "obs", "model", and "output"
 - Copy your model data to model/Drought_Metrics
 - Copy your observations and shapefiles to obs/Drought_Metrics
-- Change the filenames in <path to Drought Metrics>/cmec_drought_metrics.sh as needed
+- Change the filenames in \<path to Drought Metrics\>/cmec_drought_metrics.sh as needed
 - Run the following commands:  
 `bin/cmec-driver register <path to Drought Metrics>`  
 `bin/cmec-driver run obs/Drought_Metrics model/Drought_Metrics output Drought_Metrics`  
