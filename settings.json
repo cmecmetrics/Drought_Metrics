@@ -1,13 +1,13 @@
 {
-    "coordinates":{},
+    "coordinates": {},
     "obslist": {
         "obs_name": "CPC",
         "version": ""
     },
     "info": "Settings used to run the Drought Metrics package through the CMEC interface.",
     "settings": {
-        "async": "",
-        "description": "",
+        "async": "none",
+        "description": "Including codes about reading, interpolating, masking NetCDF data of GCMs and calculating metrics to evaluate models' performance on droughts.",
         "driver": "cmec_drought_metrics.sh",
         "name": "Drought_Metrics",
         "long_name": "Drought_Metrics",
