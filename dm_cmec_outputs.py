@@ -1,4 +1,3 @@
-#!/usr/bin/python
 """Create CMEC compliant outputs for Drought Metrics package.
 
 Parameters:

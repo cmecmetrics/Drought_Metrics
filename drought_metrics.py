@@ -1,4 +1,3 @@
-#!/usr/bin/python
 """drought-metrics.py
 
 Driver that runs the drought metrics evaluation.
