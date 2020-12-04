@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Change file names as needed for region, obs, wgt, and shp
-region="Fake region"
+region="Ohio Region"
 obspath=$CMEC_OBS_DATA/obs_precip_2.nc
 wgtpath=$CMEC_MODEL_DATA/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc
 shppath=$CMEC_OBS_DATA/HU/WBDHU2.shp
