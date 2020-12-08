@@ -29,5 +29,16 @@ From the cmec-driver directory:
 
 Your results will be written to cmec-driver/output/Drought_Metrics. Open cmec-driver/output/Drought_Metrics/index.html with your browser to view the generated metrics files and plots.
 
-## Templates
+## Contents  
+### Scripts  
+evaluation.py: Evaluation class which computes drought metrics.
+drought_metrics.py: Driver for evaluation.py  
+dm_cmec_outputs.py: Functions for creating CMEC outputs
+cmec_drought_metrics.sh: CMEC driver script
+
+### Settings
+settings.json: CMEC settings file  
+drought_metrics.yml: Environment file
+
+### Templates
 Tempelates of observational data, model data, weightfile used in interpolation, shapefile defining the evaluation regions and plots are provided.
