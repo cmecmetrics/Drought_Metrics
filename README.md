@@ -24,8 +24,8 @@ From the cmec-driver directory:
 - Copy your observations and shapefiles to obs/Drought_Metrics
 - Change the filenames in \<path to Drought Metrics\>/cmec_drought_metrics.sh as needed
 - Run the following commands:  
-`bin/cmec-driver register <path to Drought Metrics>`  
-`bin/cmec-driver run obs/Drought_Metrics model/Drought_Metrics output Drought_Metrics` 
+`python src/cmec-driver.py register <path to Drought Metrics>`  
+`python src/cmec-driver.py run -obs obs/Drought_Metrics model/Drought_Metrics output Drought_Metrics` 
 
 Your results will be written to cmec-driver/output/Drought_Metrics. Open cmec-driver/output/Drought_Metrics/index.html with your browser to view the generated metrics files and plots.
 
