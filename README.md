@@ -4,6 +4,11 @@ Including codes about reading, interpolating, masking NetCDF data of GCMs and ca
 ## How to run this package
 Use git to clone this repository. There are two ways to run the evaluation.
 
+### Environment
+If using conda, an environment can be created using drought_metrics.yml:  
+`conda env create -f drought_metrics.yml`  
+This file can also be referenced if creating an environment in another manner.
+
 ### Run from Drought_Metrics directory
 `cd` to the cloned Drought_Metrics directory. Use the command line to run drought_metrics.py:  
 `python drought_metrics.py <-options>`  
