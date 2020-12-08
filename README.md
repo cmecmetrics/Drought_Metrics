@@ -31,10 +31,10 @@ Your results will be written to cmec-driver/output/Drought_Metrics. Open cmec-dr
 
 ## Contents  
 ### Scripts  
-evaluation.py: Evaluation class which computes drought metrics.
+evaluation.py: Evaluation class which computes drought metrics.  
 drought_metrics.py: Driver for evaluation.py  
-dm_cmec_outputs.py: Functions for creating CMEC outputs
-cmec_drought_metrics.sh: CMEC driver script
+dm_cmec_outputs.py: Functions for creating CMEC outputs  
+cmec_drought_metrics.sh: CMEC driver script  
 
 ### Settings
 settings.json: CMEC settings file  
