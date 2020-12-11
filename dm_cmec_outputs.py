@@ -19,6 +19,35 @@ import json
 import pandas as pd
 from pathlib import Path
 
+def get_env():
+    import affine
+    import climate_indices
+    import geopandas
+    import matplotlib
+    import mpl_toolkits.basemap as Basemap
+    import numpy as np
+    import pandas as pd
+    import rasterio
+    import scipy
+    import sklearn
+    import xarray
+    import xesmf
+
+    versions = {}
+    versions['affine'] = affine.__version__
+    versions['climate_indices'] = climate_indices.__version__
+    versions['geopandas'] = geopandas.__version__
+    versions['matplotlib'] = matplotlib.__version__
+    versions['Basemap'] = Basemap.__version__
+    versions['numpy'] = np.__version__
+    versions['pandas'] = pd.__version__
+    versions['rasterio'] = rasterio.__version__
+    versions['scipy'] = scipy.__version__
+    versions['sklearn'] = sklearn.__version__
+    versions['xarray'] = xarray.__version__
+    versions['xesmf'] = xesmf.__version__
+    return versions
+
 def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
     """Create json that describes contents of output directory."""
     # Set output file names and descriptions
@@ -49,25 +78,71 @@ def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
         'index': 'index', 'provenance': {}, 'data': {}, 'plots': {}, 'html': {}, 'metrics': {}}
     # Set json fields
     out_json['provenance'] = {
-        'environment': '', 'modeldata': test_path, 'obsdata': obs_path, 'log': log_path, 'version': '1'}
+        'environment': get_env(),
+        'modeldata': test_path,
+        'obsdata': obs_path,
+        'log': log_path,
+        'version': '1'}
     out_json['data'] = {
-        'column definitions': {'filename': d1, 'long_name': d1, 'description': ''},
-        'taylor score': {'filename': d2, 'long_name': d2.replace('_',' '), 'description': ''}}
+        'column definitions': {
+            'filename': d1,
+            'long_name': d1,
+            'description': 'column names saved for future evaluation'},
+        'taylor score': {
+            'filename': d2,
+            'long_name': d2.replace('_',' '),
+            'description': 'Taylor score'}}
     out_json['plots'] = {
-        'heatmap pdf': {'filename': p1, 'long_name': p1.replace('_',' ')[:-4], 'description': ''},
-        'PFA pdf': {'filename': p2, 'long_name': p2.replace('_',' ')[:-4], 'description': ''},
-        'taylor pdf': {'filename': p3, 'long_name': p3.replace('_',' ')[:-4], 'description': ''},
-        'heatmap jpeg': {'filename': p1j, 'long_name': p1j.replace('_',' ')[:-5], 'description': ''},
-        'PFA jpeg': {'filename': p2j, 'long_name': p2j.replace('_',' ')[:-5], 'description': ''},
-        'taylor jpeg': {'filename': p3j, 'long_name': p3j.replace('_',' ')[:-5], 'description': ''},
-        'PCA': {'filename': p4j, 'long_name': p4j.replace('_',' ')[:-5], 'description': ''}}
+        'heatmap pdf': {
+            'filename': p1,
+            'long_name': p1.replace('_',' ')[:-4],
+            'description': 'Heatmap of metrics'},
+        'PFA pdf': {
+            'filename': p2,
+            'long_name': p2.replace('_',' ')[:-4],
+            'description': 'Results of Principal Features Analysis'},
+        'taylor pdf': {
+            'filename': p3,
+            'long_name': p3.replace('_',' ')[:-4],
+            'description': 'Taylor Diagram of test data'},
+        'heatmap jpeg': {
+            'filename': p1j,
+            'long_name': p1j.replace('_',' ')[:-5],
+            'description': 'Heatmap of metrics for html'},
+        'PFA jpeg': {
+            'filename': p2j,
+            'long_name': p2j.replace('_',' ')[:-5],
+            'description': 'Results of Principal Features Analysis for html'},
+        'taylor jpeg': {
+            'filename': p3j,
+            'long_name': p3j.replace('_',' ')[:-5],
+            'description': 'Taylor Diagram of test data for html'},
+        'PCA': {
+            'filename': p4j,
+            'long_name': p4j.replace('_',' ')[:-5],
+            'description': 'Principal Components Analysis results'}}
     out_json['html'] = {
-        'index': {'filename': 'index.html', 'long_name': 'Index', 'description': 'navigation page'}}
+        'index': {
+            'filename': 'index.html',
+            'long_name': 'Index',
+            'description': 'navigation page'}}
     out_json['metrics'] = {
-        'all': {'filename': m1, 'long_name': m1.replace('_',' ')[:-5], 'description': m1d},
-        'all cmec': {'filename': m2, 'long_name': m2.replace('_',' ')[:-5], 'description': m2d},
-        'prncpl': {'filename': m3, 'long_name': m3.replace('_',' ')[:-5], 'description': m3d},
-        'prncpl cmec': {'filename': m4, 'long_name': m4.replace('_',' ')[:-5], 'description': m4d}}
+        'all': {
+            'filename': m1,
+            'long_name': m1.replace('_',' ')[:-5],
+            'description': m1d},
+        'all cmec': {
+            'filename': m2,
+            'long_name': m2.replace('_',' ')[:-5],
+            'description': m2d},
+        'prncpl': {
+            'filename': m3,
+            'long_name': m3.replace('_',' ')[:-5],
+            'description': m3d},
+        'prncpl cmec': {
+            'filename': m4,
+            'long_name': m4.replace('_',' ')[:-5],
+            'description': m4d}}
 
     filepath = out_path + '/output.json'
     with open(filepath,'w') as f:
