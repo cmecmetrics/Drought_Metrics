@@ -85,30 +85,55 @@ def write_cmec_json(hu_name,out_path='.'):
     cmec_json = {'Dimensions': {},'Results': {}, 'Provenance': ''}
     json_structure = ['hydrologic region', 'model', 'metric']
     region = {hu_name: {}}
-    metric = {'Metric A1':'Mean Precip.',
-             'Metric A2':'Mean SPI6',
-             'Metric A3':'Mean SPI36',
-             'Metric B1':'Season Precip.',
-             'Metric B2':'LTMM',
-             'Metric C1':'Frac. Cover.',
-             'Metric D1':'Dry Frac.',
-             'Metric D2':'Dry Count',
-             'Metric E1':'Intensity',
-             'Metric F1':'Prob. Init.',
-             'Metric F2':'Prob. Term.',
-             'Total Score': 'Sum of scores'}
+    model = {item: {} for item in multi_model_table.columns.tolist()}
+    metric = {'Metric A1': {
+                'long_name': 'Mean Precip.',
+                'description': 'Monthly mean precipitation'},
+             'Metric A2': {
+                'long_name': 'Mean SPI6',
+                'description': 'Mean standardized precipitation index calculated with 6 months accumulative precip'},
+             'Metric A3': {
+                'long_name': 'Mean SPI36',
+                'description': 'Mean standardized precipitation index calculated with 66 months accumulative precip'},
+             'Metric B1': {
+                'long_name': 'Season Precip.',
+                'description': 'Seasonality of precipitation'},
+             'Metric B2': {
+                'long_name': 'LTMM',
+                'description': 'Long term monthly mean normalized by total annual precipitation'},
+             'Metric C1': {
+                'long_name': 'Frac. Cover.',
+                'description': 'Fractional area coverage of drought'},
+             'Metric D1': {
+                'long_name': 'Dry Frac.',
+                'description': 'Proportion of dry months determined by SPI6'},
+             'Metric D2': {
+                'long_name': 'Dry Count',
+                'description': 'Annual number of dry months'},
+             'Metric E1': {
+                'long_name': 'Intensity',
+                'description': 'Intensity based on monthly SPI6'},
+             'Metric F1': {
+                'long_name': 'Prob. Init.',
+                'description': 'Probability of drought initiation'},
+             'Metric F2': {
+                'long_name': 'Prob. Term.',
+                'description': 'Probability of drought termination'},
+             'Total Score': {
+                'long_name': 'Sum of scores',
+                'description': 'Overall score obtained from sum of all principal metrics'},}
     cmec_json['Provenance'] = 'Metrics generated ' + datetime.now(timezone.utc).isoformat()
     cmec_json['Dimensions']['json_structure'] = json_structure
-    cmec_json['Dimensions']['region'] = region
+    cmec_json['Dimensions']['hydrologic region'] = region
     cmec_json['Dimensions']['metric'] = metric
+    cmec_json['Dimensions']['model'] = model
 
     # Arrange results hierarchically
     # index[0] is hydrologic region which is unwanted
     ind1 = multi_model_table.index[1]
     ind2 = multi_model_table.index[-1]
     for rgn in region:
-        cmec_json['Results'][rgn] = {}
-        cmec_json['Results'][rgn] = multi_model_table[ind1:ind2].to_dict()
+        cmec_json['Results'].update({rgn: multi_model_table[ind1:ind2].to_dict()})
 
     filepath = out_path + '/all_metrics_in_' + rgn_str + '_cmec.json'
     with open(filepath,'w') as f:
@@ -127,8 +152,7 @@ def write_cmec_json(hu_name,out_path='.'):
     ind1 = principal.index[1]
     ind2 = principal.index[-1]
     for rgn in region:
-        cmec_json['Results'][rgn] = {}
-        cmec_json['Results'][rgn] = principal[ind1:ind2].to_dict()
+        cmec_json['Results'].update({rgn: principal[ind1:ind2].to_dict()})
 
     filepath = out_path + '/principal_metrics_in_' + rgn_str + '_cmec.json'
     with open(filepath,'w') as f:

@@ -1,16 +1,19 @@
 {
     "coordinates": {},
     "obslist": {
-        "obs_name": "CPC",
-        "version": ""
+        "obs_name": "pr",
+        "frequency": "mon",
+        "units": "mm/day",
+        "version": "V1",
+        "description": "Climate Prediction Center (CPC) US Unified Precipitation data provided by the NOAA/OAR/ESRL PSL, Boulder, Colorado, USA, from their Web site at https://psl.noaa.gov/data/gridded/data.unified.daily.conus.html."
     },
     "info": "Settings used to run the Drought Metrics package through the CMEC interface.",
     "settings": {
         "async": "none",
-        "description": "Including codes about reading, interpolating, masking NetCDF data of GCMs and calculating metrics to evaluate models' performance on droughts.",
+        "description": "Includes code for reading, interpolating, masking NetCDF data of GCMs and calculating metrics to evaluate models' performance on droughts.",
         "driver": "cmec_drought_metrics.sh",
         "name": "Drought_Metrics",
-        "long_name": "Drought_Metrics",
+        "long_name": "Drought Metrics Package",
         "runtime": {"Drought_Metrics": 1}
     },
     "varlist": {
@@ -18,6 +21,17 @@
             "name": "precipitation_flux",
             "frequency": "mon",
             "units": "kg m-2 s-1"
+        }
+    },
+    "supporting_data": {
+        "hydrologic_units": {
+            "long_name": "Watershed Boundary Dataset",
+            "description": "Watershed boundary polygons in the US at the 2-digit level, based on data obtained from the U.S. Geological Survey and the U.S. Department of Agriculture, Natural Resources Conservation Service. More information available at https://www.usgs.gov/core-science-systems/ngp/national-hydrography/watershed-boundary-dataset?qt-science_support_page_related_con=4#qt-science_support_page_related_con",
+            "version": "2020-04-23",
+            "regionlist": ["Tennessee Region", "Ohio Region", "Texas-Gulf Region", "Upper Mississippi Region", "Alaska Region", "Great Lakes Region", "South Atlantic-Gulf Region", "Arkansas-White-Red Region", "New England Region", "Missouri Region", "Pacific Northwest Region", "Upper Colorado Region", "South Pacific Region", "Rio Grande Region", "Mid Atlantic Region", "Lower Mississippi Region", "Souris-Red-Rainy Region", "Great Basin Region", "California Region"]
+        },
+        "weightfile": {
+            "description": "netCDF containing destination grid for interpolation"
         }
     }
 }

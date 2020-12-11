@@ -31,10 +31,11 @@ parser.add_argument('-test_path', help='GCM file directory')
 parser.add_argument('-test_pr', default='pr', help='Precipitation variable name')
 parser.add_argument('-obs_path', help='Observational file')
 parser.add_argument('-obs_pr', default='pr', help='Precipitation  variable name')
-parser.add_argument('-wgt_path', help='Weightfile for interpolation')
+parser.add_argument('-wgt_path', default='', help='Weightfile for interpolation')
 parser.add_argument('-hu_name', help='Evaluation region in shapefile')
 parser.add_argument('-shp_path', help='Shapefile path')
 parser.add_argument('-out_path', default='.', help='Output directory')
+parser.add_argument('-interpolation', default=False, help='True to interpolate data')
 
 args = parser.parse_args()
 
@@ -42,7 +43,7 @@ args = parser.parse_args()
 x = evaluation()
 x.evaluate_multi_model(
     args.test_path, args.test_pr, args.obs_path, args.obs_pr, args.wgt_path,
-    args.hu_name, args.shp_path, args.out_path, interpolation=False)
+    args.hu_name, args.shp_path, args.out_path, interpolation=args.interpolation)
 
 # Conduct the PFA to get Principal Metrics within the region defined.
 # The column names of pricipal metrics are saved at 'output_principal_metrics_column_defined'.
