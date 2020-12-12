@@ -1,7 +1,7 @@
 {
     "coordinates": {},
     "obslist": {
-        "obs_name": "pr",
+        "obs_name": "precip",
         "frequency": "mon",
         "units": "mm/day",
         "version": "V1",
