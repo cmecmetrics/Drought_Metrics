@@ -37,7 +37,7 @@ This analysis was designed to use the CPC Unified Gauge-Based Analysis of Daily 
 #### Command line options  
 The following options are used when running drought_metrics.py. If using the cmec interface, these changes should be made in Drought_Metrics/cmec_drought_metrics.sh.  
 
-**Precipitation variable not called "pr"**
+**Precipitation variable not called "pr"**  
 Use the flag `-obs_pr` to set the variable name.  
 `python drought_metrics.py -obs_pr "precip variable name" <other options>`.  
 
