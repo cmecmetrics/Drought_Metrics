@@ -37,9 +37,13 @@ This analysis was designed to use the CPC Unified Gauge-Based Analysis of Daily 
 #### Command line options  
 The following options are used when running drought_metrics.py. If using the cmec interface, these changes should be made in Drought_Metrics/cmec_drought_metrics.sh.  
 
-If the precipitation variable in the observation file is not call "pr", then the user should use `-obs_pr "<precip variable name>"`.  
+**Precipitation variable not called "pr"**
+Use the flag `-obs_pr` to set the variable name.  
+`python drought_metrics.py -obs_pr "precip variable name" <other options>`.  
 
-If the observation grid is different from the model grid, the user should use the flag `-interpolation True` and provide a weightfile on the model grid using the flag `-wgt_path <path to model file>`.  
+**Different grids**  
+If the observation grid is different from the model grid, the observations must be interpolated to the model grid. The weightfile is a netCDF file that has the model grid.  
+`python drought_metrics.py -interpolation True -wgt_path <path to model file> <other options>`.
 
 ### Models
 Monthly precipitation output should be in [CF-compliant](https://cfconventions.org/) netCDF files that conform to the standards for the CMIP6 project. Required dimensions are latitude, longitude, time, and precipitation flux "pr". The published analysis uses CMIP6 output.  
