@@ -5,8 +5,8 @@
 # Optional settings are commented out and not used for this example
 intrp=True
 region="New England Region"
-#obspr="precip"
-obspath=$CMEC_OBS_DATA/precip.V1.0.mon.mean.pr.nc
+obspr="precip"
+obspath=$CMEC_OBS_DATA/precip.V1.0.mon.mean.nc
 #obspath=$CMEC_OBS_DATA/obs_precip_2.nc
 wgtpath=$CMEC_MODEL_DATA/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc
 shppath=$CMEC_OBS_DATA/HU/WBDHU2.shp
@@ -16,7 +16,10 @@ logpath=${outpath}/drought_metrics_log.txt
 
 cd $CMEC_WK_DIR
 echo "Running drought metrics"
-python $CMEC_CODE_DIR/drought_metrics.py -test_path $testpath -wgt_path $wgtpath -obs_path $obspath -hu_name "$region" -shp_path $shppath -out_path $outpath -interpolation $intrp >> $logpath
+echo "region: "$region
+echo "obs path: "$obspath
+echo "model path: "$testpath
+python $CMEC_CODE_DIR/drought_metrics.py -test_path $testpath -wgt_path $wgtpath -obs_path $obspath -obs_pr $obspr -hu_name "$region" -shp_path $shppath -out_path $outpath -interpolation $intrp >> $logpath
 
 # Make cmec outputs if drought metrics succeeds
 if [[ $? = 0 ]]; then
