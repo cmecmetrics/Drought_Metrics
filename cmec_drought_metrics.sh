@@ -9,7 +9,7 @@ testpath=$CMEC_MODEL_DATA/
 outpath=$CMEC_WK_DIR/
 logpath=${outpath}/drought_metrics_log.txt
 
-# Optional settings (Add or delete flags from drought_metrics.py command as needed):
+# Optional settings (Add or delete flags from L22 drought_metrics.py command as needed):
 obspr="precip" # -obs_pr
 intrp=True # -interpolation
 wgtpath=$CMEC_MODEL_DATA/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc # -wgt_path
