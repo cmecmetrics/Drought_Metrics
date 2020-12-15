@@ -1,25 +1,25 @@
 #!/bin/bash
 
-# Change file names as needed for region, obs, wgt, and shp.
+# Change file names as needed for region, obs, and shp.
 # See settings.json for more information about input data.
-# Optional settings are commented out and not used for this example
-intrp=True
 region="New England Region"
-obspr="precip"
 obspath=$CMEC_OBS_DATA/precip.V1.0.mon.mean.nc
-#obspath=$CMEC_OBS_DATA/obs_precip_2.nc
-wgtpath=$CMEC_MODEL_DATA/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc
 shppath=$CMEC_OBS_DATA/HU/WBDHU2.shp
 testpath=$CMEC_MODEL_DATA/
 outpath=$CMEC_WK_DIR/
 logpath=${outpath}/drought_metrics_log.txt
+
+# Optional settings (Add or delete flags from drought_metrics.py command as needed):
+obspr="precip" # -obs_pr
+intrp=True # -interpolation
+wgtpath=$CMEC_MODEL_DATA/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc # -wgt_path
 
 cd $CMEC_WK_DIR
 echo "Running drought metrics"
 echo "region: "$region
 echo "obs path: "$obspath
 echo "model path: "$testpath
-python $CMEC_CODE_DIR/drought_metrics.py -test_path $testpath -wgt_path $wgtpath -obs_path $obspath -obs_pr $obspr -hu_name "$region" -shp_path $shppath -out_path $outpath -interpolation $intrp >> $logpath
+python $CMEC_CODE_DIR/drought_metrics.py -test_path $testpath -obs_path $obspath -hu_name "$region" -shp_path $shppath -out_path $outpath -wgt_path $wgtpath -obs_pr $obspr -interpolation $intrp >> $logpath
 
 # Make cmec outputs if drought metrics succeeds
 if [[ $? = 0 ]]; then
