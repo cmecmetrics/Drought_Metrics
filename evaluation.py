@@ -1119,7 +1119,7 @@ class evaluation():
         plt.savefig(
             out_path + '/heatmap_of_principal_metrics_' + str(self.hu_name).replace(' ','_') + '.pdf', bbox_inches='tight')
         plt.savefig(
-            out_path + '/heatmap_of_principal_metrics_' + str(self.hu_name).replace(' ','_') + '.jpeg', bbox_inches='tight')
+            out_path + '/heatmap_of_principal_metrics_' + str(self.hu_name).replace(' ','_') + '.png', bbox_inches='tight')
 
     # Conduct PFA to select principal metrics used over the evaluation region
     def PFA(self,out_path=".",pca_threshold=0.95):
@@ -1144,7 +1144,7 @@ class evaluation():
         plt.ylabel('variance')
         plt.xticks(features)
         #plt.show()
-        plt.savefig(out_path + '/PCA_explained_variance_' + str(self.hu_name).replace(' ','_') + '.jpeg')
+        plt.savefig(out_path + '/PCA_explained_variance_' + str(self.hu_name).replace(' ','_') + '.png')
 
         # Plot the explained variances
         features = range(pca.n_components_)
@@ -1171,7 +1171,7 @@ class evaluation():
         ax.xaxis.grid(b=True, which='major', color='black', linestyle='--', alpha=.6)
 
         plt.savefig(out_path + '/output__PFA_in_' + str(self.hu_name).replace(' ','_') + '.pdf')
-        plt.savefig(out_path + '/output__PFA_in_' + str(self.hu_name).replace(' ','_') + '.jpeg')
+        plt.savefig(out_path + '/output__PFA_in_' + str(self.hu_name).replace(' ','_') + '.png')
 
         random.seed(1)
 
@@ -1429,5 +1429,5 @@ class evaluation():
         self.multi_model_std.to_pickle(out_path + '/taylor_score_in_' + str(self.hu_name).replace(' ','_') + '.pkl')
 
         plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.pdf', bbox_inches='tight')
-        plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.jpeg', bbox_inches='tight')
+        plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.png', bbox_inches='tight')
 
