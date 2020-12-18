@@ -128,7 +128,7 @@ class evaluation():
     def read_weightfile(self,weightfile_path,interpolation = False):
         ##read weightfile data (the destination file used in interpolation)
         # if data are already interpolated, set the interpolation = False to skip the interpolation
-        if interpolation == True:
+        if interpolation:
             self.weightfile = xarray.open_dataset(weightfile_path)
             # transfer lon from 0to360 into -180to180
             if self.weightfile.lon.units == 'degrees_east':
@@ -147,7 +147,7 @@ class evaluation():
 
     def interpolate(self,test,observe,weightfile,interpolation = False,interpolate_type = 'conservative'):
         #or use bilinear by setting interpolate_type = 'bilinear'
-        if interpolation == True:
+        if interpolation:
             # set lat_b and lon_b
             a = test.lat + (test.lat[1] - test.lat[2]) / 2
             b = test.lat[-1] - (test.lat[1] - test.lat[2]) / 2
@@ -1413,7 +1413,7 @@ class evaluation():
     # Conduct the Taylor diagram
     def make_taylor_diagram(self,out_path=".",fig = 0):
         if fig == 0:
-            fig = plt.figure(figsize=(18,18))
+            fig = plt.figure(figsize=(8,8))
         self.multi_model_std['normalized std'] = self.multi_model_std['test std'] / self.observe_std
         self.multi_model_std['Taylor score'] = np.exp(
             (-1 + self.multi_model_std['spatial correlation'])
