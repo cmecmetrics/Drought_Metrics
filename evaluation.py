@@ -1212,7 +1212,7 @@ class evaluation():
             X = pfa.features_
             # To get the column indices of the kept features
             self.column_indices = pfa.indices_
-        print('The principal metrics selected by PFA: ')
+        # print('The principal metrics selected by PFA: ')
         self.PFA_select = data_used.iloc[:,self.column_indices].columns
 
         with open(out_path + '/output_principal_metrics_column_defined', 'wb') as fp:
