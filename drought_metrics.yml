@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - esmpy=8.0.0
   - affine=2.3.0
   - basemap=1.2.1
   - cartopy=0.17.0
