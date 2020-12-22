@@ -39,7 +39,7 @@ def add_matrix_NaNs(regridder):
 class evaluation():
     # init
     def __init__(self):
-        print('Drought Metrics\n' + 
+        print('Drought Metrics\n---------------\n' + 
             'This is a package to evaluate precipitation simulation\n'
             + 'performance based on test and observed datasets\n')
 
@@ -1245,7 +1245,8 @@ class evaluation():
                 test_path_file = test_path + file
                 file_num = file_num + 1
                 print('\n*****************************************************\n')
-                print(str(file_num) + ': Reading' + file + '\n')
+                print('Test data file ' + str(file_num) + '\n')
+                print('Reading ' + file + '\n')
                 self.read_test_data(test_path_file,test_pr_name)
                 self.read_observe_data(observe_path,observe_pr_name)
                 self.read_weightfile(weightfile_path,interpolation)
