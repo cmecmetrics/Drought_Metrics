@@ -435,7 +435,7 @@ class evaluation():
         print('1. K-S test max distance of monthly regional precipitation: ',
             self.regional_precipitation_ks_distance_score)
 
-        #2.K-S Test’s max distance of regional SPI6.
+        #2.K-S Test's max distance of regional SPI6.
         self.data_spi = pd.merge(self.test_regional_spi,self.observe_regional_spi,on=['time'])
         self.data_spi6 = self.data_spi.dropna(subset=["SPI6"])
         self.spi6_max_distance = (
@@ -449,9 +449,9 @@ class evaluation():
         D_thershold  = c * math.sqrt((n + m) / (n * m))
         self.spi6_max_distance_score = self.spi6_max_distance.spi6_max_distance[0] / D_thershold
 
-        print("2. K-S Test’s max distance of regional SPI6: ",self.spi6_max_distance_score)
+        print("2. K-S Test's max distance of regional SPI6: ",self.spi6_max_distance_score)
 
-        #3.K-S Test’s max distance of regional SPI36.
+        #3.K-S Test's max distance of regional SPI36.
         self.data_spi36 = self.data_spi.dropna(subset=["SPI36"])
         self.spi36_max_distance = (
             self.data_spi36.groupby(['model']).apply(
@@ -465,7 +465,7 @@ class evaluation():
         D_thershold  = c * math.sqrt((n + m) / (n * m))
         self.spi36_max_distance_score = self.spi36_max_distance.spi36_max_distance[0] / D_thershold
 
-        print("3. K-S Test’s max distance of regional SPI36: ",
+        print("3. K-S Test's max distance of regional SPI36: ",
             self.spi36_max_distance_score)
 
         # b. Seasonality
@@ -521,7 +521,7 @@ class evaluation():
         print("5. K-S Test of long term regional mean: ",self.long_term_monthly_mean_ks_distance_score)
 
         #Drought coverage
-        #6.K-S Test’s max distance of dry region ratio
+        #6.K-S Test's max distance of dry region ratio
         ##Dry month is defined as the month with SPI6 less than -1
         ##Dry ratio is the number of grids with spi6 less than -1 divided by the total number of grids
         self.test_dry_month = self.test_spi6
@@ -549,7 +549,7 @@ class evaluation():
         D_thershold  = c * math.sqrt((n + m)/(n * m))
         self.dry_ratio_max_distance_score = self.dry_ratio_max_distance[0] / D_thershold
 
-        print("6. K-S Test’s max distance of drought coverage: ",
+        print("6. K-S Test's max distance of drought coverage: ",
             self.dry_ratio_max_distance_score)
         print('- Drought coverage is the number of grid cells with spi6 less than -1 ',
             'divided by the total number of grid cells.')
