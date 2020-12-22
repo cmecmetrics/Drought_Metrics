@@ -39,8 +39,9 @@ def add_matrix_NaNs(regridder):
 class evaluation():
     # init
     def __init__(self):
-        print('This is a package to evaluate precipitation simulation performance'
-        'based on test and observe dataset!\n')
+        print('Drought Metrics\n' + 
+            'This is a package to evaluate precipitation simulation\n'
+            + 'performance based on test and observed datasets\n')
 
     #functions used in interpolation
     def transform_from_latlon(self,lat, lon):
@@ -88,15 +89,15 @@ class evaluation():
 
         if self.test.lon.units == 'degrees_east':
             self.test = self.test.assign_coords({"lon": (((self.test.lon + 180) % 360) - 180)})
-            print('Transfer longitude units of test data from degrees_east to degrees_west! \n')
+            print('Transfer longitude units of test data from degrees_east to degrees_west.\n')
         else:
-            print('Longitude units of test data is already degrees_west. \n')
+            print('Longitude units of test data is already degrees_west.\n')
 
         if self.test.pr.units == 'kg m-2 s-1':
             self.test['pr'] = self.test['pr']* 86400
-            print('Transfer precipitation units of test data from kg m-2 s-1 to mm/day! \n')
+            print('Transfer precipitation units of test data from kg m-2 s-1 to mm/day.\n')
         else:
-            print("Precipitation units of test data is already mm/day. \n")
+            print("Precipitation units of test data is already mm/day.\n")
 
         self.test = self.test.sortby(['lat','lon'])
         #assign model name, change if other attribute indicates data's model name
@@ -113,16 +114,16 @@ class evaluation():
             self.observe = self.observe.assign_coords(
                 {"lon": (((self.observe.lon + 180) % 360) - 180)}
                 )
-            print('Transfer longitude units of observe data from degrees_east to degrees_west! \n')
+            print('Transfer longitude units of observe data from degrees_east to degrees_west.\n')
         else:
-            print('Longitude units of observe data is already degrees_west. \n')
+            print('Longitude units of observe data is already degrees_west.\n')
 
         # transfer pr units to mm/day
         if self.observe.pr.units == 'kg m-2 s-1':
             self.observe['pr'] = self.observe['pr'] * 86400
-            print('Transfer precipitation units of observe data from kg m-2 s-1 to mm/day! \n')
+            print('Transfer precipitation units of observe data from kg m-2 s-1 to mm/day.\n')
         else:
-            print("Precipitation units of test observe is already mm/day. \n")
+            print("Precipitation units of test observe is already mm/day.\n")
         self.observe = self.observe.sortby(['lat','lon'])
 
     def read_weightfile(self,weightfile_path,interpolation = False):
@@ -136,9 +137,9 @@ class evaluation():
                     {"lon": (((self.weightfile.lon + 180) % 360) - 180)}
                     )
                 print(
-                    'Transfer longitude units of weightfile from degrees_east to degrees_west! \n')
+                    'Transfer longitude units of weightfile from degrees_east to degrees_west.\n')
             else:
-                print('Longitude units of weightfile is already degrees_west. \n')
+                print('Longitude units of weightfile is already degrees_west.\n')
 
             self.weightfile = self.weightfile.sortby(['lat','lon'])
 
@@ -196,7 +197,7 @@ class evaluation():
     def read_shp(self,shp_path):
         states = geopandas.read_file(shp_path)
         state_ids = {k: i for i, k in enumerate(states.Name)}
-        print("In the shp file, there are following regions:\n")
+        print("Shape file contains the following regions:\n")
         print(state_ids)
         print('')
 
@@ -239,9 +240,9 @@ class evaluation():
         self.data_time_max = test_time_max
         if observe_time_max < self.data_time_max:
             self.data_time_max = observe_time_max
-        print('The time range of test and observe data is from '
+        print('The time range of test and observed data is from '
             + str(self.data_time_min.item()) + ' to '
-            + str(self.data_time_max.item()) + "!\n")
+            + str(self.data_time_max.item()) + ".\n")
 
     # select the data within the time range we needed
     # the default setting is the overlap time range between two data
@@ -250,8 +251,8 @@ class evaluation():
             self.data_time_min = input_time_min
             self.data_time_max = input_time_max
         else:
-            print('Input time min and max should be within the range of data!!\n')
-            print('Set data time as deafault due to the wrong time input!!\n')
+            print('Input time min and max should be within the range of data.\n')
+            print('Set data time as default due to the wrong time input.\n')
 
         ##change two datasets into the same time period
         self.test_roi  = self.test_roi[self.test_roi['time.year']>=self.data_time_min]
@@ -408,13 +409,15 @@ class evaluation():
     #Get metrics in our paper
     def data_metrics(self):
         self.data_mean = self.data_df.groupby(['lat','lon']).mean().reset_index()
-        print('Data mean precipitation at each grid:\n')
+        print('Mean precipitation at each grid cell:\n')
         print(self.data_mean)
         print('\n')
 
-        print('Data 99th percentile precipitation at each grid:\n')
+        print('99th percentile precipitation at each grid cell:\n')
         print(self.data_mean)
         print('\n')
+
+        print('Scores:\n-------\n')
 
         #a. Monthly means
         #1.K-S test max distance of monthly regional precipitation
@@ -429,9 +432,8 @@ class evaluation():
         self.regional_precipitation_ks_distance_score = (
             self.regional_precipitation_ks_distance / D_thershold)
 
-        print('1.The score of K-S test max distance of monthly regional precipitation',
+        print('1. K-S test max distance of monthly regional precipitation: ',
             self.regional_precipitation_ks_distance_score)
-        print('\n')
 
         #2.K-S Test’s max distance of regional SPI6.
         self.data_spi = pd.merge(self.test_regional_spi,self.observe_regional_spi,on=['time'])
@@ -447,8 +449,7 @@ class evaluation():
         D_thershold  = c * math.sqrt((n + m) / (n * m))
         self.spi6_max_distance_score = self.spi6_max_distance.spi6_max_distance[0] / D_thershold
 
-        print("2.The score of K-S Test’s max distance of regional SPI6",self.spi6_max_distance_score)
-        print('\n')
+        print("2. K-S Test’s max distance of regional SPI6: ",self.spi6_max_distance_score)
 
         #3.K-S Test’s max distance of regional SPI36.
         self.data_spi36 = self.data_spi.dropna(subset=["SPI36"])
@@ -464,9 +465,8 @@ class evaluation():
         D_thershold  = c * math.sqrt((n + m) / (n * m))
         self.spi36_max_distance_score = self.spi36_max_distance.spi36_max_distance[0] / D_thershold
 
-        print("3.The score K-S Test’s max distance of regional SPI36 ",
+        print("3. K-S Test’s max distance of regional SPI36: ",
             self.spi36_max_distance_score)
-        print('\n')
 
         # b. Seasonality
         #4. The mean of K-S Test max distance of regional precipitation at each month
@@ -484,10 +484,8 @@ class evaluation():
         self.ks_test_precipitatipn_each_month_mean_score = (
             self.data_regional_mean.groupby('month').apply(lambda x: ks_2samp(
             x['test_regional_mean'],x['observe_regional_mean'])[0]) / D_thershold).mean()
-        print("4.The score of the mean of K-S Test max distance "
-            "of regional precipitation at each month",
+        print("4. K-S Test max distance of regional precipitation at each month: ",
             self.ks_test_precipitatipn_each_month_mean_score)
-        print('\n')
 
         #5.K-S test of regional long term monthly mean
         self.test_monthly_regional_mean = self.test_monthly_mean.reset_index()
@@ -520,8 +518,7 @@ class evaluation():
             self.long_term_monthly_regional_mean.pr_mean,
             self.long_term_monthly_regional_mean.pr_observe_mean)[0] / D_thershold
 
-        print("5.The score K-S Test of long term regional mean",self.long_term_monthly_mean_ks_distance_score)
-        print('\n')
+        print("5. K-S Test of long term regional mean: ",self.long_term_monthly_mean_ks_distance_score)
 
         #Drought coverage
         #6.K-S Test’s max distance of dry region ratio
@@ -552,11 +549,10 @@ class evaluation():
         D_thershold  = c * math.sqrt((n + m)/(n * m))
         self.dry_ratio_max_distance_score = self.dry_ratio_max_distance[0] / D_thershold
 
-        print("6.The score of K-S Test’s max distance of drought coverage ",
+        print("6. K-S Test’s max distance of drought coverage: ",
             self.dry_ratio_max_distance_score)
-        print('Drought coverage is the number of grids with spi6 less than -1 ',
-            'divided by the total number of grids')
-        print('\n')
+        print('- Drought coverage is the number of grid cells with spi6 less than -1 ',
+            'divided by the total number of grid cells.')
 
         #7. Z-test on the proportion of dry months.
         self.test_regional_dry_month = self.test_regional_spi
@@ -591,8 +587,7 @@ class evaluation():
         #The z-score associated with a 5% alpha level / 2 is 1.96.
         z_threshold = 1.96
         self.regional_dry_month_score = z_score / z_threshold
-        print("7.The score of Z-test on the proportion of dry months",self.regional_dry_month_score)
-        print('\n')
+        print("7. Z-test on the proportion of dry months: ",self.regional_dry_month_score)
 
         #8. k-s test on SPI6 in all dry months (the months when SPI6 less than -1)
         self.test_regional_dry_month_onlydry = (
@@ -610,14 +605,14 @@ class evaluation():
         #The z-score associated with a 5% alpha level / 2 is 1.96.
         z_threshold = 1.96
         self.spi6_on_dry_month_score = self.z_spi6_dry_month / z_threshold
-        print('8.The score of Z-test on SPI6 in all dry months:',self.spi6_on_dry_month_score)
-        print('\n')
+        print('8. Z-test on SPI6 in all dry months: ',self.spi6_on_dry_month_score)
+
         #if use KS TEST
         self.spi6_on_dry_month_max_distance = (
             ks_2samp(self.test_regional_dry_month_onlydry.SPI6,
             self.observe_regional_dry_month_onlydry.SPI6_observe)[0])
         self.spi6_on_dry_month_max_distance_score = self.spi6_on_dry_month_max_distance / D_thershold
-        print('8. The score of ks test',self.spi6_on_dry_month_max_distance_score)
+        print('8. KS test: ',self.spi6_on_dry_month_max_distance_score)
 
         #9.Annual dry month Z test
         self.test_regional_dry_month = self.test_regional_dry_month.reset_index()
@@ -643,8 +638,7 @@ class evaluation():
         #The z-score associated with a 5% alpha level / 2 is 1.96.
         z_threshold = 1.96
         self.annual_dry_month_score = self.z_annual_dry_month / z_threshold
-        print('9.The score of Annual dry month z test:', self.annual_dry_month_score)
-        print('\n')
+        print('9. Annual dry month z test:', self.annual_dry_month_score)
 
         #10.K-S Test max distance of the drought durations
         ###let's calculate test and obverved consecutive drought durations firstly.
@@ -795,9 +789,8 @@ class evaluation():
         D_thershold  = c * math.sqrt((n + m) / (n * m))
         self.dry_dutaion_max_distance_score = self.dry_dutaion_max_distance / D_thershold
 
-        print("10.The score of K-S Test's max distance of drought duration",
+        print("10. K-S Test's max distance of drought duration: ",
             self.dry_dutaion_max_distance_score)
-        print('\n')
 
         #if use z test
         #n1 = len(self.test_consecutive_regional_dry_month)
@@ -854,9 +847,8 @@ class evaluation():
         z_threshold = 1.96
         self.drought_initiation_score = self.z_drought_initiation / z_threshold
 
-        print("11.The score of Z-test on the probability of drought initiation is ",
+        print("11. Z-test on the probability of drought initiation: ",
             self.drought_initiation_score)
-        print('\n')
 
         #12. Z-test on the probability of drought termination
         #drought termination
@@ -898,9 +890,8 @@ class evaluation():
         z_threshold = 1.96
         self.drought_termination_score = self.z_drought_termination / z_threshold
         print(
-            "12.The score of  Z-test on the probability of drought termination: ",
+            "12. Z-test on the probability of drought termination: ",
             self.drought_termination_score)
-        print('\n')
 
         ##Total Score
         self.total_score = self.regional_precipitation_ks_distance_score\
@@ -911,8 +902,7 @@ class evaluation():
         + self.spi6_on_dry_month_max_distance_score + self.annual_dry_month_score\
         + self.drought_initiation_score + self.drought_termination_score
 
-        print("The Total Score is",self.total_score)
-        print("\n")
+        print("The Total Score is: ",self.total_score)
 
     # 5 Scores from ILAMB paper
     # https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2018MS001354
@@ -925,7 +915,7 @@ class evaluation():
         self.data_bias['relative_bias'] = abs(self.data_bias['bias']) / self.data_bias['crms']
         self.data_bias['relative_bias_scored'] = self.scored(self.data_bias['relative_bias'])
         self.relative_bias_scored = np.mean(self.data_bias['relative_bias_scored'])
-        print('The relative bias score is ' + str(self.relative_bias_scored) + '\n')
+        print('The relative bias score is ' + str(self.relative_bias_scored))
 
     def rmse_score(self):
         self.data_rmse = self.data_df_1.groupby(
@@ -938,7 +928,7 @@ class evaluation():
         self.data_crmse['rmse_scored'] = self.data_crmse['crmse'] / self.data_crmse['crms']
         self.data_crmse['rmse_scored'] = self.scored(self.data_crmse['rmse_scored'])
         self.rmse_scored = np.mean(self.data_crmse['rmse_scored'])
-        print('The RMSE score is '+ str(self.rmse_scored)+'\n')
+        print('The RMSE score is '+ str(self.rmse_scored))
 
     def phase_score(self):
         self.observe_max = (
@@ -953,7 +943,7 @@ class evaluation():
         self.observe_max['phase'] = 0.5 * (
             1 + np.cos(2 * math.pi * self.observe_max['month_difference'] / 12))
         self.phase_scored = np.mean(self.observe_max['phase'])
-        print('The phase shift score is ' + str(self.phase_scored) + '\n')
+        print('The phase shift score is ' + str(self.phase_scored))
 
     def interannual_score(self):
         self.test_iav = self.data_df_1.groupby(
@@ -968,7 +958,7 @@ class evaluation():
             / self.data_iav['observe_iav'])
         self.data_iav['iav_scored'] = self.scored(self.data_iav['iav_scored'])
         self.iav_scored = np.mean(self.data_iav['iav_scored'])
-        print('The interannual variability score is ' + str(self.iav_scored) + '\n')
+        print('The interannual variability score is ' + str(self.iav_scored))
 
     def spatial_score(self):
         self.test_std = np.std(self.data_mean.pr)
@@ -980,7 +970,7 @@ class evaluation():
             - self.test_regional_mean.observe_regional_mean.mean()
         self.test_pr_seasonal_std = np.std(self.test_monthly_regional_mean.pr_mean)
         self.test_pr_spatial_std = np.std(self.data_mean.pr)
-        print('The spatial distribution score is ' + str(self.spatial_scored) + '\n')
+        print('The spatial distribution score is ' + str(self.spatial_scored))
 
     # To get all 5 scores from ILAMB paper
     def overall_score(self):
@@ -994,8 +984,6 @@ class evaluation():
         print(
             'For ' + self.model_name + ' model in '+ self.hu_name
             + ' the overall score from ILAMB paper is ',self.score_overall)
-        print('\n')
-        print('\n')
 
     # to show the scores on map if needed
     def score_map(self,data,variable_name):
@@ -1253,11 +1241,11 @@ class evaluation():
         fileList = os.listdir(test_path)
 
         for file in fileList:
-            print(file)
             if file.endswith(".nc"):
                 test_path_file = test_path + file
                 file_num = file_num + 1
-                print("The " + str(file_num) + 'th run: Read and evaluate ' + file)
+                print('\n*****************************************************\n')
+                print(str(file_num) + ': Read and evaluate ' + file + '\n')
                 self.read_test_data(test_path_file,test_pr_name)
                 self.read_observe_data(observe_path,observe_pr_name)
                 self.read_weightfile(weightfile_path,interpolation)
