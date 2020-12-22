@@ -89,15 +89,15 @@ class evaluation():
 
         if self.test.lon.units == 'degrees_east':
             self.test = self.test.assign_coords({"lon": (((self.test.lon + 180) % 360) - 180)})
-            print('Transfer longitude units of test data from degrees_east to degrees_west.\n')
+            print('Transfer longitude units of test data from degrees_east to degrees_west.')
         else:
-            print('Longitude units of test data is already degrees_west.\n')
+            print('Longitude units of test data is already degrees_west.')
 
         if self.test.pr.units == 'kg m-2 s-1':
             self.test['pr'] = self.test['pr']* 86400
-            print('Transfer precipitation units of test data from kg m-2 s-1 to mm/day.\n')
+            print('Transfer precipitation units of test data from kg m-2 s-1 to mm/day.')
         else:
-            print("Precipitation units of test data is already mm/day.\n")
+            print("Precipitation units of test data is already mm/day.")
 
         self.test = self.test.sortby(['lat','lon'])
         #assign model name, change if other attribute indicates data's model name
@@ -114,16 +114,16 @@ class evaluation():
             self.observe = self.observe.assign_coords(
                 {"lon": (((self.observe.lon + 180) % 360) - 180)}
                 )
-            print('Transfer longitude units of observe data from degrees_east to degrees_west.\n')
+            print('Transfer longitude units of observe data from degrees_east to degrees_west.')
         else:
-            print('Longitude units of observe data is already degrees_west.\n')
+            print('Longitude units of observe data is already degrees_west.')
 
         # transfer pr units to mm/day
         if self.observe.pr.units == 'kg m-2 s-1':
             self.observe['pr'] = self.observe['pr'] * 86400
-            print('Transfer precipitation units of observe data from kg m-2 s-1 to mm/day.\n')
+            print('Transfer precipitation units of observe data from kg m-2 s-1 to mm/day.')
         else:
-            print("Precipitation units of test observe is already mm/day.\n")
+            print("Precipitation units of test observe is already mm/day.")
         self.observe = self.observe.sortby(['lat','lon'])
 
     def read_weightfile(self,weightfile_path,interpolation = False):
@@ -137,9 +137,9 @@ class evaluation():
                     {"lon": (((self.weightfile.lon + 180) % 360) - 180)}
                     )
                 print(
-                    'Transfer longitude units of weightfile from degrees_east to degrees_west.\n')
+                    'Transfer longitude units of weightfile from degrees_east to degrees_west.')
             else:
-                print('Longitude units of weightfile is already degrees_west.\n')
+                print('Longitude units of weightfile is already degrees_west.')
 
             self.weightfile = self.weightfile.sortby(['lat','lon'])
 
@@ -179,7 +179,7 @@ class evaluation():
             weightfile = weightfile.assign_coords(lat_b=lat_b)
             weightfile = weightfile.assign_coords(lon_b=lon_b)
 
-            print("Interpolate model and observed data into weight file \n")
+            print("\nInterpolate model and observed data into weight file:\n")
             regridder = xe.Regridder(test, weightfile, interpolate_type)
             regridder = add_matrix_NaNs(regridder)
             data_input = test['pr']
@@ -197,7 +197,7 @@ class evaluation():
     def read_shp(self,shp_path):
         states = geopandas.read_file(shp_path)
         state_ids = {k: i for i, k in enumerate(states.Name)}
-        print("Shape file contains the following regions:\n")
+        print("\nShape file contains the following regions:\n")
         print(state_ids)
         print('')
 
@@ -242,7 +242,7 @@ class evaluation():
             self.data_time_max = observe_time_max
         print('The time range of test and observed data is from '
             + str(self.data_time_min.item()) + ' to '
-            + str(self.data_time_max.item()) + ".\n")
+            + str(self.data_time_max.item()) + ".")
 
     # select the data within the time range we needed
     # the default setting is the overlap time range between two data
@@ -251,8 +251,8 @@ class evaluation():
             self.data_time_min = input_time_min
             self.data_time_max = input_time_max
         else:
-            print('Input time min and max should be within the range of data.\n')
-            print('Set data time as default due to the wrong time input.\n')
+            print('Input time min and max should be within the range of data.')
+            print('Set data time as default due to the wrong time input.')
 
         ##change two datasets into the same time period
         self.test_roi  = self.test_roi[self.test_roi['time.year']>=self.data_time_min]
@@ -409,11 +409,11 @@ class evaluation():
     #Get metrics in our paper
     def data_metrics(self):
         self.data_mean = self.data_df.groupby(['lat','lon']).mean().reset_index()
-        print('Mean precipitation at each grid cell:\n')
+        print('\nMean precipitation at each grid cell:\n')
         print(self.data_mean)
         print('\n')
 
-        print('99th percentile precipitation at each grid cell:\n')
+        print('\n99th percentile precipitation at each grid cell:\n')
         print(self.data_mean)
         print('\n')
 
@@ -551,8 +551,8 @@ class evaluation():
 
         print("6. K-S Test's max distance of drought coverage: ",
             self.dry_ratio_max_distance_score)
-        print('- Drought coverage is the number of grid cells with spi6 less than -1 ',
-            'divided by the total number of grid cells.')
+        print('   (Drought coverage is the number of grid cells with spi6\n',
+            '   less than -1 divided by the total number of grid cells.)')
 
         #7. Z-test on the proportion of dry months.
         self.test_regional_dry_month = self.test_regional_spi
@@ -902,7 +902,7 @@ class evaluation():
         + self.spi6_on_dry_month_max_distance_score + self.annual_dry_month_score\
         + self.drought_initiation_score + self.drought_termination_score
 
-        print("The Total Score is: ",self.total_score)
+        print("\nThe Total Score is: ",self.total_score)
 
     # 5 Scores from ILAMB paper
     # https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2018MS001354
@@ -982,7 +982,7 @@ class evaluation():
         self.score_overall = (self.relative_bias_scored + 2 * self.rmse_scored +
                               self.phase_scored + self.iav_scored + self.spatial_scored) / 6
         print(
-            'For ' + self.model_name + ' model in '+ self.hu_name
+            '\nFor ' + self.model_name + ' model in '+ self.hu_name
             + ' the overall score from ILAMB paper is ',self.score_overall)
 
     # to show the scores on map if needed
@@ -1245,7 +1245,7 @@ class evaluation():
                 test_path_file = test_path + file
                 file_num = file_num + 1
                 print('\n*****************************************************\n')
-                print(str(file_num) + ': Read and evaluate ' + file + '\n')
+                print(str(file_num) + ': Reading' + file + '\n')
                 self.read_test_data(test_path_file,test_pr_name)
                 self.read_observe_data(observe_path,observe_pr_name)
                 self.read_weightfile(weightfile_path,interpolation)
