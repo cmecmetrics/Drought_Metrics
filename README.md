@@ -29,7 +29,7 @@ From the cmec-driver directory:
 
 Your results will be written to cmec-driver/output/Drought_Metrics. Open cmec-driver/output/Drought_Metrics/index.html with your browser to view the generated metrics files and plots.  
 
-Results will be overwritten the next time cmec-driver is run with the same output path. To save results, either copy the output/Drought_Metrics folder to a new location or provide a unique output folder path when running cmec-driver.
+Results will be overwritten the next time cmec-driver is run with the same output path. To save results, either copy the output/Drought_Metrics folder to a new location or provide a unique output folder path when running cmec-driver.  
 
 ## Data  
 
@@ -48,8 +48,8 @@ If the observation grid is different from the model grid, the observations must 
 `python drought_metrics.py -interpolation True -wgt_path <path to model file> <other options>`  
 
 **Reuse principal metrics**
-To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').
-`python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`
+To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
+`python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`  
 
 ### Models
 Monthly precipitation output should be in [CF-compliant](https://cfconventions.org/) netCDF files that conform to the standards for the CMIP6 project. Required dimensions are latitude, longitude, time, and precipitation flux "pr". The published analysis uses CMIP6 output.  
