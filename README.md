@@ -39,16 +39,13 @@ This analysis was designed to use the CPC Unified Gauge-Based Analysis of Daily 
 #### Command line options  
 The following options are used when running drought_metrics.py. If using the cmec interface, these changes should be made in Drought_Metrics/cmec_drought_metrics.sh.  
 
-**Precipitation variable not called "pr"**  
-Use the flag `-obs_pr` to set the variable name.  
+**Precipitation variable not called "pr":** Use the flag `-obs_pr` to set the variable name.  
 `python drought_metrics.py -obs_pr "precip variable name" <other options>`  
 
-**Different grids**  
-If the observation grid is different from the model grid, the observations must be interpolated to the model grid. The weightfile is a netCDF file that has the model grid.  
+**Different grids:** If the observation grid is different from the model grid, the observations must be interpolated to the model grid. The weightfile is a netCDF file that has the model grid.  
 `python drought_metrics.py -interpolation True -wgt_path <path to model file> <other options>`  
 
-**Reuse principal metrics**
-To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
+**Reuse principal metrics:** To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
 `python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`  
 
 ### Models
