@@ -22,6 +22,7 @@ from pathlib import Path
 def get_env():
     import affine
     import climate_indices
+    import esmpy
     import geopandas
     import matplotlib
     import mpl_toolkits.basemap as Basemap
@@ -36,6 +37,7 @@ def get_env():
     versions = {}
     versions['affine'] = affine.__version__
     versions['climate_indices'] = climate_indices.__version__
+    versions['esmpy'] = esmpy.__version__
     versions['geopandas'] = geopandas.__version__
     versions['matplotlib'] = matplotlib.__version__
     versions['Basemap'] = Basemap.__version__
@@ -84,23 +86,22 @@ def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
         'log': log_path,
         'version': '1'}
     out_json['data'] = {
-        'column definitions': {
-            'filename': d1,
-            'long_name': d1,
-            'description': 'column names saved for future evaluation'},
         'taylor score': {
             'filename': d2,
             'long_name': d2.replace('_',' '),
             'description': 'Taylor score'}}
+    if Path(out_path + '/' + d1).exists():
+        data = {
+        'column definitions': {
+            'filename': d1,
+            'long_name': d1,
+            'description': 'column names saved for future evaluation'}}
+        out_json['data'].update(data)
     out_json['plots'] = {
         'heatmap pdf': {
             'filename': p1,
             'long_name': p1.replace('_',' ')[:-4],
             'description': 'Heatmap of metrics'},
-        'PFA pdf': {
-            'filename': p2,
-            'long_name': p2.replace('_',' ')[:-4],
-            'description': 'Results of Principal Features Analysis'},
         'taylor pdf': {
             'filename': p3,
             'long_name': p3.replace('_',' ')[:-4],
@@ -109,10 +110,6 @@ def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
             'filename': p1j,
             'long_name': p1j.replace('_',' ')[:-5],
             'description': 'Heatmap of metrics for html'},
-        'PFA jpeg': {
-            'filename': p2j,
-            'long_name': p2j.replace('_',' ')[:-5],
-            'description': 'Results of Principal Features Analysis for html'},
         'taylor jpeg': {
             'filename': p3j,
             'long_name': p3j.replace('_',' ')[:-5],
@@ -121,6 +118,18 @@ def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
             'filename': p4j,
             'long_name': p4j.replace('_',' ')[:-5],
             'description': 'Principal Components Analysis results'}}
+    if Path(out_path + '/' + p2).exists():
+        pfa = {
+        'PFA jpeg': {
+            'filename': p2j,
+            'long_name': p2j.replace('_',' ')[:-5],
+            'description': 'Results of Principal Features Analysis for html'},
+        'PFA pdf': {
+            'filename': p2,
+            'long_name': p2.replace('_',' ')[:-4],
+            'description': 'Results of Principal Features Analysis'}}
+        out_json['plots'].update(pfa)
+
     out_json['html'] = {
         'index': {
             'filename': 'index.html',

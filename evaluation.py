@@ -1011,10 +1011,8 @@ class evaluation():
         m.colorbar(label=variable_name)
 
     # Plot the heat map of the principal metric evaluation
-    def result_analysis(self,out_path=".",upper_limit = 2):
+    def result_analysis(self,out_path=".",column_name="output_principal_metrics_column_defined",upper_limit = 2):
         #the name of the file of pricipal metrics got from PFA()
-        column_name = out_path + '/output_principal_metrics_column_defined'
-
         with open(column_name, 'rb') as fp:
             self.column_indices = pickle.load(fp)
         data_df = pd.DataFrame(self.multi_model).reset_index()
@@ -1110,7 +1108,7 @@ class evaluation():
             out_path + '/heatmap_of_principal_metrics_' + str(self.hu_name).replace(' ','_') + '.png', bbox_inches='tight')
 
     # Conduct PFA to select principal metrics used over the evaluation region
-    def PFA(self,out_path=".",pca_threshold=0.95):
+    def PFA(self,out_path=".",column_name="output_principal_metrics_column_defined",pca_threshold=0.95):
 
         label_size = 24
         mpl.rcParams['xtick.labelsize'] = label_size
@@ -1203,7 +1201,7 @@ class evaluation():
         # print('The principal metrics selected by PFA: ')
         self.PFA_select = data_used.iloc[:,self.column_indices].columns
 
-        with open(out_path + '/output_principal_metrics_column_defined', 'wb') as fp:
+        with open(column_name, 'wb') as fp:
             pickle.dump(self.column_indices, fp)
 
         self.principal_metrics = data_df.iloc[:,1:3]

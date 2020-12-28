@@ -18,8 +18,12 @@ Parameters:
         Name of evaluation region
     shp_path : str
         Path to regions shapefile
-    out_path : string
-        path to output directory (default '.')
+    out_path : str
+        Path to output directory (default '.')
+    interpolation : bool
+        True to perform interpolation (default False)
+    pfa : str
+        Path to principal metrics file
 
 """
 import argparse
@@ -36,6 +40,7 @@ parser.add_argument('-hu_name', help='Evaluation region in shapefile')
 parser.add_argument('-shp_path', help='Shapefile path')
 parser.add_argument('-out_path', default='.', help='Output directory')
 parser.add_argument('-interpolation', default=False, help='True to interpolate data')
+parser.add_argument('-pfa', default=None, help='Path for existing PFA results file.')
 
 args = parser.parse_args()
 
@@ -47,12 +52,15 @@ x.evaluate_multi_model(
 
 # Conduct the PFA to get Principal Metrics within the region defined.
 # The column names of pricipal metrics are saved at 'output_principal_metrics_column_defined'.
-if not os.path.isfile(args.out_path + '/output_principal_metrics_column_defined'):
-    x.PFA(args.out_path)
+if args.pfa is None:
+    pfa_path = args.out_path + "/output_principal_metrics_column_defined"
+    x.PFA(out_path=args.out_path, column_name=pfa_path)
+else:
+    pfa_path = args.pfa
 
 # Make sure get the name of pricipal metrics defined by PFA firstly.
 # (Here I provide a template named 'output_principal_metrics_column_defined').
 # Select the principal metrics defined at 'output_principal_metrics_column_defined' and make plots
-x.PM_selection(args.out_path)
-x.result_analysis(out_path=args.out_path, upper_limit=2)
+x.PM_selection(out_path=args.out_path, column_name=pfa_path)
+x.result_analysis(out_path=args.out_path, column_name=pfa_path, upper_limit=2)
 x.make_taylor_diagram(args.out_path)
