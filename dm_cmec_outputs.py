@@ -22,7 +22,7 @@ from pathlib import Path
 def get_env():
     import affine
     import climate_indices
-    import esmf
+    import ESMF
     import geopandas
     import matplotlib
     import mpl_toolkits.basemap as Basemap
@@ -37,7 +37,7 @@ def get_env():
     versions = {}
     versions['affine'] = affine.__version__
     versions['climate_indices'] = climate_indices.__version__
-    versions['esmpy'] = esmf.__version__
+    versions['esmpy'] = ESMF.__version__
     versions['geopandas'] = geopandas.__version__
     versions['matplotlib'] = matplotlib.__version__
     versions['Basemap'] = Basemap.__version__
