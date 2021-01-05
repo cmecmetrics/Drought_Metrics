@@ -1110,7 +1110,7 @@ class evaluation():
     # Conduct PFA to select principal metrics used over the evaluation region
     def PFA(self,out_path=".",column_name="output_principal_metrics_column_defined",pca_threshold=0.95):
 
-        label_size = 24
+        label_size = 18
         mpl.rcParams['xtick.labelsize'] = label_size
         mpl.rcParams['ytick.labelsize'] = label_size
         #PCA part
@@ -1126,16 +1126,18 @@ class evaluation():
         # Plot the explained variances
         features = range(pca.n_components_)
         plt.bar(features, pca.explained_variance_)
-        plt.xlabel('PCA feature')
-        plt.ylabel('variance')
+        plt.xlabel('PCA feature', fontsize=label_size+1)
+        plt.ylabel('variance', fontsize=label_size+1)
+        plt.title('PCA explained variance', fontsize = label_size+2)
         plt.xticks(features)
+        plt.tight_layout()
         #plt.show()
         plt.savefig(out_path + '/PCA_explained_variance_' + str(self.hu_name).replace(' ','_') + '.png')
 
         # Plot the explained variances
         features = range(pca.n_components_)
 
-        plt.rcParams["figure.figsize"] = (24,8)
+        plt.rcParams["figure.figsize"] = (16,8)
         fig, ax = plt.subplots()
         n_component = np.arange(1, len(pca.explained_variance_ratio_) + 1, step=1)
         y = np.cumsum(pca.explained_variance_ratio_)
@@ -1157,6 +1159,26 @@ class evaluation():
         ax.xaxis.grid(b=True, which='major', color='black', linestyle='--', alpha=.6)
 
         plt.savefig(out_path + '/output__PFA_in_' + str(self.hu_name).replace(' ','_') + '.pdf')
+
+        # PNG version
+        plt.rcParams["figure.figsize"] = (12,6)
+        fig, ax = plt.subplots()
+
+        plt.ylim(0.0,1.1)
+        plt.plot(n_component, y, marker='o', linestyle='--', color='b')
+        plt.plot(self.n_used, y[self.n_used-1], marker='o', color='red')
+
+        plt.xlabel('Number of Principal Components',fontsize=12)
+        #change from 0-based array index to 1-based human-readable label
+        plt.xticks(np.arange(1, (len(n_component) + 1), step=1))
+        plt.ylabel('Cumulative Variance Explained',fontsize=12)
+        plt.title('The number of principal components versus culmulative variance',fontsize=16)
+        plt.axhline(y=0.95, color='r', linestyle='--')
+        plt.text(0.55, 1, '95% variance explained', color = 'red', fontsize=12)
+        plt.text(
+            self.n_used-1.8, 0.85, 'the number of components selected', color = 'red', fontsize=12)
+        ax.xaxis.grid(b=True, which='major', color='black', linestyle='--', alpha=.6)
+
         plt.savefig(out_path + '/output__PFA_in_' + str(self.hu_name).replace(' ','_') + '.png')
 
         random.seed(1)
@@ -1242,7 +1264,7 @@ class evaluation():
             if file.endswith(".nc"):
                 test_path_file = test_path + file
                 file_num = file_num + 1
-                print('\n*****************************************************\n')
+                print('\n*****************************************************')
                 print('Test data file ' + str(file_num) + '\n')
                 print('Reading ' + file + '\n')
                 self.read_test_data(test_path_file,test_pr_name)
@@ -1307,7 +1329,7 @@ class evaluation():
         self.multi_model_json = self.multi_model.set_index('model').to_json(f, indent=2)
 
     # plot the Taylor diagram
-    def TaylorDiagram(self,stddev,corrcoef,refstd,fig,colors,model_name,normalize=True):
+    def TaylorDiagram(self,stddev,corrcoef,refstd,fig,colors,model_name,normalize=True,fontscale=1):
         """Plot a Taylor diagram.
         This is adapted from the code by Yannick Copin found here:
         https://gist.github.com/ycopin/3342888
@@ -1329,9 +1351,9 @@ class evaluation():
         from matplotlib.projections import PolarAxes
         import mpl_toolkits.axisartist.floating_axes as FA
         import mpl_toolkits.axisartist.grid_finder as GF
-        plt.rcParams.update({'font.size': 32})
-        plt.rc('xtick',labelsize=30)
-        plt.rc('ytick',labelsize=30)
+        plt.rcParams.update({'font.size': 32*fontscale})
+        plt.rc('xtick',labelsize=30*fontscale)
+        plt.rc('ytick',labelsize=30*fontscale)
         # define transform
         tr = PolarAxes.PolarTransform()
 
@@ -1381,7 +1403,7 @@ class evaluation():
         for i in range(len(corrcoef)):
             ax.plot(
                 np.arccos(corrcoef[i]), stddev[i], marker='$%d$' % (i+1),
-                color=colors[i], mew=0.6, ms=26, label = model_name[i])
+                color=colors[i], mew=0.6, ms=26*fontscale, label = model_name[i])
 
         # Add reference point and stddev contour
         t = np.linspace(0, np.pi/2)
@@ -1394,13 +1416,22 @@ class evaluation():
         rms = np.sqrt(refstd ** 2 + rs ** 2 - 2 * refstd * rs * np.cos(ts))
         contours = ax.contour(ts, rs, rms, 5, colors='k', alpha=0.68)
         ax.clabel(contours, fmt='%1.1f')
-        plt.rcParams.update({'font.size': 20})
-        plt.legend(bbox_to_anchor=(1.4, 1.03), handlelength=0, borderpad=0.8)
+        plt.rcParams.update({'font.size': 20*fontscale})
+        numcol=1
+        anchorx = 1.4
+        # change settings if there are many models
+        if len(stddev) > 16:
+            numcol = 2
+            fontscale = fontscale * 0.8
+            anchorx = 2
+        plt.legend(
+            bbox_to_anchor=(anchorx, 1.03), handlelength=0, ncol=numcol,
+            borderpad=0.8, fontsize=32*fontscale)
 
     # Conduct the Taylor diagram
     def make_taylor_diagram(self,out_path=".",fig = 0):
         if fig == 0:
-            fig = plt.figure(figsize=(8,8))
+            fig = plt.figure(figsize=(18,18))
         self.multi_model_std['normalized std'] = self.multi_model_std['test std'] / self.observe_std
         self.multi_model_std['Taylor score'] = np.exp(
             (-1 + self.multi_model_std['spatial correlation'])
@@ -1416,5 +1447,8 @@ class evaluation():
         self.multi_model_std.to_pickle(out_path + '/taylor_score_in_' + str(self.hu_name).replace(' ','_') + '.pkl')
 
         plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.pdf', bbox_inches='tight')
-        plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.png', bbox_inches='tight')
 
+        # save smaller png
+        fig = plt.figure(figsize=(10,10))
+        self.TaylorDiagram(test_std,test_cor,observe_std,fig,colors,model_name,normalize=True,fontscale=0.5)
+        plt.savefig(out_path + '/taylor_diagram_'+ str(self.hu_name).replace(' ','_') + '.png', bbox_inches='tight')

@@ -27,6 +27,8 @@ python $CMEC_CODE_DIR/drought_metrics.py -test_path $testpath -obs_path $obspath
 if [[ $? = 0 ]]; then
     echo "Creating CMEC output"
     python $CMEC_CODE_DIR/dm_cmec_outputs.py -test_path $testpath -obs_path $obspath -log_path $logpath -hu_name "$region" -out_path $outpath
+    # Remove regridding files
+    rm ${outpath}/conservative_*.nc
 else
     echo "Failure in drought_metrics.py"
 fi

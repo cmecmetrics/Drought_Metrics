@@ -68,12 +68,12 @@ def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
     d2 = 'taylor_score_in_' + rgn_str + '.pkl'
     # Plot paths
     p1 = 'heatmap_of_principal_metrics_' + rgn_str + '.pdf'
-    p1j = 'heatmap_of_principal_metrics_' + rgn_str + '.jpeg'
+    p1j = 'heatmap_of_principal_metrics_' + rgn_str + '.png'
     p2 = 'output__PFA_in_' + rgn_str + '.pdf'
-    p2j = 'output__PFA_in_' + rgn_str + '.jpeg'
+    p2j = 'output__PFA_in_' + rgn_str + '.png'
     p3 = 'taylor_diagram_' + rgn_str + '.pdf'
-    p3j = 'taylor_diagram_' + rgn_str + '.jpeg'
-    p4j = 'PCA_explained_variance_' + rgn_str + '.jpeg'
+    p3j = 'taylor_diagram_' + rgn_str + '.png'
+    p4j = 'PCA_explained_variance_' + rgn_str + '.png'
 
     # Initialize json
     out_json = {
@@ -106,20 +106,20 @@ def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
             'filename': p3,
             'long_name': p3.replace('_',' ')[:-4],
             'description': 'Taylor Diagram of test data'},
-        'heatmap jpeg': {
+        'heatmap png': {
             'filename': p1j,
             'long_name': p1j.replace('_',' ')[:-5],
             'description': 'Heatmap of metrics for html'},
         'taylor jpeg': {
             'filename': p3j,
             'long_name': p3j.replace('_',' ')[:-5],
-            'description': 'Taylor Diagram of test data for html'},
-        'PCA': {
-            'filename': p4j,
-            'long_name': p4j.replace('_',' ')[:-5],
-            'description': 'Principal Components Analysis results'}}
+            'description': 'Taylor Diagram of test data for html'},}
     if Path(out_path + '/' + p2).exists():
         pfa = {
+        'PCA': {
+        'filename': p4j,
+        'long_name': p4j.replace('_',' ')[:-5],
+        'description': 'Principal Components Analysis results'},
         'PFA jpeg': {
             'filename': p2j,
             'long_name': p2j.replace('_',' ')[:-5],
@@ -249,45 +249,45 @@ def make_html(hu_name, out_path='.'):
     #Set file description and path
     rgn_str = str(hu_name).replace(' ','_')
     m1d = 'all_metrics_in_' + rgn_str + '.json'
-    m1p = str(Path(out_path + '/' + m1d).absolute())
     m2d = 'all_metrics_in_' + rgn_str + '_cmec.json'
-    m2p = str(Path(out_path + '/' + m2d).absolute())
     m3d = 'principal_metrics_in_' + rgn_str + '.json'
-    m3p = str(Path(out_path + '/' + m3d).absolute())
     m4d = 'principal_metrics_in_' + rgn_str + '_cmec.json'
-    m4p = str(Path(out_path + '/' + m4d).absolute())
     p1alt = 'PCA results'
-    p1p = str(Path(out_path + '/PCA_explained_variance_' + rgn_str + '.jpeg').absolute())
-    p2alt = 'Heatmap of principal metrics'
-    p2p = str(Path(out_path + '/heatmap_of_principal_metrics_' + rgn_str + '.jpeg').absolute())
-    p3alt = 'The number of principal components versus cumulative variance'
-    p3p = str(Path(out_path + '/output__PFA_in_' + rgn_str + '.jpeg').absolute())
+    p1p = 'PCA_explained_variance_' + rgn_str + '.png'
+    p2alt = 'The number of principal components versus cumulative variance'
+    p2p = 'output__PFA_in_' + rgn_str + '.png'
+    p3alt = 'Heatmap of principal metrics'
+    p3p = 'heatmap_of_principal_metrics_' + rgn_str + '.png'
     p4alt = 'Taylor diagram'
-    p4p = str(Path(out_path + '/taylor_diagram_' + rgn_str + '.jpeg').absolute())
-
+    p4p = 'taylor_diagram_' + rgn_str + '.png'
 
     html = f'<html>\
     <body>\
     <head><title>Drought Metrics {rgn_str}</title></head>\
     <br><h1>Drought Metrics Output for {hu_name}</h1>\
     <br><h2>Metrics files</h2>\
-    <br><a href="file:///{m1p}">{m1d}</a>\
-    <br><a href="file:///{m3p}">{m3d}</a>\
+    <br><a href="{m1d}">{m1d}</a>\
+    <br><a href="{m3d}">{m3d}</a>\
     <br>\
     <br><h4>CMEC formatted outputs</h4>\
-    <br><a href="file:///{m2p}">{m2d}</a>\
-    <br><a href="file:///{m4p}">{m4d}</a>\
+    <br><a href="{m2d}">{m2d}</a>\
+    <br><a href="{m4d}">{m4d}</a>\
     <br>\
     <br><h2>Plots</h2>\
-    <br><p><img src="file:///{p1p}" alt="{p1alt}"</p>\
+    <br><p><img src="{p3p}" alt="{p3alt}"></p>\
     <br>\
-    <br><p><img src="file:///{p2p}" alt="{p2alt}"</p>\
-    <br>\
-    <br><p><img src="file:///{p3p}" alt="{p3alt}"</p>\
-    <br>\
-    <br><p><img src="file:///{p4p}" alt="{p4alt}"</p>\
+    <br><p><img src="{p4p}" alt="{p4alt}"></p>\
+    <br><p>Note: Models do not appear on the Taylor Diagram if their statistics are outside the presented range.</p> \
     </body>\
     </html>'
+
+    # Image 2 only exists if PFA analysis is run
+    if Path(out_path + '/' + p2p).exists():
+        html = html.replace(
+        '<br><h2>Plots</h2>', 
+        '<br><h2>Plots</h2>'
+        + f'    <br><p><img src="{p1p}" alt="{p1alt}"></p>    <br>'
+        + f'    <br><p><img src="{p2p}" alt="{p2alt}"></p>    <br>')
 
     with open(filepath,'w') as out_file:
         out_file.write(html)
