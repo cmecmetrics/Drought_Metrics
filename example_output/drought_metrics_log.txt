@@ -1,0 +1,3654 @@
+Drought Metrics
+---------------
+This is a package to evaluate precipitation simulation
+performance based on test and observed datasets
+
+
+*****************************************************
+Test data file 1
+
+Reading pr_Amon_BCC-CSM2-MR_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_160x320_180x360.nc
+Create weight file: conservative_180x360_180x360.nc
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.193945    3.276787    6.5
+1   41.5 -72.5     0.0  3.233081    3.253754    6.5
+2   41.5 -71.5     0.0  3.274099    3.180979    6.5
+3   41.5 -70.5     0.0  3.333456    3.116461    6.5
+4   42.5 -73.5     0.0  3.094901    3.010783    6.5
+5   42.5 -72.5     0.0  3.108276    3.234723    6.5
+6   42.5 -71.5     0.0  3.116644    3.220260    6.5
+7   43.5 -72.5     0.0  3.039225    2.938345    6.5
+8   43.5 -71.5     0.0  3.045980    3.067319    6.5
+9   43.5 -70.5     0.0  3.063477    3.247847    6.5
+10  43.5 -69.5     0.0  3.118496    3.240040    6.5
+11  44.5 -71.5     0.0  3.023367    3.085697    6.5
+12  44.5 -70.5     0.0  3.037222    3.113217    6.5
+13  44.5 -69.5     0.0  3.059147    3.090840    6.5
+14  44.5 -68.5     0.0  3.111031    3.112127    6.5
+15  44.5 -67.5     0.0  3.334698    3.341162    6.5
+16  45.5 -70.5     0.0  3.015673    2.840428    6.5
+17  45.5 -69.5     0.0  3.034419    3.012618    6.5
+18  45.5 -68.5     0.0  3.080066    3.017834    6.5
+19  45.5 -67.5     0.0  3.117177    3.057651    6.5
+20  46.5 -70.5     0.0  2.924579    2.716872    6.5
+21  46.5 -69.5     0.0  2.952473    2.657954    6.5
+22  46.5 -68.5     0.0  2.979395    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.193945    3.276787    6.5
+1   41.5 -72.5     0.0  3.233081    3.253754    6.5
+2   41.5 -71.5     0.0  3.274099    3.180979    6.5
+3   41.5 -70.5     0.0  3.333456    3.116461    6.5
+4   42.5 -73.5     0.0  3.094901    3.010783    6.5
+5   42.5 -72.5     0.0  3.108276    3.234723    6.5
+6   42.5 -71.5     0.0  3.116644    3.220260    6.5
+7   43.5 -72.5     0.0  3.039225    2.938345    6.5
+8   43.5 -71.5     0.0  3.045980    3.067319    6.5
+9   43.5 -70.5     0.0  3.063477    3.247847    6.5
+10  43.5 -69.5     0.0  3.118496    3.240040    6.5
+11  44.5 -71.5     0.0  3.023367    3.085697    6.5
+12  44.5 -70.5     0.0  3.037222    3.113217    6.5
+13  44.5 -69.5     0.0  3.059147    3.090840    6.5
+14  44.5 -68.5     0.0  3.111031    3.112127    6.5
+15  44.5 -67.5     0.0  3.334698    3.341162    6.5
+16  45.5 -70.5     0.0  3.015673    2.840428    6.5
+17  45.5 -69.5     0.0  3.034419    3.012618    6.5
+18  45.5 -68.5     0.0  3.080066    3.017834    6.5
+19  45.5 -67.5     0.0  3.117177    3.057651    6.5
+20  46.5 -70.5     0.0  2.924579    2.716872    6.5
+21  46.5 -69.5     0.0  2.952473    2.657954    6.5
+22  46.5 -68.5     0.0  2.979395    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  0.57626189260984
+2. K-S Test's max distance of regional SPI6:  0.6503199219336134
+3. K-S Test's max distance of regional SPI36:  0.736537339493756
+4. K-S Test max distance of regional precipitation at each month:  0.5489631820563234
+5. K-S Test of long term regional mean:  0.3537680159998813
+6. K-S Test's max distance of drought coverage:  0.7225776910373483
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  0.9455255741831456
+8. Z-test on SPI6 in all dry months:  0.8263894497422422
+8. KS test:  1.6745346984546476
+9. Annual dry month z test: 0.5163456703574278
+10. K-S Test's max distance of drought duration:  0.2679525667366743
+11. Z-test on the probability of drought initiation:  0.14072433117319436
+12. Z-test on the probability of drought termination:  1.0256921402699608
+
+The Total Score is:  7.891250457569138
+The relative bias score is 0.92316935902729
+The RMSE score is 0.23244678847608105
+The phase shift score is 0.5935619038542036
+The interannual variability score is 1.0958466533219948
+The spatial distribution score is 0.666925604609364
+
+For BCC-CSM2-MR r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6240661829608357
+
+*****************************************************
+Test data file 2
+
+Reading pr_Amon_BCC-ESM1_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_64x128_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.361949    3.276787    6.5
+1   41.5 -72.5     0.0  3.361423    3.253754    6.5
+2   41.5 -71.5     0.0  3.606901    3.180979    6.5
+3   41.5 -70.5     0.0  3.706828    3.116461    6.5
+4   42.5 -73.5     0.0  2.937286    3.010783    6.5
+5   42.5 -72.5     0.0  2.937286    3.234723    6.5
+6   42.5 -71.5     0.0  3.075218    3.220260    6.5
+7   43.5 -72.5     0.0  2.937286    2.938345    6.5
+8   43.5 -71.5     0.0  3.075218    3.067319    6.5
+9   43.5 -70.5     0.0  3.129191    3.247847    6.5
+10  43.5 -69.5     0.0  3.129191    3.240040    6.5
+11  44.5 -71.5     0.0  3.025496    3.085697    6.5
+12  44.5 -70.5     0.0  3.077550    3.113217    6.5
+13  44.5 -69.5     0.0  3.077135    3.090840    6.5
+14  44.5 -68.5     0.0  3.264977    3.112127    6.5
+15  44.5 -67.5     0.0  3.285943    3.341162    6.5
+16  45.5 -70.5     0.0  2.976303    2.840428    6.5
+17  45.5 -69.5     0.0  2.976303    3.012618    6.5
+18  45.5 -68.5     0.0  3.033743    3.017834    6.5
+19  45.5 -67.5     0.0  3.039685    3.057651    6.5
+20  46.5 -70.5     0.0  2.976303    2.716872    6.5
+21  46.5 -69.5     0.0  2.976303    2.657954    6.5
+22  46.5 -68.5     0.0  3.033743    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.361949    3.276787    6.5
+1   41.5 -72.5     0.0  3.361423    3.253754    6.5
+2   41.5 -71.5     0.0  3.606901    3.180979    6.5
+3   41.5 -70.5     0.0  3.706828    3.116461    6.5
+4   42.5 -73.5     0.0  2.937286    3.010783    6.5
+5   42.5 -72.5     0.0  2.937286    3.234723    6.5
+6   42.5 -71.5     0.0  3.075218    3.220260    6.5
+7   43.5 -72.5     0.0  2.937286    2.938345    6.5
+8   43.5 -71.5     0.0  3.075218    3.067319    6.5
+9   43.5 -70.5     0.0  3.129191    3.247847    6.5
+10  43.5 -69.5     0.0  3.129191    3.240040    6.5
+11  44.5 -71.5     0.0  3.025496    3.085697    6.5
+12  44.5 -70.5     0.0  3.077550    3.113217    6.5
+13  44.5 -69.5     0.0  3.077135    3.090840    6.5
+14  44.5 -68.5     0.0  3.264977    3.112127    6.5
+15  44.5 -67.5     0.0  3.285943    3.341162    6.5
+16  45.5 -70.5     0.0  2.976303    2.840428    6.5
+17  45.5 -69.5     0.0  2.976303    3.012618    6.5
+18  45.5 -68.5     0.0  3.033743    3.017834    6.5
+19  45.5 -67.5     0.0  3.039685    3.057651    6.5
+20  46.5 -70.5     0.0  2.976303    2.716872    6.5
+21  46.5 -69.5     0.0  2.976303    2.657954    6.5
+22  46.5 -68.5     0.0  3.033743    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  0.8499862915995138
+2. K-S Test's max distance of regional SPI6:  0.9538025521692997
+3. K-S Test's max distance of regional SPI36:  0.6481528587545052
+4. K-S Test max distance of regional precipitation at each month:  0.5822336779385249
+5. K-S Test of long term regional mean:  0.4716906879998417
+6. K-S Test's max distance of drought coverage:  2.413409488064743
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.1906618341565538
+8. Z-test on SPI6 in all dry months:  1.6366527134042104
+8. KS test:  2.4006010629479078
+9. Annual dry month z test: 0.5858592292963418
+10. K-S Test's max distance of drought duration:  0.23993559303274853
+11. Z-test on the probability of drought initiation:  0.3424011468234762
+12. Z-test on the probability of drought termination:  0.5706724783238616
+
+The Total Score is:  11.00947130807457
+The relative bias score is 0.8885973372183583
+The RMSE score is 0.20118866284634251
+The phase shift score is 0.5456103524207243
+The interannual variability score is 1.2190296549779573
+The spatial distribution score is 0.7281780682801579
+
+For BCC-ESM1 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6306321230983137
+
+*****************************************************
+Test data file 3
+
+Reading pr_Amon_CAMS-CSM1-0_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_160x320_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.017040    3.276787    6.5
+1   41.5 -72.5     0.0  2.890705    3.253754    6.5
+2   41.5 -71.5     0.0  2.777791    3.180979    6.5
+3   41.5 -70.5     0.0  2.803998    3.116461    6.5
+4   42.5 -73.5     0.0  3.456921    3.010783    6.5
+5   42.5 -72.5     0.0  3.181600    3.234723    6.5
+6   42.5 -71.5     0.0  2.954497    3.220260    6.5
+7   43.5 -72.5     0.0  3.393722    2.938345    6.5
+8   43.5 -71.5     0.0  3.141576    3.067319    6.5
+9   43.5 -70.5     0.0  3.042555    3.247847    6.5
+10  43.5 -69.5     0.0  3.001706    3.240040    6.5
+11  44.5 -71.5     0.0  3.293195    3.085697    6.5
+12  44.5 -70.5     0.0  3.383432    3.113217    6.5
+13  44.5 -69.5     0.0  3.436138    3.090840    6.5
+14  44.5 -68.5     0.0  3.318093    3.112127    6.5
+15  44.5 -67.5     0.0  3.306493    3.341162    6.5
+16  45.5 -70.5     0.0  3.527416    2.840428    6.5
+17  45.5 -69.5     0.0  3.525100    3.012618    6.5
+18  45.5 -68.5     0.0  3.360568    3.017834    6.5
+19  45.5 -67.5     0.0  3.067852    3.057651    6.5
+20  46.5 -70.5     0.0  3.077127    2.716872    6.5
+21  46.5 -69.5     0.0  3.042246    2.657954    6.5
+22  46.5 -68.5     0.0  2.964773    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.017040    3.276787    6.5
+1   41.5 -72.5     0.0  2.890705    3.253754    6.5
+2   41.5 -71.5     0.0  2.777791    3.180979    6.5
+3   41.5 -70.5     0.0  2.803998    3.116461    6.5
+4   42.5 -73.5     0.0  3.456921    3.010783    6.5
+5   42.5 -72.5     0.0  3.181600    3.234723    6.5
+6   42.5 -71.5     0.0  2.954497    3.220260    6.5
+7   43.5 -72.5     0.0  3.393722    2.938345    6.5
+8   43.5 -71.5     0.0  3.141576    3.067319    6.5
+9   43.5 -70.5     0.0  3.042555    3.247847    6.5
+10  43.5 -69.5     0.0  3.001706    3.240040    6.5
+11  44.5 -71.5     0.0  3.293195    3.085697    6.5
+12  44.5 -70.5     0.0  3.383432    3.113217    6.5
+13  44.5 -69.5     0.0  3.436138    3.090840    6.5
+14  44.5 -68.5     0.0  3.318093    3.112127    6.5
+15  44.5 -67.5     0.0  3.306493    3.341162    6.5
+16  45.5 -70.5     0.0  3.527416    2.840428    6.5
+17  45.5 -69.5     0.0  3.525100    3.012618    6.5
+18  45.5 -68.5     0.0  3.360568    3.017834    6.5
+19  45.5 -67.5     0.0  3.067852    3.057651    6.5
+20  46.5 -70.5     0.0  3.077127    2.716872    6.5
+21  46.5 -69.5     0.0  3.042246    2.657954    6.5
+22  46.5 -68.5     0.0  2.964773    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  0.9508321228062357
+2. K-S Test's max distance of regional SPI6:  1.1561243056597572
+3. K-S Test's max distance of regional SPI36:  0.8543833138127568
+4. K-S Test max distance of regional precipitation at each month:  0.582233677938525
+5. K-S Test of long term regional mean:  0.4716906879998417
+6. K-S Test's max distance of drought coverage:  1.0694149827352755
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.3307396969985013
+8. Z-test on SPI6 in all dry months:  0.8195167023825403
+8. KS test:  1.8286585388596777
+9. Annual dry month z test: 0.7228087274072276
+10. K-S Test's max distance of drought duration:  0.4605395129215511
+11. Z-test on the probability of drought initiation:  0.23996676013310816
+12. Z-test on the probability of drought termination:  0.8812399153087908
+
+The Total Score is:  10.088092729659696
+The relative bias score is 0.810437003291969
+The RMSE score is 0.23645928970911426
+The phase shift score is 0.8367474142775345
+The interannual variability score is 1.0541912172949495
+The spatial distribution score is 0.39007750958371495
+
+For CAMS-CSM1-0 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5940619539777328
+
+*****************************************************
+Test data file 4
+
+Reading pr_Amon_CanESM5_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_64x128_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.526783    3.276787    6.5
+1   41.5 -72.5     0.0  3.527417    3.253754    6.5
+2   41.5 -71.5     0.0  3.575755    3.180979    6.5
+3   41.5 -70.5     0.0  3.592695    3.116461    6.5
+4   42.5 -73.5     0.0  4.038093    3.010783    6.5
+5   42.5 -72.5     0.0  4.038093    3.234723    6.5
+6   42.5 -71.5     0.0  3.843704    3.220260    6.5
+7   43.5 -72.5     0.0  4.038093    2.938345    6.5
+8   43.5 -71.5     0.0  3.843704    3.067319    6.5
+9   43.5 -70.5     0.0  3.767638    3.247847    6.5
+10  43.5 -69.5     0.0  3.767638    3.240040    6.5
+11  44.5 -71.5     0.0  3.821556    3.085697    6.5
+12  44.5 -70.5     0.0  3.819597    3.113217    6.5
+13  44.5 -69.5     0.0  3.820015    3.090840    6.5
+14  44.5 -68.5     0.0  4.060595    3.112127    6.5
+15  44.5 -67.5     0.0  4.083001    3.341162    6.5
+16  45.5 -70.5     0.0  3.921467    2.840428    6.5
+17  45.5 -69.5     0.0  3.921467    3.012618    6.5
+18  45.5 -68.5     0.0  4.435365    3.017834    6.5
+19  45.5 -67.5     0.0  4.488528    3.057651    6.5
+20  46.5 -70.5     0.0  3.921467    2.716872    6.5
+21  46.5 -69.5     0.0  3.921467    2.657954    6.5
+22  46.5 -68.5     0.0  4.435365    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.526783    3.276787    6.5
+1   41.5 -72.5     0.0  3.527417    3.253754    6.5
+2   41.5 -71.5     0.0  3.575755    3.180979    6.5
+3   41.5 -70.5     0.0  3.592695    3.116461    6.5
+4   42.5 -73.5     0.0  4.038093    3.010783    6.5
+5   42.5 -72.5     0.0  4.038093    3.234723    6.5
+6   42.5 -71.5     0.0  3.843704    3.220260    6.5
+7   43.5 -72.5     0.0  4.038093    2.938345    6.5
+8   43.5 -71.5     0.0  3.843704    3.067319    6.5
+9   43.5 -70.5     0.0  3.767638    3.247847    6.5
+10  43.5 -69.5     0.0  3.767638    3.240040    6.5
+11  44.5 -71.5     0.0  3.821556    3.085697    6.5
+12  44.5 -70.5     0.0  3.819597    3.113217    6.5
+13  44.5 -69.5     0.0  3.820015    3.090840    6.5
+14  44.5 -68.5     0.0  4.060595    3.112127    6.5
+15  44.5 -67.5     0.0  4.083001    3.341162    6.5
+16  45.5 -70.5     0.0  3.921467    2.840428    6.5
+17  45.5 -69.5     0.0  3.921467    3.012618    6.5
+18  45.5 -68.5     0.0  4.435365    3.017834    6.5
+19  45.5 -67.5     0.0  4.488528    3.057651    6.5
+20  46.5 -70.5     0.0  3.921467    2.716872    6.5
+21  46.5 -69.5     0.0  3.921467    2.657954    6.5
+22  46.5 -68.5     0.0  4.435365    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  3.428758261028547
+2. K-S Test's max distance of regional SPI6:  2.890310764149393
+3. K-S Test's max distance of regional SPI36:  3.10818757266365
+4. K-S Test max distance of regional precipitation at each month:  1.1270380480095732
+5. K-S Test of long term regional mean:  1.2971493919995647
+6. K-S Test's max distance of drought coverage:  1.9076051043385993
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.8015572568389504
+8. Z-test on SPI6 in all dry months:  0.42314540511025805
+8. KS test:  1.2032888315523123
+9. Annual dry month z test: 1.6065651614213228
+10. K-S Test's max distance of drought duration:  0.5003646095535683
+11. Z-test on the probability of drought initiation:  1.237460168463101
+12. Z-test on the probability of drought termination:  0.9417458755482554
+
+The Total Score is:  21.549666436013275
+The relative bias score is 0.6021516395523333
+The RMSE score is 0.26029783723347566
+The phase shift score is 0.6477006224795641
+The interannual variability score is 0.8828293155183219
+The spatial distribution score is 0.26465978608339014
+
+For CanESM5 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.4863228396834269
+
+*****************************************************
+Test data file 5
+
+Reading pr_Amon_CAS-ESM2-0_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_128x256_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.111113    3.276787    6.5
+1   41.5 -72.5     0.0  3.009442    3.253754    6.5
+2   41.5 -71.5     0.0  3.038643    3.180979    6.5
+3   41.5 -70.5     0.0  2.759075    3.116461    6.5
+4   42.5 -73.5     0.0  3.370184    3.010783    6.5
+5   42.5 -72.5     0.0  3.376683    3.234723    6.5
+6   42.5 -71.5     0.0  3.582542    3.220260    6.5
+7   43.5 -72.5     0.0  3.708053    2.938345    6.5
+8   43.5 -71.5     0.0  4.164533    3.067319    6.5
+9   43.5 -70.5     0.0  2.781528    3.247847    6.5
+10  43.5 -69.5     0.0  2.827898    3.240040    6.5
+11  44.5 -71.5     0.0  4.351157    3.085697    6.5
+12  44.5 -70.5     0.0  3.965274    3.113217    6.5
+13  44.5 -69.5     0.0  3.363430    3.090840    6.5
+14  44.5 -68.5     0.0  3.007328    3.112127    6.5
+15  44.5 -67.5     0.0  3.123830    3.341162    6.5
+16  45.5 -70.5     0.0  3.900119    2.840428    6.5
+17  45.5 -69.5     0.0  3.479953    3.012618    6.5
+18  45.5 -68.5     0.0  3.238224    3.017834    6.5
+19  45.5 -67.5     0.0  3.346320    3.057651    6.5
+20  46.5 -70.5     0.0  3.742719    2.716872    6.5
+21  46.5 -69.5     0.0  3.435095    2.657954    6.5
+22  46.5 -68.5     0.0  3.297115    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.111113    3.276787    6.5
+1   41.5 -72.5     0.0  3.009442    3.253754    6.5
+2   41.5 -71.5     0.0  3.038643    3.180979    6.5
+3   41.5 -70.5     0.0  2.759075    3.116461    6.5
+4   42.5 -73.5     0.0  3.370184    3.010783    6.5
+5   42.5 -72.5     0.0  3.376683    3.234723    6.5
+6   42.5 -71.5     0.0  3.582542    3.220260    6.5
+7   43.5 -72.5     0.0  3.708053    2.938345    6.5
+8   43.5 -71.5     0.0  4.164533    3.067319    6.5
+9   43.5 -70.5     0.0  2.781528    3.247847    6.5
+10  43.5 -69.5     0.0  2.827898    3.240040    6.5
+11  44.5 -71.5     0.0  4.351157    3.085697    6.5
+12  44.5 -70.5     0.0  3.965274    3.113217    6.5
+13  44.5 -69.5     0.0  3.363430    3.090840    6.5
+14  44.5 -68.5     0.0  3.007328    3.112127    6.5
+15  44.5 -67.5     0.0  3.123830    3.341162    6.5
+16  45.5 -70.5     0.0  3.900119    2.840428    6.5
+17  45.5 -69.5     0.0  3.479953    3.012618    6.5
+18  45.5 -68.5     0.0  3.238224    3.017834    6.5
+19  45.5 -67.5     0.0  3.346320    3.057651    6.5
+20  46.5 -70.5     0.0  3.742719    2.716872    6.5
+21  46.5 -69.5     0.0  3.435095    2.657954    6.5
+22  46.5 -68.5     0.0  3.297115    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.7720053197752577
+2. K-S Test's max distance of regional SPI6:  1.5463162588199253
+3. K-S Test's max distance of regional SPI36:  1.1342675028203841
+4. K-S Test max distance of regional precipitation at each month:  0.6820451655851292
+5. K-S Test of long term regional mean:  0.7075360319997626
+6. K-S Test's max distance of drought coverage:  1.3584460591502145
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.5758759569719092
+8. Z-test on SPI6 in all dry months:  0.41624146677421453
+8. KS test:  1.5579004408508412
+9. Annual dry month z test: 0.8382841268951787
+10. K-S Test's max distance of drought duration:  0.2632771318241768
+11. Z-test on the probability of drought initiation:  0.8847151296371781
+12. Z-test on the probability of drought termination:  0.08883732050393897
+
+The Total Score is:  12.14622931300972
+The relative bias score is 0.7167397869480092
+The RMSE score is 0.23230021194414147
+The phase shift score is 0.6898271914688887
+The interannual variability score is 1.0365358844234178
+The spatial distribution score is 0.1597103660553145
+
+For CAS-ESM2-0 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5112356087973189
+
+*****************************************************
+Test data file 6
+
+Reading pr_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_192x288_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.418867    3.276787    6.5
+1   41.5 -72.5     0.0  3.552188    3.253754    6.5
+2   41.5 -71.5     0.0  3.677910    3.180979    6.5
+3   41.5 -70.5     0.0  3.763528    3.116461    6.5
+4   42.5 -73.5     0.0  3.263661    3.010783    6.5
+5   42.5 -72.5     0.0  3.399577    3.234723    6.5
+6   42.5 -71.5     0.0  3.469986    3.220260    6.5
+7   43.5 -72.5     0.0  3.212481    2.938345    6.5
+8   43.5 -71.5     0.0  3.353053    3.067319    6.5
+9   43.5 -70.5     0.0  3.337038    3.247847    6.5
+10  43.5 -69.5     0.0  3.326828    3.240040    6.5
+11  44.5 -71.5     0.0  3.244647    3.085697    6.5
+12  44.5 -70.5     0.0  3.313592    3.113217    6.5
+13  44.5 -69.5     0.0  3.333762    3.090840    6.5
+14  44.5 -68.5     0.0  3.346367    3.112127    6.5
+15  44.5 -67.5     0.0  3.479518    3.341162    6.5
+16  45.5 -70.5     0.0  3.177055    2.840428    6.5
+17  45.5 -69.5     0.0  3.241886    3.012618    6.5
+18  45.5 -68.5     0.0  3.324406    3.017834    6.5
+19  45.5 -67.5     0.0  3.450946    3.057651    6.5
+20  46.5 -70.5     0.0  3.070725    2.716872    6.5
+21  46.5 -69.5     0.0  3.121776    2.657954    6.5
+22  46.5 -68.5     0.0  3.216832    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.418867    3.276787    6.5
+1   41.5 -72.5     0.0  3.552188    3.253754    6.5
+2   41.5 -71.5     0.0  3.677910    3.180979    6.5
+3   41.5 -70.5     0.0  3.763528    3.116461    6.5
+4   42.5 -73.5     0.0  3.263661    3.010783    6.5
+5   42.5 -72.5     0.0  3.399577    3.234723    6.5
+6   42.5 -71.5     0.0  3.469986    3.220260    6.5
+7   43.5 -72.5     0.0  3.212481    2.938345    6.5
+8   43.5 -71.5     0.0  3.353053    3.067319    6.5
+9   43.5 -70.5     0.0  3.337038    3.247847    6.5
+10  43.5 -69.5     0.0  3.326828    3.240040    6.5
+11  44.5 -71.5     0.0  3.244647    3.085697    6.5
+12  44.5 -70.5     0.0  3.313592    3.113217    6.5
+13  44.5 -69.5     0.0  3.333762    3.090840    6.5
+14  44.5 -68.5     0.0  3.346367    3.112127    6.5
+15  44.5 -67.5     0.0  3.479518    3.341162    6.5
+16  45.5 -70.5     0.0  3.177055    2.840428    6.5
+17  45.5 -69.5     0.0  3.241886    3.012618    6.5
+18  45.5 -68.5     0.0  3.324406    3.017834    6.5
+19  45.5 -67.5     0.0  3.450946    3.057651    6.5
+20  46.5 -70.5     0.0  3.070725    2.716872    6.5
+21  46.5 -69.5     0.0  3.121776    2.657954    6.5
+22  46.5 -68.5     0.0  3.216832    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.6999725831990276
+2. K-S Test's max distance of regional SPI6:  1.8208957814141173
+3. K-S Test's max distance of regional SPI36:  0.9427677945520075
+4. K-S Test max distance of regional precipitation at each month:  0.6862039775704045
+5. K-S Test of long term regional mean:  0.7075360319997626
+6. K-S Test's max distance of drought coverage:  2.485667257168478
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.5408564912614227
+8. Z-test on SPI6 in all dry months:  0.6030854192944793
+8. KS test:  1.497551356341555
+9. Annual dry month z test: 0.8339144503221486
+10. K-S Test's max distance of drought duration:  0.3908456667151121
+11. Z-test on the probability of drought initiation:  0.7688732756625737
+12. Z-test on the probability of drought termination:  0.24843490705952442
+
+The Total Score is:  13.232673906551021
+The relative bias score is 0.80984156808412
+The RMSE score is 0.2305963840452858
+The phase shift score is 0.6413043478260869
+The interannual variability score is 1.0752747556176763
+The spatial distribution score is 0.83305529258326
+
+For CESM2 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6367781220336192
+
+*****************************************************
+Test data file 7
+
+Reading pr_Amon_CESM2-WACCM_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_192x288_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.546844    3.276787    6.5
+1   41.5 -72.5     0.0  3.643505    3.253754    6.5
+2   41.5 -71.5     0.0  3.770213    3.180979    6.5
+3   41.5 -70.5     0.0  3.858765    3.116461    6.5
+4   42.5 -73.5     0.0  3.438625    3.010783    6.5
+5   42.5 -72.5     0.0  3.537306    3.234723    6.5
+6   42.5 -71.5     0.0  3.575800    3.220260    6.5
+7   43.5 -72.5     0.0  3.363181    2.938345    6.5
+8   43.5 -71.5     0.0  3.472688    3.067319    6.5
+9   43.5 -70.5     0.0  3.435633    3.247847    6.5
+10  43.5 -69.5     0.0  3.413116    3.240040    6.5
+11  44.5 -71.5     0.0  3.374379    3.085697    6.5
+12  44.5 -70.5     0.0  3.445426    3.113217    6.5
+13  44.5 -69.5     0.0  3.451781    3.090840    6.5
+14  44.5 -68.5     0.0  3.437460    3.112127    6.5
+15  44.5 -67.5     0.0  3.567816    3.341162    6.5
+16  45.5 -70.5     0.0  3.317671    2.840428    6.5
+17  45.5 -69.5     0.0  3.363684    3.012618    6.5
+18  45.5 -68.5     0.0  3.416975    3.017834    6.5
+19  45.5 -67.5     0.0  3.526140    3.057651    6.5
+20  46.5 -70.5     0.0  3.191003    2.716872    6.5
+21  46.5 -69.5     0.0  3.215377    2.657954    6.5
+22  46.5 -68.5     0.0  3.283753    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.546844    3.276787    6.5
+1   41.5 -72.5     0.0  3.643505    3.253754    6.5
+2   41.5 -71.5     0.0  3.770213    3.180979    6.5
+3   41.5 -70.5     0.0  3.858765    3.116461    6.5
+4   42.5 -73.5     0.0  3.438625    3.010783    6.5
+5   42.5 -72.5     0.0  3.537306    3.234723    6.5
+6   42.5 -71.5     0.0  3.575800    3.220260    6.5
+7   43.5 -72.5     0.0  3.363181    2.938345    6.5
+8   43.5 -71.5     0.0  3.472688    3.067319    6.5
+9   43.5 -70.5     0.0  3.435633    3.247847    6.5
+10  43.5 -69.5     0.0  3.413116    3.240040    6.5
+11  44.5 -71.5     0.0  3.374379    3.085697    6.5
+12  44.5 -70.5     0.0  3.445426    3.113217    6.5
+13  44.5 -69.5     0.0  3.451781    3.090840    6.5
+14  44.5 -68.5     0.0  3.437460    3.112127    6.5
+15  44.5 -67.5     0.0  3.567816    3.341162    6.5
+16  45.5 -70.5     0.0  3.317671    2.840428    6.5
+17  45.5 -69.5     0.0  3.363684    3.012618    6.5
+18  45.5 -68.5     0.0  3.416975    3.017834    6.5
+19  45.5 -67.5     0.0  3.526140    3.057651    6.5
+20  46.5 -70.5     0.0  3.191003    2.716872    6.5
+21  46.5 -69.5     0.0  3.215377    2.657954    6.5
+22  46.5 -68.5     0.0  3.283753    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.9016642456124715
+2. K-S Test's max distance of regional SPI6:  1.9509597658008402
+3. K-S Test's max distance of regional SPI36:  1.502536172567262
+4. K-S Test max distance of regional precipitation at each month:  0.8192859610992101
+5. K-S Test of long term regional mean:  0.9433813759996834
+6. K-S Test's max distance of drought coverage:  2.6301827953759473
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.0661484769187255
+8. Z-test on SPI6 in all dry months:  0.18265340875682082
+8. KS test:  1.1434633613268685
+9. Annual dry month z test: 1.15687715345883
+10. K-S Test's max distance of drought duration:  0.2366685414207691
+11. Z-test on the probability of drought initiation:  0.8612964206377501
+12. Z-test on the probability of drought termination:  0.6821787999661754
+
+The Total Score is:  15.657974528763761
+The relative bias score is 0.7438868337801032
+The RMSE score is 0.23877529560718427
+The phase shift score is 0.684573501234056
+The interannual variability score is 1.0748026989701112
+The spatial distribution score is 0.831708496477175
+
+For CESM2-WACCM r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6354203536126356
+
+*****************************************************
+Test data file 8
+
+Reading pr_Amon_IPSL-CM6A-LR_historical_r1i1p1f1_gr_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_143x144_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  4.151369    3.276787    6.5
+1   41.5 -72.5     0.0  4.016056    3.253754    6.5
+2   41.5 -71.5     0.0  3.953578    3.180979    6.5
+3   41.5 -70.5     0.0  3.754543    3.116461    6.5
+4   42.5 -73.5     0.0  4.407202    3.010783    6.5
+5   42.5 -72.5     0.0  4.380336    3.234723    6.5
+6   42.5 -71.5     0.0  4.177378    3.220260    6.5
+7   43.5 -72.5     0.0  4.733696    2.938345    6.5
+8   43.5 -71.5     0.0  4.481260    3.067319    6.5
+9   43.5 -70.5     0.0  3.710306    3.247847    6.5
+10  43.5 -69.5     0.0  3.710306    3.240040    6.5
+11  44.5 -71.5     0.0  5.212636    3.085697    6.5
+12  44.5 -70.5     0.0  4.668370    3.113217    6.5
+13  44.5 -69.5     0.0  4.668370    3.090840    6.5
+14  44.5 -68.5     0.0  4.320608    3.112127    6.5
+15  44.5 -67.5     0.0  4.204653    3.341162    6.5
+16  45.5 -70.5     0.0  4.796854    2.840428    6.5
+17  45.5 -69.5     0.0  4.796854    3.012618    6.5
+18  45.5 -68.5     0.0  4.804349    3.017834    6.5
+19  45.5 -67.5     0.0  4.804724    3.057651    6.5
+20  46.5 -70.5     0.0  4.227688    2.716872    6.5
+21  46.5 -69.5     0.0  4.227688    2.657954    6.5
+22  46.5 -68.5     0.0  4.408685    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  4.151369    3.276787    6.5
+1   41.5 -72.5     0.0  4.016056    3.253754    6.5
+2   41.5 -71.5     0.0  3.953578    3.180979    6.5
+3   41.5 -70.5     0.0  3.754543    3.116461    6.5
+4   42.5 -73.5     0.0  4.407202    3.010783    6.5
+5   42.5 -72.5     0.0  4.380336    3.234723    6.5
+6   42.5 -71.5     0.0  4.177378    3.220260    6.5
+7   43.5 -72.5     0.0  4.733696    2.938345    6.5
+8   43.5 -71.5     0.0  4.481260    3.067319    6.5
+9   43.5 -70.5     0.0  3.710306    3.247847    6.5
+10  43.5 -69.5     0.0  3.710306    3.240040    6.5
+11  44.5 -71.5     0.0  5.212636    3.085697    6.5
+12  44.5 -70.5     0.0  4.668370    3.113217    6.5
+13  44.5 -69.5     0.0  4.668370    3.090840    6.5
+14  44.5 -68.5     0.0  4.320608    3.112127    6.5
+15  44.5 -67.5     0.0  4.204653    3.341162    6.5
+16  45.5 -70.5     0.0  4.796854    2.840428    6.5
+17  45.5 -69.5     0.0  4.796854    3.012618    6.5
+18  45.5 -68.5     0.0  4.804349    3.017834    6.5
+19  45.5 -67.5     0.0  4.804724    3.057651    6.5
+20  46.5 -70.5     0.0  4.227688    2.716872    6.5
+21  46.5 -69.5     0.0  4.227688    2.657954    6.5
+22  46.5 -68.5     0.0  4.408685    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  4.927039181814131
+2. K-S Test's max distance of regional SPI6:  4.321014592403342
+3. K-S Test's max distance of regional SPI36:  4.625454492020787
+4. K-S Test max distance of regional precipitation at each month:  1.559554494478192
+5. K-S Test of long term regional mean:  1.4150720639995251
+6. K-S Test's max distance of drought coverage:  1.979862873442334
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  3.186771379654306
+8. Z-test on SPI6 in all dry months:  1.1312907550705136
+8. KS test:  2.199388857671776
+9. Annual dry month z test: 1.8649755009941638
+10. K-S Test's max distance of drought duration:  0.34614038414728393
+11. Z-test on the probability of drought initiation:  1.5285956089488073
+12. Z-test on the probability of drought termination:  0.8526509882526545
+
+The Total Score is:  28.46038003368002
+The relative bias score is 0.4859826571594209
+The RMSE score is 0.27049655177089177
+The phase shift score is 0.5586120091892746
+The interannual variability score is 0.8132209795836809
+The spatial distribution score is 0.1915874205598971
+
+For IPSL-CM6A-LR r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.4317326950056762
+
+*****************************************************
+Test data file 9
+
+Reading pr_Amon_MRI-ESM2-0_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_160x320_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.571068    3.276787    6.5
+1   41.5 -72.5     0.0  3.419753    3.253754    6.5
+2   41.5 -71.5     0.0  3.282005    3.180979    6.5
+3   41.5 -70.5     0.0  3.204551    3.116461    6.5
+4   42.5 -73.5     0.0  3.843010    3.010783    6.5
+5   42.5 -72.5     0.0  3.700072    3.234723    6.5
+6   42.5 -71.5     0.0  3.422281    3.220260    6.5
+7   43.5 -72.5     0.0  3.764179    2.938345    6.5
+8   43.5 -71.5     0.0  3.590836    3.067319    6.5
+9   43.5 -70.5     0.0  3.332423    3.247847    6.5
+10  43.5 -69.5     0.0  3.154363    3.240040    6.5
+11  44.5 -71.5     0.0  3.788512    3.085697    6.5
+12  44.5 -70.5     0.0  3.722978    3.113217    6.5
+13  44.5 -69.5     0.0  3.476076    3.090840    6.5
+14  44.5 -68.5     0.0  3.224650    3.112127    6.5
+15  44.5 -67.5     0.0  3.310342    3.341162    6.5
+16  45.5 -70.5     0.0  3.667525    2.840428    6.5
+17  45.5 -69.5     0.0  3.684340    3.012618    6.5
+18  45.5 -68.5     0.0  3.535981    3.017834    6.5
+19  45.5 -67.5     0.0  3.579009    3.057651    6.5
+20  46.5 -70.5     0.0  3.608855    2.716872    6.5
+21  46.5 -69.5     0.0  3.564156    2.657954    6.5
+22  46.5 -68.5     0.0  3.513545    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.571068    3.276787    6.5
+1   41.5 -72.5     0.0  3.419753    3.253754    6.5
+2   41.5 -71.5     0.0  3.282005    3.180979    6.5
+3   41.5 -70.5     0.0  3.204551    3.116461    6.5
+4   42.5 -73.5     0.0  3.843010    3.010783    6.5
+5   42.5 -72.5     0.0  3.700072    3.234723    6.5
+6   42.5 -71.5     0.0  3.422281    3.220260    6.5
+7   43.5 -72.5     0.0  3.764179    2.938345    6.5
+8   43.5 -71.5     0.0  3.590836    3.067319    6.5
+9   43.5 -70.5     0.0  3.332423    3.247847    6.5
+10  43.5 -69.5     0.0  3.154363    3.240040    6.5
+11  44.5 -71.5     0.0  3.788512    3.085697    6.5
+12  44.5 -70.5     0.0  3.722978    3.113217    6.5
+13  44.5 -69.5     0.0  3.476076    3.090840    6.5
+14  44.5 -68.5     0.0  3.224650    3.112127    6.5
+15  44.5 -67.5     0.0  3.310342    3.341162    6.5
+16  45.5 -70.5     0.0  3.667525    2.840428    6.5
+17  45.5 -69.5     0.0  3.684340    3.012618    6.5
+18  45.5 -68.5     0.0  3.535981    3.017834    6.5
+19  45.5 -67.5     0.0  3.579009    3.057651    6.5
+20  46.5 -70.5     0.0  3.608855    2.716872    6.5
+21  46.5 -69.5     0.0  3.564156    2.657954    6.5
+22  46.5 -68.5     0.0  3.513545    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.2330148338631295
+2. K-S Test's max distance of regional SPI6:  2.1532815192912977
+3. K-S Test's max distance of regional SPI36:  1.8560740955242647
+4. K-S Test max distance of regional precipitation at each month:  0.8442388330108611
+5. K-S Test of long term regional mean:  0.9433813759996834
+6. K-S Test's max distance of drought coverage:  2.2544423960365263
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.24124580547116
+8. Z-test on SPI6 in all dry months:  0.8084826700115393
+8. KS test:  1.7943938664069463
+9. Annual dry month z test: 1.2561920967174105
+10. K-S Test's max distance of drought duration:  0.2567045793235799
+11. Z-test on the probability of drought initiation:  0.9840895251967882
+12. Z-test on the probability of drought termination:  0.6666126994998948
+
+The Total Score is:  17.226967047017958
+The relative bias score is 0.7181649016806653
+The RMSE score is 0.22910457084492403
+The phase shift score is 0.8202619740775843
+The interannual variability score is 1.091498794746738
+The spatial distribution score is 0.2933535584619402
+
+For MRI-ESM2-0 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5635813951094627
+
+*****************************************************
+Test data file 10
+
+Reading pr_Amon_NESM3_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_96x192_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.947213    3.276787    6.5
+1   41.5 -72.5     0.0  3.903872    3.253754    6.5
+2   41.5 -71.5     0.0  3.714052    3.180979    6.5
+3   41.5 -70.5     0.0  3.473432    3.116461    6.5
+4   42.5 -73.5     0.0  3.941710    3.010783    6.5
+5   42.5 -72.5     0.0  3.902096    3.234723    6.5
+6   42.5 -71.5     0.0  3.731058    3.220260    6.5
+7   43.5 -72.5     0.0  3.699240    2.938345    6.5
+8   43.5 -71.5     0.0  3.767201    3.067319    6.5
+9   43.5 -70.5     0.0  3.757649    3.247847    6.5
+10  43.5 -69.5     0.0  3.736634    3.240040    6.5
+11  44.5 -71.5     0.0  3.722885    3.085697    6.5
+12  44.5 -70.5     0.0  3.722730    3.113217    6.5
+13  44.5 -69.5     0.0  3.723008    3.090840    6.5
+14  44.5 -68.5     0.0  3.668415    3.112127    6.5
+15  44.5 -67.5     0.0  3.598419    3.341162    6.5
+16  45.5 -70.5     0.0  3.605061    2.840428    6.5
+17  45.5 -69.5     0.0  3.676712    3.012618    6.5
+18  45.5 -68.5     0.0  3.629549    3.017834    6.5
+19  45.5 -67.5     0.0  3.568910    3.057651    6.5
+20  46.5 -70.5     0.0  3.576021    2.716872    6.5
+21  46.5 -69.5     0.0  3.571390    2.657954    6.5
+22  46.5 -68.5     0.0  3.530218    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.947213    3.276787    6.5
+1   41.5 -72.5     0.0  3.903872    3.253754    6.5
+2   41.5 -71.5     0.0  3.714052    3.180979    6.5
+3   41.5 -70.5     0.0  3.473432    3.116461    6.5
+4   42.5 -73.5     0.0  3.941710    3.010783    6.5
+5   42.5 -72.5     0.0  3.902096    3.234723    6.5
+6   42.5 -71.5     0.0  3.731058    3.220260    6.5
+7   43.5 -72.5     0.0  3.699240    2.938345    6.5
+8   43.5 -71.5     0.0  3.767201    3.067319    6.5
+9   43.5 -70.5     0.0  3.757649    3.247847    6.5
+10  43.5 -69.5     0.0  3.736634    3.240040    6.5
+11  44.5 -71.5     0.0  3.722885    3.085697    6.5
+12  44.5 -70.5     0.0  3.722730    3.113217    6.5
+13  44.5 -69.5     0.0  3.723008    3.090840    6.5
+14  44.5 -68.5     0.0  3.668415    3.112127    6.5
+15  44.5 -67.5     0.0  3.598419    3.341162    6.5
+16  45.5 -70.5     0.0  3.605061    2.840428    6.5
+17  45.5 -69.5     0.0  3.676712    3.012618    6.5
+18  45.5 -68.5     0.0  3.629549    3.017834    6.5
+19  45.5 -67.5     0.0  3.568910    3.057651    6.5
+20  46.5 -70.5     0.0  3.576021    2.716872    6.5
+21  46.5 -69.5     0.0  3.571390    2.657954    6.5
+22  46.5 -68.5     0.0  3.530218    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.8380898211034613
+2. K-S Test's max distance of regional SPI6:  2.297797057498767
+3. K-S Test's max distance of regional SPI36:  2.3274579928002685
+4. K-S Test max distance of regional precipitation at each month:  1.05217943227462
+5. K-S Test of long term regional mean:  0.8254587039997231
+6. K-S Test's max distance of drought coverage:  2.456764149526984
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.6459148883928834
+8. Z-test on SPI6 in all dry months:  0.17937941192226373
+8. KS test:  1.8908248090743645
+9. Annual dry month z test: 0.9044746477923726
+10. K-S Test's max distance of drought duration:  0.3803842587506074
+11. Z-test on the probability of drought initiation:  0.5500168728506702
+12. Z-test on the probability of drought termination:  0.7347292202905107
+
+The Total Score is:  17.523707595604627
+The relative bias score is 0.6506331965463467
+The RMSE score is 0.2455955443835174
+The phase shift score is 0.5230908223150234
+The interannual variability score is 0.96904233043984
+The spatial distribution score is 0.6683201639797135
+
+For NESM3 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5503796003413264
+
+*****************************************************
+Test data file 11
+
+Reading pr_Amon_NorCPM1_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_96x144_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  2.639429    3.276787    6.5
+1   41.5 -72.5     0.0  2.685292    3.253754    6.5
+2   41.5 -71.5     0.0  2.734371    3.180979    6.5
+3   41.5 -70.5     0.0  2.884286    3.116461    6.5
+4   42.5 -73.5     0.0  2.610267    3.010783    6.5
+5   42.5 -72.5     0.0  2.649933    3.234723    6.5
+6   42.5 -71.5     0.0  2.608821    3.220260    6.5
+7   43.5 -72.5     0.0  2.571819    2.938345    6.5
+8   43.5 -71.5     0.0  2.552578    3.067319    6.5
+9   43.5 -70.5     0.0  2.496604    3.247847    6.5
+10  43.5 -69.5     0.0  2.496604    3.240040    6.5
+11  44.5 -71.5     0.0  2.473785    3.085697    6.5
+12  44.5 -70.5     0.0  2.512318    3.113217    6.5
+13  44.5 -69.5     0.0  2.512318    3.090840    6.5
+14  44.5 -68.5     0.0  2.554285    3.112127    6.5
+15  44.5 -67.5     0.0  2.568275    3.341162    6.5
+16  45.5 -70.5     0.0  2.427651    2.840428    6.5
+17  45.5 -69.5     0.0  2.427651    3.012618    6.5
+18  45.5 -68.5     0.0  2.469627    3.017834    6.5
+19  45.5 -67.5     0.0  2.484356    3.057651    6.5
+20  46.5 -70.5     0.0  2.349328    2.716872    6.5
+21  46.5 -69.5     0.0  2.349328    2.657954    6.5
+22  46.5 -68.5     0.0  2.392122    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  2.639429    3.276787    6.5
+1   41.5 -72.5     0.0  2.685292    3.253754    6.5
+2   41.5 -71.5     0.0  2.734371    3.180979    6.5
+3   41.5 -70.5     0.0  2.884286    3.116461    6.5
+4   42.5 -73.5     0.0  2.610267    3.010783    6.5
+5   42.5 -72.5     0.0  2.649933    3.234723    6.5
+6   42.5 -71.5     0.0  2.608821    3.220260    6.5
+7   43.5 -72.5     0.0  2.571819    2.938345    6.5
+8   43.5 -71.5     0.0  2.552578    3.067319    6.5
+9   43.5 -70.5     0.0  2.496604    3.247847    6.5
+10  43.5 -69.5     0.0  2.496604    3.240040    6.5
+11  44.5 -71.5     0.0  2.473785    3.085697    6.5
+12  44.5 -70.5     0.0  2.512318    3.113217    6.5
+13  44.5 -69.5     0.0  2.512318    3.090840    6.5
+14  44.5 -68.5     0.0  2.554285    3.112127    6.5
+15  44.5 -67.5     0.0  2.568275    3.341162    6.5
+16  45.5 -70.5     0.0  2.427651    2.840428    6.5
+17  45.5 -69.5     0.0  2.427651    3.012618    6.5
+18  45.5 -68.5     0.0  2.469627    3.017834    6.5
+19  45.5 -67.5     0.0  2.484356    3.057651    6.5
+20  46.5 -70.5     0.0  2.349328    2.716872    6.5
+21  46.5 -69.5     0.0  2.349328    2.657954    6.5
+22  46.5 -68.5     0.0  2.392122    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.7084308952662473
+2. K-S Test's max distance of regional SPI6:  3.280502717309561
+3. K-S Test's max distance of regional SPI36:  3.697417444258655
+4. K-S Test max distance of regional precipitation at each month:  1.002273688451318
+5. K-S Test of long term regional mean:  0.9433813759996834
+6. K-S Test's max distance of drought coverage:  0.9538025521692997
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  0.6303503827887637
+8. Z-test on SPI6 in all dry months:  1.6218624916851703
+8. KS test:  2.348305811576636
+9. Annual dry month z test: 0.28649330589068167
+10. K-S Test's max distance of drought duration:  0.1109541404418132
+11. Z-test on the probability of drought initiation:  0.4885318330439301
+12. Z-test on the probability of drought termination:  0.08975251941281356
+
+The Total Score is:  16.429242526167588
+The relative bias score is 0.5378242719170944
+The RMSE score is 0.14111026099209215
+The phase shift score is 0.6317864744889363
+The interannual variability score is 1.5067414446775427
+The spatial distribution score is 0.7060941238764757
+
+For NorCPM1 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6107778061573722
+
+*****************************************************
+Test data file 12
+
+Reading pr_Amon_TaiESM1_historical_r1i1p1f1_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_192x288_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.276231    3.276787    6.5
+1   41.5 -72.5     0.0  3.444473    3.253754    6.5
+2   41.5 -71.5     0.0  3.688642    3.180979    6.5
+3   41.5 -70.5     0.0  3.928227    3.116461    6.5
+4   42.5 -73.5     0.0  3.139384    3.010783    6.5
+5   42.5 -72.5     0.0  3.341584    3.234723    6.5
+6   42.5 -71.5     0.0  3.338348    3.220260    6.5
+7   43.5 -72.5     0.0  3.084120    2.938345    6.5
+8   43.5 -71.5     0.0  3.288937    3.067319    6.5
+9   43.5 -70.5     0.0  3.375363    3.247847    6.5
+10  43.5 -69.5     0.0  3.498736    3.240040    6.5
+11  44.5 -71.5     0.0  3.061286    3.085697    6.5
+12  44.5 -70.5     0.0  3.267855    3.113217    6.5
+13  44.5 -69.5     0.0  3.403807    3.090840    6.5
+14  44.5 -68.5     0.0  3.472050    3.112127    6.5
+15  44.5 -67.5     0.0  3.728905    3.341162    6.5
+16  45.5 -70.5     0.0  3.074284    2.840428    6.5
+17  45.5 -69.5     0.0  3.289437    3.012618    6.5
+18  45.5 -68.5     0.0  3.513887    3.017834    6.5
+19  45.5 -67.5     0.0  3.596778    3.057651    6.5
+20  46.5 -70.5     0.0  3.000163    2.716872    6.5
+21  46.5 -69.5     0.0  3.049745    2.657954    6.5
+22  46.5 -68.5     0.0  3.071684    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.276231    3.276787    6.5
+1   41.5 -72.5     0.0  3.444473    3.253754    6.5
+2   41.5 -71.5     0.0  3.688642    3.180979    6.5
+3   41.5 -70.5     0.0  3.928227    3.116461    6.5
+4   42.5 -73.5     0.0  3.139384    3.010783    6.5
+5   42.5 -72.5     0.0  3.341584    3.234723    6.5
+6   42.5 -71.5     0.0  3.338348    3.220260    6.5
+7   43.5 -72.5     0.0  3.084120    2.938345    6.5
+8   43.5 -71.5     0.0  3.288937    3.067319    6.5
+9   43.5 -70.5     0.0  3.375363    3.247847    6.5
+10  43.5 -69.5     0.0  3.498736    3.240040    6.5
+11  44.5 -71.5     0.0  3.061286    3.085697    6.5
+12  44.5 -70.5     0.0  3.267855    3.113217    6.5
+13  44.5 -69.5     0.0  3.403807    3.090840    6.5
+14  44.5 -68.5     0.0  3.472050    3.112127    6.5
+15  44.5 -67.5     0.0  3.728905    3.341162    6.5
+16  45.5 -70.5     0.0  3.074284    2.840428    6.5
+17  45.5 -69.5     0.0  3.289437    3.012618    6.5
+18  45.5 -68.5     0.0  3.513887    3.017834    6.5
+19  45.5 -67.5     0.0  3.596778    3.057651    6.5
+20  46.5 -70.5     0.0  3.000163    2.716872    6.5
+21  46.5 -69.5     0.0  3.049745    2.657954    6.5
+22  46.5 -68.5     0.0  3.071684    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.5559071100465676
+2. K-S Test's max distance of regional SPI6:  1.3439945053294677
+3. K-S Test's max distance of regional SPI36:  1.119536756030509
+4. K-S Test max distance of regional precipitation at each month:  0.7569037813200824
+5. K-S Test of long term regional mean:  0.5896133599998021
+6. K-S Test's max distance of drought coverage:  1.604122474102913
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  0.9455255741831456
+8. Z-test on SPI6 in all dry months:  1.0372247366280682
+8. KS test:  1.6828657168549195
+9. Annual dry month z test: 0.49780701893690515
+10. K-S Test's max distance of drought duration:  0.3180964301570529
+11. Z-test on the probability of drought initiation:  0.32154522284540143
+12. Z-test on the probability of drought termination:  0.3616602344304485
+
+The Total Score is:  10.779481754080162
+The relative bias score is 0.8196326313329041
+The RMSE score is 0.23418357389199151
+The phase shift score is 0.749790892538404
+The interannual variability score is 1.0651257199822581
+The spatial distribution score is 0.7580638165444724
+
+For TaiESM1 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6434967013636703
+
+*****************************************************
+Test data file 13
+
+Reading pr_Amon_CNRM-CM6-1-HR_historical_r1i1p1f2_gr_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_360x720_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.878580    3.276787    6.5
+1   41.5 -72.5     0.0  3.716341    3.253754    6.5
+2   41.5 -71.5     0.0  3.637725    3.180979    6.5
+3   41.5 -70.5     0.0  3.358400    3.116461    6.5
+4   42.5 -73.5     0.0  3.705488    3.010783    6.5
+5   42.5 -72.5     0.0  4.001959    3.234723    6.5
+6   42.5 -71.5     0.0  3.810493    3.220260    6.5
+7   43.5 -72.5     0.0  3.720898    2.938345    6.5
+8   43.5 -71.5     0.0  3.901110    3.067319    6.5
+9   43.5 -70.5     0.0  3.533769    3.247847    6.5
+10  43.5 -69.5     0.0  3.192152    3.240040    6.5
+11  44.5 -71.5     0.0  4.152551    3.085697    6.5
+12  44.5 -70.5     0.0  4.119578    3.113217    6.5
+13  44.5 -69.5     0.0  3.666450    3.090840    6.5
+14  44.5 -68.5     0.0  3.605776    3.112127    6.5
+15  44.5 -67.5     0.0  3.546297    3.341162    6.5
+16  45.5 -70.5     0.0  4.054543    2.840428    6.5
+17  45.5 -69.5     0.0  3.856674    3.012618    6.5
+18  45.5 -68.5     0.0  3.587693    3.017834    6.5
+19  45.5 -67.5     0.0  3.704737    3.057651    6.5
+20  46.5 -70.5     0.0  3.580738    2.716872    6.5
+21  46.5 -69.5     0.0  3.601172    2.657954    6.5
+22  46.5 -68.5     0.0  3.475336    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.878580    3.276787    6.5
+1   41.5 -72.5     0.0  3.716341    3.253754    6.5
+2   41.5 -71.5     0.0  3.637725    3.180979    6.5
+3   41.5 -70.5     0.0  3.358400    3.116461    6.5
+4   42.5 -73.5     0.0  3.705488    3.010783    6.5
+5   42.5 -72.5     0.0  4.001959    3.234723    6.5
+6   42.5 -71.5     0.0  3.810493    3.220260    6.5
+7   43.5 -72.5     0.0  3.720898    2.938345    6.5
+8   43.5 -71.5     0.0  3.901110    3.067319    6.5
+9   43.5 -70.5     0.0  3.533769    3.247847    6.5
+10  43.5 -69.5     0.0  3.192152    3.240040    6.5
+11  44.5 -71.5     0.0  4.152551    3.085697    6.5
+12  44.5 -70.5     0.0  4.119578    3.113217    6.5
+13  44.5 -69.5     0.0  3.666450    3.090840    6.5
+14  44.5 -68.5     0.0  3.605776    3.112127    6.5
+15  44.5 -67.5     0.0  3.546297    3.341162    6.5
+16  45.5 -70.5     0.0  4.054543    2.840428    6.5
+17  45.5 -69.5     0.0  3.856674    3.012618    6.5
+18  45.5 -68.5     0.0  3.587693    3.017834    6.5
+19  45.5 -67.5     0.0  3.704737    3.057651    6.5
+20  46.5 -70.5     0.0  3.580738    2.716872    6.5
+21  46.5 -69.5     0.0  3.601172    2.657954    6.5
+22  46.5 -68.5     0.0  3.475336    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  3.0109683888864134
+2. K-S Test's max distance of regional SPI6:  2.442312595706237
+3. K-S Test's max distance of regional SPI36:  2.460034713909145
+4. K-S Test max distance of regional precipitation at each month:  1.0189089363924186
+5. K-S Test of long term regional mean:  1.0613040479996438
+6. K-S Test's max distance of drought coverage:  1.5463162588199253
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.1361874083396994
+8. Z-test on SPI6 in all dry months:  1.0690250210356351
+8. KS test:  2.6674639222532055
+9. Annual dry month z test: 1.1558706354873736
+10. K-S Test's max distance of drought duration:  0.12983349122965987
+11. Z-test on the probability of drought initiation:  1.0889454197924713
+12. Z-test on the probability of drought termination:  0.3203100273092256
+
+The Total Score is:  18.90862235489576
+The relative bias score is 0.6597897839800059
+The RMSE score is 0.2616201760420647
+The phase shift score is 0.5702619740775843
+The interannual variability score is 0.9513881108571723
+The spatial distribution score is 0.47765347818060094
+
+For CNRM-CM6-1-HR r1i1p1f2 model in New England Region the overall score from ILAMB paper is  0.5303889498632488
+
+*****************************************************
+Test data file 14
+
+Reading pr_Amon_CESM2-FV2_historical_r1i1p1f1_gn_200001-201412_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_96x144_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.576400    3.276787    6.5
+1   41.5 -72.5     0.0  3.702243    3.253754    6.5
+2   41.5 -71.5     0.0  3.797930    3.180979    6.5
+3   41.5 -70.5     0.0  4.093746    3.116461    6.5
+4   42.5 -73.5     0.0  3.238268    3.010783    6.5
+5   42.5 -72.5     0.0  3.319578    3.234723    6.5
+6   42.5 -71.5     0.0  3.359020    3.220260    6.5
+7   43.5 -72.5     0.0  3.185742    2.938345    6.5
+8   43.5 -71.5     0.0  3.235869    3.067319    6.5
+9   43.5 -70.5     0.0  3.390221    3.247847    6.5
+10  43.5 -69.5     0.0  3.390221    3.240040    6.5
+11  44.5 -71.5     0.0  3.063606    3.085697    6.5
+12  44.5 -70.5     0.0  3.267110    3.113217    6.5
+13  44.5 -69.5     0.0  3.267110    3.090840    6.5
+14  44.5 -68.5     0.0  3.422081    3.112127    6.5
+15  44.5 -67.5     0.0  3.473739    3.341162    6.5
+16  45.5 -70.5     0.0  3.150057    2.840428    6.5
+17  45.5 -69.5     0.0  3.150057    3.012618    6.5
+18  45.5 -68.5     0.0  3.291917    3.017834    6.5
+19  45.5 -67.5     0.0  3.340333    3.057651    6.5
+20  46.5 -70.5     0.0  3.041776    2.716872    6.5
+21  46.5 -69.5     0.0  3.041776    2.657954    6.5
+22  46.5 -68.5     0.0  3.172731    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.576400    3.276787    6.5
+1   41.5 -72.5     0.0  3.702243    3.253754    6.5
+2   41.5 -71.5     0.0  3.797930    3.180979    6.5
+3   41.5 -70.5     0.0  4.093746    3.116461    6.5
+4   42.5 -73.5     0.0  3.238268    3.010783    6.5
+5   42.5 -72.5     0.0  3.319578    3.234723    6.5
+6   42.5 -71.5     0.0  3.359020    3.220260    6.5
+7   43.5 -72.5     0.0  3.185742    2.938345    6.5
+8   43.5 -71.5     0.0  3.235869    3.067319    6.5
+9   43.5 -70.5     0.0  3.390221    3.247847    6.5
+10  43.5 -69.5     0.0  3.390221    3.240040    6.5
+11  44.5 -71.5     0.0  3.063606    3.085697    6.5
+12  44.5 -70.5     0.0  3.267110    3.113217    6.5
+13  44.5 -69.5     0.0  3.267110    3.090840    6.5
+14  44.5 -68.5     0.0  3.422081    3.112127    6.5
+15  44.5 -67.5     0.0  3.473739    3.341162    6.5
+16  45.5 -70.5     0.0  3.150057    2.840428    6.5
+17  45.5 -69.5     0.0  3.150057    3.012618    6.5
+18  45.5 -68.5     0.0  3.291917    3.017834    6.5
+19  45.5 -67.5     0.0  3.340333    3.057651    6.5
+20  46.5 -70.5     0.0  3.041776    2.716872    6.5
+21  46.5 -69.5     0.0  3.041776    2.657954    6.5
+22  46.5 -68.5     0.0  3.172731    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.6135332993075517
+2. K-S Test's max distance of regional SPI6:  1.4885100435369374
+3. K-S Test's max distance of regional SPI36:  1.252113477139385
+4. K-S Test max distance of regional precipitation at each month:  0.6612511056587533
+5. K-S Test of long term regional mean:  0.7075360319997626
+6. K-S Test's max distance of drought coverage:  2.962568533253128
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.346304202602621
+8. Z-test on SPI6 in all dry months:  1.8696110628260634
+8. KS test:  4.182877255444981
+9. Annual dry month z test: 1.3365959019876894
+10. K-S Test's max distance of drought duration:  0.43307693980701406
+11. Z-test on the probability of drought initiation:  0.713685190618031
+12. Z-test on the probability of drought termination:  1.391853658586664
+
+The Total Score is:  18.656828700135502
+The relative bias score is 0.7979791638674274
+The RMSE score is 0.20966710502190003
+The phase shift score is 0.7876532784254104
+The interannual variability score is 1.191638352695032
+The spatial distribution score is 0.7254377399538283
+
+For CESM2-FV2 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6536737908309164
+
+*****************************************************
+Test data file 15
+
+Reading pr_Amon_CNRM-ESM2-1_historical_r1i1p1f2_gr_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_128x256_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.557732    3.276787    6.5
+1   41.5 -72.5     0.0  3.529707    3.253754    6.5
+2   41.5 -71.5     0.0  3.499398    3.180979    6.5
+3   41.5 -70.5     0.0  3.470212    3.116461    6.5
+4   42.5 -73.5     0.0  3.827052    3.010783    6.5
+5   42.5 -72.5     0.0  3.771480    3.234723    6.5
+6   42.5 -71.5     0.0  3.678806    3.220260    6.5
+7   43.5 -72.5     0.0  3.998680    2.938345    6.5
+8   43.5 -71.5     0.0  3.958010    3.067319    6.5
+9   43.5 -70.5     0.0  3.627814    3.247847    6.5
+10  43.5 -69.5     0.0  3.449470    3.240040    6.5
+11  44.5 -71.5     0.0  4.068806    3.085697    6.5
+12  44.5 -70.5     0.0  3.991797    3.113217    6.5
+13  44.5 -69.5     0.0  3.723530    3.090840    6.5
+14  44.5 -68.5     0.0  3.531646    3.112127    6.5
+15  44.5 -67.5     0.0  3.453817    3.341162    6.5
+16  45.5 -70.5     0.0  4.210363    2.840428    6.5
+17  45.5 -69.5     0.0  4.052302    3.012618    6.5
+18  45.5 -68.5     0.0  3.922719    3.017834    6.5
+19  45.5 -67.5     0.0  3.811842    3.057651    6.5
+20  46.5 -70.5     0.0  3.777961    2.716872    6.5
+21  46.5 -69.5     0.0  3.695934    2.657954    6.5
+22  46.5 -68.5     0.0  3.665154    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.557732    3.276787    6.5
+1   41.5 -72.5     0.0  3.529707    3.253754    6.5
+2   41.5 -71.5     0.0  3.499398    3.180979    6.5
+3   41.5 -70.5     0.0  3.470212    3.116461    6.5
+4   42.5 -73.5     0.0  3.827052    3.010783    6.5
+5   42.5 -72.5     0.0  3.771480    3.234723    6.5
+6   42.5 -71.5     0.0  3.678806    3.220260    6.5
+7   43.5 -72.5     0.0  3.998680    2.938345    6.5
+8   43.5 -71.5     0.0  3.958010    3.067319    6.5
+9   43.5 -70.5     0.0  3.627814    3.247847    6.5
+10  43.5 -69.5     0.0  3.449470    3.240040    6.5
+11  44.5 -71.5     0.0  4.068806    3.085697    6.5
+12  44.5 -70.5     0.0  3.991797    3.113217    6.5
+13  44.5 -69.5     0.0  3.723530    3.090840    6.5
+14  44.5 -68.5     0.0  3.531646    3.112127    6.5
+15  44.5 -67.5     0.0  3.453817    3.341162    6.5
+16  45.5 -70.5     0.0  4.210363    2.840428    6.5
+17  45.5 -69.5     0.0  4.052302    3.012618    6.5
+18  45.5 -68.5     0.0  3.922719    3.017834    6.5
+19  45.5 -67.5     0.0  3.811842    3.057651    6.5
+20  46.5 -70.5     0.0  3.777961    2.716872    6.5
+21  46.5 -69.5     0.0  3.695934    2.657954    6.5
+22  46.5 -68.5     0.0  3.665154    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.8524963684187075
+2. K-S Test's max distance of regional SPI6:  2.789149887404164
+3. K-S Test's max distance of regional SPI36:  2.5778806882281455
+4. K-S Test max distance of regional precipitation at each month:  1.0105913124218682
+5. K-S Test of long term regional mean:  1.0613040479996438
+6. K-S Test's max distance of drought coverage:  1.7486380123103826
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.9610900797872652
+8. Z-test on SPI6 in all dry months:  0.705168858858395
+8. KS test:  1.5945569218120377
+9. Annual dry month z test: 1.014019243852367
+10. K-S Test's max distance of drought duration:  0.5653748489496151
+11. Z-test on the probability of drought initiation:  0.8542482899695302
+12. Z-test on the probability of drought termination:  0.564065436373321
+
+The Total Score is:  18.02804028857743
+The relative bias score is 0.6631981805088368
+The RMSE score is 0.260304268463177
+The phase shift score is 0.6543060045946373
+The interannual variability score is 0.8971415831856651
+The spatial distribution score is 0.26673335335120524
+
+For CNRM-ESM2-1 r1i1p1f2 model in New England Region the overall score from ILAMB paper is  0.5003312764277831
+
+*****************************************************
+Test data file 16
+
+Reading pr_Amon_CESM2-WACCM-FV2_historical_r1i1p1f1_gn_185001-189912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_96x144_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.397354    3.276787    6.5
+1   41.5 -72.5     0.0  3.506227    3.253754    6.5
+2   41.5 -71.5     0.0  3.585624    3.180979    6.5
+3   41.5 -70.5     0.0  3.831146    3.116461    6.5
+4   42.5 -73.5     0.0  3.130551    3.010783    6.5
+5   42.5 -72.5     0.0  3.195424    3.234723    6.5
+6   42.5 -71.5     0.0  3.219097    3.220260    6.5
+7   43.5 -72.5     0.0  3.091726    2.938345    6.5
+8   43.5 -71.5     0.0  3.128906    3.067319    6.5
+9   43.5 -70.5     0.0  3.243332    3.247847    6.5
+10  43.5 -69.5     0.0  3.243332    3.240040    6.5
+11  44.5 -71.5     0.0  3.002706    3.085697    6.5
+12  44.5 -70.5     0.0  3.177224    3.113217    6.5
+13  44.5 -69.5     0.0  3.177224    3.090840    6.5
+14  44.5 -68.5     0.0  3.288473    3.112127    6.5
+15  44.5 -67.5     0.0  3.325556    3.341162    6.5
+16  45.5 -70.5     0.0  3.073512    2.840428    6.5
+17  45.5 -69.5     0.0  3.073512    3.012618    6.5
+18  45.5 -68.5     0.0  3.178754    3.017834    6.5
+19  45.5 -67.5     0.0  3.214789    3.057651    6.5
+20  46.5 -70.5     0.0  2.977573    2.716872    6.5
+21  46.5 -69.5     0.0  2.977573    2.657954    6.5
+22  46.5 -68.5     0.0  3.078298    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.397354    3.276787    6.5
+1   41.5 -72.5     0.0  3.506227    3.253754    6.5
+2   41.5 -71.5     0.0  3.585624    3.180979    6.5
+3   41.5 -70.5     0.0  3.831146    3.116461    6.5
+4   42.5 -73.5     0.0  3.130551    3.010783    6.5
+5   42.5 -72.5     0.0  3.195424    3.234723    6.5
+6   42.5 -71.5     0.0  3.219097    3.220260    6.5
+7   43.5 -72.5     0.0  3.091726    2.938345    6.5
+8   43.5 -71.5     0.0  3.128906    3.067319    6.5
+9   43.5 -70.5     0.0  3.243332    3.247847    6.5
+10  43.5 -69.5     0.0  3.243332    3.240040    6.5
+11  44.5 -71.5     0.0  3.002706    3.085697    6.5
+12  44.5 -70.5     0.0  3.177224    3.113217    6.5
+13  44.5 -69.5     0.0  3.177224    3.090840    6.5
+14  44.5 -68.5     0.0  3.288473    3.112127    6.5
+15  44.5 -67.5     0.0  3.325556    3.341162    6.5
+16  45.5 -70.5     0.0  3.073512    2.840428    6.5
+17  45.5 -69.5     0.0  3.073512    3.012618    6.5
+18  45.5 -68.5     0.0  3.178754    3.017834    6.5
+19  45.5 -67.5     0.0  3.214789    3.057651    6.5
+20  46.5 -70.5     0.0  2.977573    2.716872    6.5
+21  46.5 -69.5     0.0  2.977573    2.657954    6.5
+22  46.5 -68.5     0.0  3.078298    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.2965892583721397
+2. K-S Test's max distance of regional SPI6:  1.0694149827352755
+3. K-S Test's max distance of regional SPI36:  0.8101910734431316
+4. K-S Test max distance of regional precipitation at each month:  0.5988689258796257
+5. K-S Test of long term regional mean:  0.4716906879998417
+6. K-S Test's max distance of drought coverage:  2.716892118300429
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.6809343541033699
+8. Z-test on SPI6 in all dry months:  1.7944872107307173
+8. KS test:  2.3756219392159887
+9. Annual dry month z test: 0.917640028807496
+10. K-S Test's max distance of drought duration:  0.248414209796315
+11. Z-test on the probability of drought initiation:  0.5527125987215474
+12. Z-test on the probability of drought termination:  0.77163173552165
+
+The Total Score is:  13.262187703100494
+The relative bias score is 0.8709570797576088
+The RMSE score is 0.19804677806986107
+The phase shift score is 0.7696070388836236
+The interannual variability score is 1.2301268644109644
+The spatial distribution score is 0.787139556234082
+
+For CESM2-WACCM-FV2 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6756540159043335
+
+*****************************************************
+Test data file 17
+
+Reading pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_186001-186912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.335827    3.276787    6.5
+1   41.5 -72.5     0.0  3.272177    3.253754    6.5
+2   41.5 -71.5     0.0  3.069572    3.180979    6.5
+3   41.5 -70.5     0.0  3.025447    3.116461    6.5
+4   42.5 -73.5     0.0  3.397118    3.010783    6.5
+5   42.5 -72.5     0.0  3.406717    3.234723    6.5
+6   42.5 -71.5     0.0  3.225954    3.220260    6.5
+7   43.5 -72.5     0.0  3.509641    2.938345    6.5
+8   43.5 -71.5     0.0  3.403428    3.067319    6.5
+9   43.5 -70.5     0.0  3.308712    3.247847    6.5
+10  43.5 -69.5     0.0  3.088605    3.240040    6.5
+11  44.5 -71.5     0.0  3.604032    3.085697    6.5
+12  44.5 -70.5     0.0  3.601624    3.113217    6.5
+13  44.5 -69.5     0.0  3.408834    3.090840    6.5
+14  44.5 -68.5     0.0  3.429498    3.112127    6.5
+15  44.5 -67.5     0.0  3.483314    3.341162    6.5
+16  45.5 -70.5     0.0  3.652591    2.840428    6.5
+17  45.5 -69.5     0.0  3.663641    3.012618    6.5
+18  45.5 -68.5     0.0  3.659441    3.017834    6.5
+19  45.5 -67.5     0.0  3.679347    3.057651    6.5
+20  46.5 -70.5     0.0  3.540750    2.716872    6.5
+21  46.5 -69.5     0.0  3.582370    2.657954    6.5
+22  46.5 -68.5     0.0  3.563283    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.335827    3.276787    6.5
+1   41.5 -72.5     0.0  3.272177    3.253754    6.5
+2   41.5 -71.5     0.0  3.069572    3.180979    6.5
+3   41.5 -70.5     0.0  3.025447    3.116461    6.5
+4   42.5 -73.5     0.0  3.397118    3.010783    6.5
+5   42.5 -72.5     0.0  3.406717    3.234723    6.5
+6   42.5 -71.5     0.0  3.225954    3.220260    6.5
+7   43.5 -72.5     0.0  3.509641    2.938345    6.5
+8   43.5 -71.5     0.0  3.403428    3.067319    6.5
+9   43.5 -70.5     0.0  3.308712    3.247847    6.5
+10  43.5 -69.5     0.0  3.088605    3.240040    6.5
+11  44.5 -71.5     0.0  3.604032    3.085697    6.5
+12  44.5 -70.5     0.0  3.601624    3.113217    6.5
+13  44.5 -69.5     0.0  3.408834    3.090840    6.5
+14  44.5 -68.5     0.0  3.429498    3.112127    6.5
+15  44.5 -67.5     0.0  3.483314    3.341162    6.5
+16  45.5 -70.5     0.0  3.652591    2.840428    6.5
+17  45.5 -69.5     0.0  3.663641    3.012618    6.5
+18  45.5 -68.5     0.0  3.659441    3.017834    6.5
+19  45.5 -67.5     0.0  3.679347    3.057651    6.5
+20  46.5 -70.5     0.0  3.540750    2.716872    6.5
+21  46.5 -69.5     0.0  3.582370    2.657954    6.5
+22  46.5 -68.5     0.0  3.563283    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.0025100768191932
+2. K-S Test's max distance of regional SPI6:  1.6763802432066477
+3. K-S Test's max distance of regional SPI36:  1.8413433487343895
+4. K-S Test max distance of regional precipitation at each month:  0.7319509094084314
+5. K-S Test of long term regional mean:  0.7075360319997626
+6. K-S Test's max distance of drought coverage:  2.5434734724514656
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.8015572568389504
+8. Z-test on SPI6 in all dry months:  1.5654693261783
+8. KS test:  2.673532470104641
+9. Annual dry month z test: 1.6372929302288024
+10. K-S Test's max distance of drought duration:  0.2970914869224312
+11. Z-test on the probability of drought initiation:  1.237460168463101
+12. Z-test on the probability of drought termination:  0.9417458755482554
+
+The Total Score is:  18.794782783803644
+The relative bias score is 0.7388291631592543
+The RMSE score is 0.21244506151420445
+The phase shift score is 0.6717809519271017
+The interannual variability score is 1.1739956077024933
+The spatial distribution score is 0.23017181879603496
+
+For E3SM-1-1 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5399446107688822
+
+*****************************************************
+Test data file 18
+
+Reading pr_Amon_MIROC-ES2L_historical_r1i1p1f2_gn_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_64x128_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.551522    3.276787    6.5
+1   41.5 -72.5     0.0  3.551775    3.253754    6.5
+2   41.5 -71.5     0.0  3.495075    3.180979    6.5
+3   41.5 -70.5     0.0  3.471198    3.116461    6.5
+4   42.5 -73.5     0.0  3.756042    3.010783    6.5
+5   42.5 -72.5     0.0  3.756042    3.234723    6.5
+6   42.5 -71.5     0.0  3.727119    3.220260    6.5
+7   43.5 -72.5     0.0  3.756042    2.938345    6.5
+8   43.5 -71.5     0.0  3.727119    3.067319    6.5
+9   43.5 -70.5     0.0  3.715801    3.247847    6.5
+10  43.5 -69.5     0.0  3.715801    3.240040    6.5
+11  44.5 -71.5     0.0  3.789325    3.085697    6.5
+12  44.5 -70.5     0.0  3.800911    3.113217    6.5
+13  44.5 -69.5     0.0  3.801596    3.090840    6.5
+14  44.5 -68.5     0.0  3.867980    3.112127    6.5
+15  44.5 -67.5     0.0  3.871522    3.341162    6.5
+16  45.5 -70.5     0.0  3.967777    2.840428    6.5
+17  45.5 -69.5     0.0  3.967777    3.012618    6.5
+18  45.5 -68.5     0.0  4.369716    3.017834    6.5
+19  45.5 -67.5     0.0  4.411296    3.057651    6.5
+20  46.5 -70.5     0.0  3.967777    2.716872    6.5
+21  46.5 -69.5     0.0  3.967777    2.657954    6.5
+22  46.5 -68.5     0.0  4.369716    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.551522    3.276787    6.5
+1   41.5 -72.5     0.0  3.551775    3.253754    6.5
+2   41.5 -71.5     0.0  3.495075    3.180979    6.5
+3   41.5 -70.5     0.0  3.471198    3.116461    6.5
+4   42.5 -73.5     0.0  3.756042    3.010783    6.5
+5   42.5 -72.5     0.0  3.756042    3.234723    6.5
+6   42.5 -71.5     0.0  3.727119    3.220260    6.5
+7   43.5 -72.5     0.0  3.756042    2.938345    6.5
+8   43.5 -71.5     0.0  3.727119    3.067319    6.5
+9   43.5 -70.5     0.0  3.715801    3.247847    6.5
+10  43.5 -69.5     0.0  3.715801    3.240040    6.5
+11  44.5 -71.5     0.0  3.789325    3.085697    6.5
+12  44.5 -70.5     0.0  3.800911    3.113217    6.5
+13  44.5 -69.5     0.0  3.801596    3.090840    6.5
+14  44.5 -68.5     0.0  3.867980    3.112127    6.5
+15  44.5 -67.5     0.0  3.871522    3.341162    6.5
+16  45.5 -70.5     0.0  3.967777    2.840428    6.5
+17  45.5 -69.5     0.0  3.967777    3.012618    6.5
+18  45.5 -68.5     0.0  4.369716    3.017834    6.5
+19  45.5 -67.5     0.0  4.411296    3.057651    6.5
+20  46.5 -70.5     0.0  3.967777    2.716872    6.5
+21  46.5 -69.5     0.0  3.967777    2.657954    6.5
+22  46.5 -68.5     0.0  4.369716    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  3.1550338620388736
+2. K-S Test's max distance of regional SPI6:  2.6590859030174414
+3. K-S Test's max distance of regional SPI36:  2.843034130445898
+4. K-S Test max distance of regional precipitation at each month:  1.1644673558770497
+5. K-S Test of long term regional mean:  0.7075360319997626
+6. K-S Test's max distance of drought coverage:  2.5434734724514656
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.8560316826558043
+8. Z-test on SPI6 in all dry months:  0.8624413151078111
+8. KS test:  1.594305850024632
+9. Annual dry month z test: 1.0553583840659992
+10. K-S Test's max distance of drought duration:  0.552925175797656
+11. Z-test on the probability of drought initiation:  0.11642872309649344
+12. Z-test on the probability of drought termination:  1.7889077057169627
+
+The Total Score is:  19.48366310139038
+The relative bias score is 0.5772274109037777
+The RMSE score is 0.22624138756159834
+The phase shift score is 0.653525604923719
+The interannual variability score is 1.083641280114475
+The spatial distribution score is 0.21083211265714288
+
+For MIROC-ES2L r1i1p1f2 model in New England Region the overall score from ILAMB paper is  0.49628486395371857
+
+*****************************************************
+Test data file 19
+
+Reading pr_Amon_EC-Earth3_historical_r1i1p1f1_gr_187801-187812_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_256x512_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.666531    3.276787    6.5
+1   41.5 -72.5     0.0  3.742544    3.253754    6.5
+2   41.5 -71.5     0.0  3.725710    3.180979    6.5
+3   41.5 -70.5     0.0  3.539691    3.116461    6.5
+4   42.5 -73.5     0.0  3.515805    3.010783    6.5
+5   42.5 -72.5     0.0  3.785442    3.234723    6.5
+6   42.5 -71.5     0.0  3.759687    3.220260    6.5
+7   43.5 -72.5     0.0  3.576132    2.938345    6.5
+8   43.5 -71.5     0.0  3.683365    3.067319    6.5
+9   43.5 -70.5     0.0  3.502842    3.247847    6.5
+10  43.5 -69.5     0.0  3.392051    3.240040    6.5
+11  44.5 -71.5     0.0  3.835890    3.085697    6.5
+12  44.5 -70.5     0.0  3.834628    3.113217    6.5
+13  44.5 -69.5     0.0  3.676616    3.090840    6.5
+14  44.5 -68.5     0.0  3.708549    3.112127    6.5
+15  44.5 -67.5     0.0  3.791078    3.341162    6.5
+16  45.5 -70.5     0.0  3.776068    2.840428    6.5
+17  45.5 -69.5     0.0  3.699245    3.012618    6.5
+18  45.5 -68.5     0.0  3.722127    3.017834    6.5
+19  45.5 -67.5     0.0  3.892458    3.057651    6.5
+20  46.5 -70.5     0.0  3.501931    2.716872    6.5
+21  46.5 -69.5     0.0  3.500811    2.657954    6.5
+22  46.5 -68.5     0.0  3.514232    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.666531    3.276787    6.5
+1   41.5 -72.5     0.0  3.742544    3.253754    6.5
+2   41.5 -71.5     0.0  3.725710    3.180979    6.5
+3   41.5 -70.5     0.0  3.539691    3.116461    6.5
+4   42.5 -73.5     0.0  3.515805    3.010783    6.5
+5   42.5 -72.5     0.0  3.785442    3.234723    6.5
+6   42.5 -71.5     0.0  3.759687    3.220260    6.5
+7   43.5 -72.5     0.0  3.576132    2.938345    6.5
+8   43.5 -71.5     0.0  3.683365    3.067319    6.5
+9   43.5 -70.5     0.0  3.502842    3.247847    6.5
+10  43.5 -69.5     0.0  3.392051    3.240040    6.5
+11  44.5 -71.5     0.0  3.835890    3.085697    6.5
+12  44.5 -70.5     0.0  3.834628    3.113217    6.5
+13  44.5 -69.5     0.0  3.676616    3.090840    6.5
+14  44.5 -68.5     0.0  3.708549    3.112127    6.5
+15  44.5 -67.5     0.0  3.791078    3.341162    6.5
+16  45.5 -70.5     0.0  3.776068    2.840428    6.5
+17  45.5 -69.5     0.0  3.699245    3.012618    6.5
+18  45.5 -68.5     0.0  3.722127    3.017834    6.5
+19  45.5 -67.5     0.0  3.892458    3.057651    6.5
+20  46.5 -70.5     0.0  3.501931    2.716872    6.5
+21  46.5 -69.5     0.0  3.500811    2.657954    6.5
+22  46.5 -68.5     0.0  3.514232    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.8236832737882156
+2. K-S Test's max distance of regional SPI6:  2.297797057498767
+3. K-S Test's max distance of regional SPI36:  2.106496790952142
+4. K-S Test max distance of regional precipitation at each month:  0.9773208165396668
+5. K-S Test of long term regional mean:  1.0613040479996438
+6. K-S Test's max distance of drought coverage:  2.8758592103286458
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.6964988597074897
+8. Z-test on SPI6 in all dry months:  0.803217164478523
+8. KS test:  2.670686470030014
+9. Annual dry month z test: 1.5550816864603925
+10. K-S Test's max distance of drought duration:  0.2777710981996924
+11. Z-test on the probability of drought initiation:  1.1768711762857493
+12. Z-test on the probability of drought termination:  0.9141624082621965
+
+The Total Score is:  21.155761797852925
+The relative bias score is 0.6466543449441087
+The RMSE score is 0.23755935752144236
+The phase shift score is 0.45652173913043465
+The interannual variability score is 1.0509527561202245
+The spatial distribution score is 0.602291397513513
+
+For EC-Earth3 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5385898254585276
+
+*****************************************************
+Test data file 20
+
+Reading pr_Amon_UKESM1-0-LL_historical_r1i1p1f2_gn_195001-201412_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_144x192_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.753322    3.276787    6.5
+1   41.5 -72.5     0.0  3.953656    3.253754    6.5
+2   41.5 -71.5     0.0  3.918072    3.180979    6.5
+3   41.5 -70.5     0.0  3.812165    3.116461    6.5
+4   42.5 -73.5     0.0  3.592306    3.010783    6.5
+5   42.5 -72.5     0.0  3.751546    3.234723    6.5
+6   42.5 -71.5     0.0  3.726915    3.220260    6.5
+7   43.5 -72.5     0.0  3.490667    2.938345    6.5
+8   43.5 -71.5     0.0  3.509336    3.067319    6.5
+9   43.5 -70.5     0.0  3.566206    3.247847    6.5
+10  43.5 -69.5     0.0  3.648535    3.240040    6.5
+11  44.5 -71.5     0.0  3.348720    3.085697    6.5
+12  44.5 -70.5     0.0  3.497741    3.113217    6.5
+13  44.5 -69.5     0.0  3.570648    3.090840    6.5
+14  44.5 -68.5     0.0  3.692221    3.112127    6.5
+15  44.5 -67.5     0.0  3.861891    3.341162    6.5
+16  45.5 -70.5     0.0  3.273641    2.840428    6.5
+17  45.5 -69.5     0.0  3.384487    3.012618    6.5
+18  45.5 -68.5     0.0  3.569943    3.017834    6.5
+19  45.5 -67.5     0.0  3.699720    3.057651    6.5
+20  46.5 -70.5     0.0  3.248595    2.716872    6.5
+21  46.5 -69.5     0.0  3.310457    2.657954    6.5
+22  46.5 -68.5     0.0  3.414057    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.753322    3.276787    6.5
+1   41.5 -72.5     0.0  3.953656    3.253754    6.5
+2   41.5 -71.5     0.0  3.918072    3.180979    6.5
+3   41.5 -70.5     0.0  3.812165    3.116461    6.5
+4   42.5 -73.5     0.0  3.592306    3.010783    6.5
+5   42.5 -72.5     0.0  3.751546    3.234723    6.5
+6   42.5 -71.5     0.0  3.726915    3.220260    6.5
+7   43.5 -72.5     0.0  3.490667    2.938345    6.5
+8   43.5 -71.5     0.0  3.509336    3.067319    6.5
+9   43.5 -70.5     0.0  3.566206    3.247847    6.5
+10  43.5 -69.5     0.0  3.648535    3.240040    6.5
+11  44.5 -71.5     0.0  3.348720    3.085697    6.5
+12  44.5 -70.5     0.0  3.497741    3.113217    6.5
+13  44.5 -69.5     0.0  3.570648    3.090840    6.5
+14  44.5 -68.5     0.0  3.692221    3.112127    6.5
+15  44.5 -67.5     0.0  3.861891    3.341162    6.5
+16  45.5 -70.5     0.0  3.273641    2.840428    6.5
+17  45.5 -69.5     0.0  3.384487    3.012618    6.5
+18  45.5 -68.5     0.0  3.569943    3.017834    6.5
+19  45.5 -67.5     0.0  3.699720    3.057651    6.5
+20  46.5 -70.5     0.0  3.248595    2.716872    6.5
+21  46.5 -69.5     0.0  3.310457    2.657954    6.5
+22  46.5 -68.5     0.0  3.414057    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.2618279284936214
+2. K-S Test's max distance of regional SPI6:  1.979862873442334
+3. K-S Test's max distance of regional SPI36:  2.4011117267496442
+4. K-S Test max distance of regional precipitation at each month:  0.8317623970550355
+5. K-S Test of long term regional mean:  1.0613040479996438
+6. K-S Test's max distance of drought coverage:  1.1416727518390102
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.5058370255509357
+8. Z-test on SPI6 in all dry months:  0.24969907831852559
+8. KS test:  1.1250889788993674
+9. Annual dry month z test: 0.7683762588972073
+10. K-S Test's max distance of drought duration:  0.25035494581034873
+11. Z-test on the probability of drought initiation:  0.539177550960501
+12. Z-test on the probability of drought termination:  0.5934610365483239
+
+The Total Score is:  14.209482576435622
+The relative bias score is 0.7235623907763172
+The RMSE score is 0.2607361943780669
+The phase shift score is 0.7309642533256988
+The interannual variability score is 0.8798848514322934
+The spatial distribution score is 0.8889639882584356
+
+For UKESM1-0-LL r1i1p1f2 model in New England Region the overall score from ILAMB paper is  0.6241413120914797
+
+*****************************************************
+Test data file 21
+
+Reading pr_Amon_EC-Earth3-Veg_historical_r1i1p1f1_gr_200501-200512_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_256x512_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.678078    3.276787    6.5
+1   41.5 -72.5     0.0  3.732444    3.253754    6.5
+2   41.5 -71.5     0.0  3.707053    3.180979    6.5
+3   41.5 -70.5     0.0  3.497249    3.116461    6.5
+4   42.5 -73.5     0.0  3.483853    3.010783    6.5
+5   42.5 -72.5     0.0  3.762046    3.234723    6.5
+6   42.5 -71.5     0.0  3.754476    3.220260    6.5
+7   43.5 -72.5     0.0  3.525979    2.938345    6.5
+8   43.5 -71.5     0.0  3.675598    3.067319    6.5
+9   43.5 -70.5     0.0  3.493106    3.247847    6.5
+10  43.5 -69.5     0.0  3.342718    3.240040    6.5
+11  44.5 -71.5     0.0  3.793248    3.085697    6.5
+12  44.5 -70.5     0.0  3.786636    3.113217    6.5
+13  44.5 -69.5     0.0  3.631976    3.090840    6.5
+14  44.5 -68.5     0.0  3.652050    3.112127    6.5
+15  44.5 -67.5     0.0  3.709404    3.341162    6.5
+16  45.5 -70.5     0.0  3.745737    2.840428    6.5
+17  45.5 -69.5     0.0  3.647485    3.012618    6.5
+18  45.5 -68.5     0.0  3.654016    3.017834    6.5
+19  45.5 -67.5     0.0  3.826080    3.057651    6.5
+20  46.5 -70.5     0.0  3.488501    2.716872    6.5
+21  46.5 -69.5     0.0  3.481861    2.657954    6.5
+22  46.5 -68.5     0.0  3.480842    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.678078    3.276787    6.5
+1   41.5 -72.5     0.0  3.732444    3.253754    6.5
+2   41.5 -71.5     0.0  3.707053    3.180979    6.5
+3   41.5 -70.5     0.0  3.497249    3.116461    6.5
+4   42.5 -73.5     0.0  3.483853    3.010783    6.5
+5   42.5 -72.5     0.0  3.762046    3.234723    6.5
+6   42.5 -71.5     0.0  3.754476    3.220260    6.5
+7   43.5 -72.5     0.0  3.525979    2.938345    6.5
+8   43.5 -71.5     0.0  3.675598    3.067319    6.5
+9   43.5 -70.5     0.0  3.493106    3.247847    6.5
+10  43.5 -69.5     0.0  3.342718    3.240040    6.5
+11  44.5 -71.5     0.0  3.793248    3.085697    6.5
+12  44.5 -70.5     0.0  3.786636    3.113217    6.5
+13  44.5 -69.5     0.0  3.631976    3.090840    6.5
+14  44.5 -68.5     0.0  3.652050    3.112127    6.5
+15  44.5 -67.5     0.0  3.709404    3.341162    6.5
+16  45.5 -70.5     0.0  3.745737    2.840428    6.5
+17  45.5 -69.5     0.0  3.647485    3.012618    6.5
+18  45.5 -68.5     0.0  3.654016    3.017834    6.5
+19  45.5 -67.5     0.0  3.826080    3.057651    6.5
+20  46.5 -70.5     0.0  3.488501    2.716872    6.5
+21  46.5 -69.5     0.0  3.481861    2.657954    6.5
+22  46.5 -68.5     0.0  3.480842    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.780463631842477
+2. K-S Test's max distance of regional SPI6:  2.3556032727817553
+3. K-S Test's max distance of regional SPI36:  2.297996499220518
+4. K-S Test max distance of regional precipitation at each month:  0.9856384405102173
+5. K-S Test of long term regional mean:  1.1792267199996043
+6. K-S Test's max distance of drought coverage:  2.6157312415552005
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.4513625997340815
+8. Z-test on SPI6 in all dry months:  1.760283871450788
+8. KS test:  2.611774268485234
+9. Annual dry month z test: 1.4248842602888112
+10. K-S Test's max distance of drought duration:  0.3944475690346152
+11. Z-test on the probability of drought initiation:  0.8867750346743207
+12. Z-test on the probability of drought termination:  1.1861916216410844
+
+The Total Score is:  20.775647590733307
+The relative bias score is 0.6572080980220952
+The RMSE score is 0.22995690650893585
+The phase shift score is 0.4986483081197592
+The interannual variability score is 1.074206414452621
+The spatial distribution score is 0.5949071264917186
+
+For EC-Earth3-Veg r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.547480626684011
+
+*****************************************************
+Test data file 22
+
+Reading pr_Amon_HadGEM3-GC31-LL_historical_r1i1p1f3_gn_185001-194912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_144x192_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.821588    3.276787    6.5
+1   41.5 -72.5     0.0  4.098495    3.253754    6.5
+2   41.5 -71.5     0.0  4.085402    3.180979    6.5
+3   41.5 -70.5     0.0  4.047230    3.116461    6.5
+4   42.5 -73.5     0.0  3.761748    3.010783    6.5
+5   42.5 -72.5     0.0  3.938447    3.234723    6.5
+6   42.5 -71.5     0.0  3.913352    3.220260    6.5
+7   43.5 -72.5     0.0  3.754531    2.938345    6.5
+8   43.5 -71.5     0.0  3.751417    3.067319    6.5
+9   43.5 -70.5     0.0  3.742479    3.247847    6.5
+10  43.5 -69.5     0.0  3.804493    3.240040    6.5
+11  44.5 -71.5     0.0  3.671833    3.085697    6.5
+12  44.5 -70.5     0.0  3.722593    3.113217    6.5
+13  44.5 -69.5     0.0  3.755159    3.090840    6.5
+14  44.5 -68.5     0.0  3.809494    3.112127    6.5
+15  44.5 -67.5     0.0  3.990637    3.341162    6.5
+16  45.5 -70.5     0.0  3.524450    2.840428    6.5
+17  45.5 -69.5     0.0  3.581778    3.012618    6.5
+18  45.5 -68.5     0.0  3.678000    3.017834    6.5
+19  45.5 -67.5     0.0  3.825665    3.057651    6.5
+20  46.5 -70.5     0.0  3.428356    2.716872    6.5
+21  46.5 -69.5     0.0  3.463560    2.657954    6.5
+22  46.5 -68.5     0.0  3.522952    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.821588    3.276787    6.5
+1   41.5 -72.5     0.0  4.098495    3.253754    6.5
+2   41.5 -71.5     0.0  4.085402    3.180979    6.5
+3   41.5 -70.5     0.0  4.047230    3.116461    6.5
+4   42.5 -73.5     0.0  3.761748    3.010783    6.5
+5   42.5 -72.5     0.0  3.938447    3.234723    6.5
+6   42.5 -71.5     0.0  3.913352    3.220260    6.5
+7   43.5 -72.5     0.0  3.754531    2.938345    6.5
+8   43.5 -71.5     0.0  3.751417    3.067319    6.5
+9   43.5 -70.5     0.0  3.742479    3.247847    6.5
+10  43.5 -69.5     0.0  3.804493    3.240040    6.5
+11  44.5 -71.5     0.0  3.671833    3.085697    6.5
+12  44.5 -70.5     0.0  3.722593    3.113217    6.5
+13  44.5 -69.5     0.0  3.755159    3.090840    6.5
+14  44.5 -68.5     0.0  3.809494    3.112127    6.5
+15  44.5 -67.5     0.0  3.990637    3.341162    6.5
+16  45.5 -70.5     0.0  3.524450    2.840428    6.5
+17  45.5 -69.5     0.0  3.581778    3.012618    6.5
+18  45.5 -68.5     0.0  3.678000    3.017834    6.5
+19  45.5 -67.5     0.0  3.825665    3.057651    6.5
+20  46.5 -70.5     0.0  3.428356    2.716872    6.5
+21  46.5 -69.5     0.0  3.463560    2.657954    6.5
+22  46.5 -68.5     0.0  3.522952    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  3.0541880308321514
+2. K-S Test's max distance of regional SPI6:  2.5723765800929597
+3. K-S Test's max distance of regional SPI36:  2.489496207488895
+4. K-S Test max distance of regional precipitation at each month:  1.0313853723482442
+5. K-S Test of long term regional mean:  1.2971493919995647
+6. K-S Test's max distance of drought coverage:  1.560767812640672
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.206226339760673
+8. Z-test on SPI6 in all dry months:  1.3344464027354264
+8. KS test:  2.382671262477757
+9. Annual dry month z test: 1.2391947357972115
+10. K-S Test's max distance of drought duration:  0.3944475690346152
+11. Z-test on the probability of drought initiation:  0.8706271550322885
+12. Z-test on the probability of drought termination:  0.7379382064157223
+
+The Total Score is:  19.44202109488614
+The relative bias score is 0.6431090895949475
+The RMSE score is 0.260862157667138
+The phase shift score is 0.5927815041832852
+The interannual variability score is 0.8915697624316126
+The spatial distribution score is 0.9079144477470134
+
+For HadGEM3-GC31-LL r1i1p1f3 model in New England Region the overall score from ILAMB paper is  0.592849853215189
+
+*****************************************************
+Test data file 23
+
+Reading pr_Amon_GFDL-CM4_historical_r1i1p1f1_gr1_185001-194912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_180x288_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.460904    3.276787    6.5
+1   41.5 -72.5     0.0  3.423985    3.253754    6.5
+2   41.5 -71.5     0.0  3.386292    3.180979    6.5
+3   41.5 -70.5     0.0  3.374228    3.116461    6.5
+4   42.5 -73.5     0.0  3.446211    3.010783    6.5
+5   42.5 -72.5     0.0  3.494566    3.234723    6.5
+6   42.5 -71.5     0.0  3.514231    3.220260    6.5
+7   43.5 -72.5     0.0  3.433754    2.938345    6.5
+8   43.5 -71.5     0.0  3.479304    3.067319    6.5
+9   43.5 -70.5     0.0  3.488501    3.247847    6.5
+10  43.5 -69.5     0.0  3.490197    3.240040    6.5
+11  44.5 -71.5     0.0  3.366667    3.085697    6.5
+12  44.5 -70.5     0.0  3.372872    3.113217    6.5
+13  44.5 -69.5     0.0  3.525242    3.090840    6.5
+14  44.5 -68.5     0.0  3.570806    3.112127    6.5
+15  44.5 -67.5     0.0  3.575776    3.341162    6.5
+16  45.5 -70.5     0.0  3.302439    2.840428    6.5
+17  45.5 -69.5     0.0  3.334737    3.012618    6.5
+18  45.5 -68.5     0.0  3.464025    3.017834    6.5
+19  45.5 -67.5     0.0  3.527644    3.057651    6.5
+20  46.5 -70.5     0.0  3.273918    2.716872    6.5
+21  46.5 -69.5     0.0  3.316037    2.657954    6.5
+22  46.5 -68.5     0.0  3.327582    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.460904    3.276787    6.5
+1   41.5 -72.5     0.0  3.423985    3.253754    6.5
+2   41.5 -71.5     0.0  3.386292    3.180979    6.5
+3   41.5 -70.5     0.0  3.374228    3.116461    6.5
+4   42.5 -73.5     0.0  3.446211    3.010783    6.5
+5   42.5 -72.5     0.0  3.494566    3.234723    6.5
+6   42.5 -71.5     0.0  3.514231    3.220260    6.5
+7   43.5 -72.5     0.0  3.433754    2.938345    6.5
+8   43.5 -71.5     0.0  3.479304    3.067319    6.5
+9   43.5 -70.5     0.0  3.488501    3.247847    6.5
+10  43.5 -69.5     0.0  3.490197    3.240040    6.5
+11  44.5 -71.5     0.0  3.366667    3.085697    6.5
+12  44.5 -70.5     0.0  3.372872    3.113217    6.5
+13  44.5 -69.5     0.0  3.525242    3.090840    6.5
+14  44.5 -68.5     0.0  3.570806    3.112127    6.5
+15  44.5 -67.5     0.0  3.575776    3.341162    6.5
+16  45.5 -70.5     0.0  3.302439    2.840428    6.5
+17  45.5 -69.5     0.0  3.334737    3.012618    6.5
+18  45.5 -68.5     0.0  3.464025    3.017834    6.5
+19  45.5 -67.5     0.0  3.527644    3.057651    6.5
+20  46.5 -70.5     0.0  3.273918    2.716872    6.5
+21  46.5 -69.5     0.0  3.316037    2.657954    6.5
+22  46.5 -68.5     0.0  3.327582    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.9304773402429634
+2. K-S Test's max distance of regional SPI6:  1.604122474102913
+3. K-S Test's max distance of regional SPI36:  1.4436131854077616
+4. K-S Test max distance of regional precipitation at each month:  0.7735390292611831
+5. K-S Test of long term regional mean:  0.8254587039997231
+6. K-S Test's max distance of drought coverage:  1.242833628584239
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.5758759569719092
+8. Z-test on SPI6 in all dry months:  0.047136675963641156
+8. KS test:  1.4866239500929597
+9. Annual dry month z test: 0.8603596473514562
+10. K-S Test's max distance of drought duration:  0.45788210508446964
+11. Z-test on the probability of drought initiation:  0.14781750309532074
+12. Z-test on the probability of drought termination:  1.3325598075590874
+
+The Total Score is:  13.223281226669515
+The relative bias score is 0.7724027211765399
+The RMSE score is 0.2466642320937601
+The phase shift score is 0.5933527963926075
+The interannual variability score is 1.0100125968162612
+The spatial distribution score is 0.5077668825664311
+
+For GFDL-CM4 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.56281057685656
+
+*****************************************************
+Test data file 24
+
+Reading pr_Amon_GFDL-ESM4_historical_r1i1p1f1_gr1_195001-201412_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_180x288_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.708514    3.276787    6.5
+1   41.5 -72.5     0.0  3.719411    3.253754    6.5
+2   41.5 -71.5     0.0  3.719445    3.180979    6.5
+3   41.5 -70.5     0.0  3.715847    3.116461    6.5
+4   42.5 -73.5     0.0  3.684232    3.010783    6.5
+5   42.5 -72.5     0.0  3.735504    3.234723    6.5
+6   42.5 -71.5     0.0  3.745787    3.220260    6.5
+7   43.5 -72.5     0.0  3.702771    2.938345    6.5
+8   43.5 -71.5     0.0  3.729460    3.067319    6.5
+9   43.5 -70.5     0.0  3.682758    3.247847    6.5
+10  43.5 -69.5     0.0  3.749164    3.240040    6.5
+11  44.5 -71.5     0.0  3.702853    3.085697    6.5
+12  44.5 -70.5     0.0  3.680242    3.113217    6.5
+13  44.5 -69.5     0.0  3.763389    3.090840    6.5
+14  44.5 -68.5     0.0  3.786445    3.112127    6.5
+15  44.5 -67.5     0.0  3.827758    3.341162    6.5
+16  45.5 -70.5     0.0  3.666026    2.840428    6.5
+17  45.5 -69.5     0.0  3.588168    3.012618    6.5
+18  45.5 -68.5     0.0  3.698151    3.017834    6.5
+19  45.5 -67.5     0.0  3.766288    3.057651    6.5
+20  46.5 -70.5     0.0  3.541787    2.716872    6.5
+21  46.5 -69.5     0.0  3.594599    2.657954    6.5
+22  46.5 -68.5     0.0  3.620128    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.708514    3.276787    6.5
+1   41.5 -72.5     0.0  3.719411    3.253754    6.5
+2   41.5 -71.5     0.0  3.719445    3.180979    6.5
+3   41.5 -70.5     0.0  3.715847    3.116461    6.5
+4   42.5 -73.5     0.0  3.684232    3.010783    6.5
+5   42.5 -72.5     0.0  3.735504    3.234723    6.5
+6   42.5 -71.5     0.0  3.745787    3.220260    6.5
+7   43.5 -72.5     0.0  3.702771    2.938345    6.5
+8   43.5 -71.5     0.0  3.729460    3.067319    6.5
+9   43.5 -70.5     0.0  3.682758    3.247847    6.5
+10  43.5 -69.5     0.0  3.749164    3.240040    6.5
+11  44.5 -71.5     0.0  3.702853    3.085697    6.5
+12  44.5 -70.5     0.0  3.680242    3.113217    6.5
+13  44.5 -69.5     0.0  3.763389    3.090840    6.5
+14  44.5 -68.5     0.0  3.786445    3.112127    6.5
+15  44.5 -67.5     0.0  3.827758    3.341162    6.5
+16  45.5 -70.5     0.0  3.666026    2.840428    6.5
+17  45.5 -69.5     0.0  3.588168    3.012618    6.5
+18  45.5 -68.5     0.0  3.698151    3.017834    6.5
+19  45.5 -67.5     0.0  3.766288    3.057651    6.5
+20  46.5 -70.5     0.0  3.541787    2.716872    6.5
+21  46.5 -69.5     0.0  3.594599    2.657954    6.5
+22  46.5 -68.5     0.0  3.620128    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.8380898211034613
+2. K-S Test's max distance of regional SPI6:  2.4712157033477307
+3. K-S Test's max distance of regional SPI36:  2.091766044162267
+4. K-S Test max distance of regional precipitation at each month:  0.9897972524954924
+5. K-S Test of long term regional mean:  1.0613040479996438
+6. K-S Test's max distance of drought coverage:  2.037669088725322
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.6964988597074897
+8. Z-test on SPI6 in all dry months:  0.712789690093355
+8. KS test:  2.5659536672837384
+9. Annual dry month z test: 1.5724239727066505
+10. K-S Test's max distance of drought duration:  0.3380570148998691
+11. Z-test on the probability of drought initiation:  1.1220363451004607
+12. Z-test on the probability of drought termination:  1.047942272885933
+
+The Total Score is:  20.49469707551819
+The relative bias score is 0.6395829165946617
+The RMSE score is 0.2469283309743022
+The phase shift score is 0.739910834453527
+The interannual variability score is 1.0046350878619756
+The spatial distribution score is 0.353915310033354
+
+For GFDL-ESM4 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5386501351486871
+
+*****************************************************
+Test data file 25
+
+Reading pr_Amon_GISS-E2-1-G_historical_r1i1p1f1_gn_185001-190012_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_90x144_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.729546    3.276787    6.5
+1   41.5 -72.5     0.0  3.686155    3.253754    6.5
+2   41.5 -71.5     0.0  3.642735    3.180979    6.5
+3   41.5 -70.5     0.0  3.642735    3.116461    6.5
+4   42.5 -73.5     0.0  4.577584    3.010783    6.5
+5   42.5 -72.5     0.0  3.828399    3.234723    6.5
+6   42.5 -71.5     0.0  3.078155    3.220260    6.5
+7   43.5 -72.5     0.0  3.828612    2.938345    6.5
+8   43.5 -71.5     0.0  3.075051    3.067319    6.5
+9   43.5 -70.5     0.0  3.075051    3.247847    6.5
+10  43.5 -69.5     0.0  3.888544    3.240040    6.5
+11  44.5 -71.5     0.0  4.001641    3.085697    6.5
+12  44.5 -70.5     0.0  4.003690    3.113217    6.5
+13  44.5 -69.5     0.0  3.320736    3.090840    6.5
+14  44.5 -68.5     0.0  3.321989    3.112127    6.5
+15  44.5 -67.5     0.0  3.790045    3.341162    6.5
+16  45.5 -70.5     0.0  4.006763    2.840428    6.5
+17  45.5 -69.5     0.0  3.318857    3.012618    6.5
+18  45.5 -68.5     0.0  3.318857    3.017834    6.5
+19  45.5 -67.5     0.0  3.789396    3.057651    6.5
+20  46.5 -70.5     0.0  3.161108    2.716872    6.5
+21  46.5 -69.5     0.0  2.938008    2.657954    6.5
+22  46.5 -68.5     0.0  2.938849    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.729546    3.276787    6.5
+1   41.5 -72.5     0.0  3.686155    3.253754    6.5
+2   41.5 -71.5     0.0  3.642735    3.180979    6.5
+3   41.5 -70.5     0.0  3.642735    3.116461    6.5
+4   42.5 -73.5     0.0  4.577584    3.010783    6.5
+5   42.5 -72.5     0.0  3.828399    3.234723    6.5
+6   42.5 -71.5     0.0  3.078155    3.220260    6.5
+7   43.5 -72.5     0.0  3.828612    2.938345    6.5
+8   43.5 -71.5     0.0  3.075051    3.067319    6.5
+9   43.5 -70.5     0.0  3.075051    3.247847    6.5
+10  43.5 -69.5     0.0  3.888544    3.240040    6.5
+11  44.5 -71.5     0.0  4.001641    3.085697    6.5
+12  44.5 -70.5     0.0  4.003690    3.113217    6.5
+13  44.5 -69.5     0.0  3.320736    3.090840    6.5
+14  44.5 -68.5     0.0  3.321989    3.112127    6.5
+15  44.5 -67.5     0.0  3.790045    3.341162    6.5
+16  45.5 -70.5     0.0  4.006763    2.840428    6.5
+17  45.5 -69.5     0.0  3.318857    3.012618    6.5
+18  45.5 -68.5     0.0  3.318857    3.017834    6.5
+19  45.5 -67.5     0.0  3.789396    3.057651    6.5
+20  46.5 -70.5     0.0  3.161108    2.716872    6.5
+21  46.5 -69.5     0.0  2.938008    2.657954    6.5
+22  46.5 -68.5     0.0  2.938849    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.1897951919173915
+2. K-S Test's max distance of regional SPI6:  1.8642504428763584
+3. K-S Test's max distance of regional SPI36:  1.4436131854077616
+4. K-S Test max distance of regional precipitation at each month:  0.8151271491139349
+5. K-S Test of long term regional mean:  1.0613040479996438
+6. K-S Test's max distance of drought coverage:  1.5318647049991783
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.7509732855243438
+8. Z-test on SPI6 in all dry months:  0.43148923521540206
+8. KS test:  2.0836315493732616
+9. Annual dry month z test: 0.9025788810449351
+10. K-S Test's max distance of drought duration:  0.27448538438472725
+11. Z-test on the probability of drought initiation:  0.6708609286207528
+12. Z-test on the probability of drought termination:  0.6475077178380587
+
+The Total Score is:  14.96150708471562
+The relative bias score is 0.7279408702060025
+The RMSE score is 0.25369296799605795
+The phase shift score is 0.8144369916334295
+The interannual variability score is 0.9406994817950575
+The spatial distribution score is 0.3516244258867913
+
+For GISS-E2-1-G r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5570146175855661
+
+*****************************************************
+Test data file 26
+
+Reading pr_Amon_GISS-E2-1-H_historical_r1i1p1f1_gn_200101-201412_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_90x144_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.049351    3.276787    6.5
+1   41.5 -72.5     0.0  3.573151    3.253754    6.5
+2   41.5 -71.5     0.0  4.096883    3.180979    6.5
+3   41.5 -70.5     0.0  4.096883    3.116461    6.5
+4   42.5 -73.5     0.0  5.287765    3.010783    6.5
+5   42.5 -72.5     0.0  3.887941    3.234723    6.5
+6   42.5 -71.5     0.0  2.485771    3.220260    6.5
+7   43.5 -72.5     0.0  3.888493    2.938345    6.5
+8   43.5 -71.5     0.0  2.476914    3.067319    6.5
+9   43.5 -70.5     0.0  2.476914    3.247847    6.5
+10  43.5 -69.5     0.0  4.538372    3.240040    6.5
+11  44.5 -71.5     0.0  4.987575    3.085697    6.5
+12  44.5 -70.5     0.0  4.993126    3.113217    6.5
+13  44.5 -69.5     0.0  2.563767    3.090840    6.5
+14  44.5 -68.5     0.0  2.568124    3.112127    6.5
+15  44.5 -67.5     0.0  3.285047    3.341162    6.5
+16  45.5 -70.5     0.0  5.001454    2.840428    6.5
+17  45.5 -69.5     0.0  2.557232    3.012618    6.5
+18  45.5 -68.5     0.0  2.557232    3.017834    6.5
+19  45.5 -67.5     0.0  3.283295    3.057651    6.5
+20  46.5 -70.5     0.0  2.645983    2.716872    6.5
+21  46.5 -69.5     0.0  3.469465    2.657954    6.5
+22  46.5 -68.5     0.0  3.467451    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.049351    3.276787    6.5
+1   41.5 -72.5     0.0  3.573151    3.253754    6.5
+2   41.5 -71.5     0.0  4.096883    3.180979    6.5
+3   41.5 -70.5     0.0  4.096883    3.116461    6.5
+4   42.5 -73.5     0.0  5.287765    3.010783    6.5
+5   42.5 -72.5     0.0  3.887941    3.234723    6.5
+6   42.5 -71.5     0.0  2.485771    3.220260    6.5
+7   43.5 -72.5     0.0  3.888493    2.938345    6.5
+8   43.5 -71.5     0.0  2.476914    3.067319    6.5
+9   43.5 -70.5     0.0  2.476914    3.247847    6.5
+10  43.5 -69.5     0.0  4.538372    3.240040    6.5
+11  44.5 -71.5     0.0  4.987575    3.085697    6.5
+12  44.5 -70.5     0.0  4.993126    3.113217    6.5
+13  44.5 -69.5     0.0  2.563767    3.090840    6.5
+14  44.5 -68.5     0.0  2.568124    3.112127    6.5
+15  44.5 -67.5     0.0  3.285047    3.341162    6.5
+16  45.5 -70.5     0.0  5.001454    2.840428    6.5
+17  45.5 -69.5     0.0  2.557232    3.012618    6.5
+18  45.5 -68.5     0.0  2.557232    3.017834    6.5
+19  45.5 -67.5     0.0  3.283295    3.057651    6.5
+20  46.5 -70.5     0.0  2.645983    2.716872    6.5
+21  46.5 -69.5     0.0  3.469465    2.657954    6.5
+22  46.5 -68.5     0.0  3.467451    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.0313231714496855
+2. K-S Test's max distance of regional SPI6:  2.09547530400831
+3. K-S Test's max distance of regional SPI36:  1.5761899065166376
+4. K-S Test max distance of regional precipitation at each month:  0.7860154652170087
+5. K-S Test of long term regional mean:  1.1792267199996043
+6. K-S Test's max distance of drought coverage:  0.5636105990091316
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.7509732855243438
+8. Z-test on SPI6 in all dry months:  0.44123055933921174
+8. KS test:  0.9598210146418495
+9. Annual dry month z test: 0.9677715107517807
+10. K-S Test's max distance of drought duration:  0.32447102046745646
+11. Z-test on the probability of drought initiation:  0.27615306865667566
+12. Z-test on the probability of drought termination:  1.347387383442431
+
+The Total Score is:  13.53394742921746
+The relative bias score is 0.6190677853963307
+The RMSE score is 0.24641576734230322
+The phase shift score is 0.5456103524207243
+The interannual variability score is 0.9631143769176503
+The spatial distribution score is 0.06800783086173698
+
+For GISS-E2-1-H r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.44810531338017473
+
+*****************************************************
+Test data file 27
+
+Reading pr_Amon_MIROC6_historical_r1i1p1f1_gn_185001-194912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_128x256_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  4.234400    3.276787    6.5
+1   41.5 -72.5     0.0  4.229542    3.253754    6.5
+2   41.5 -71.5     0.0  4.198530    3.180979    6.5
+3   41.5 -70.5     0.0  3.970493    3.116461    6.5
+4   42.5 -73.5     0.0  4.079397    3.010783    6.5
+5   42.5 -72.5     0.0  4.172546    3.234723    6.5
+6   42.5 -71.5     0.0  4.228251    3.220260    6.5
+7   43.5 -72.5     0.0  3.992499    2.938345    6.5
+8   43.5 -71.5     0.0  4.124537    3.067319    6.5
+9   43.5 -70.5     0.0  4.102876    3.247847    6.5
+10  43.5 -69.5     0.0  4.060321    3.240040    6.5
+11  44.5 -71.5     0.0  3.993724    3.085697    6.5
+12  44.5 -70.5     0.0  4.149427    3.113217    6.5
+13  44.5 -69.5     0.0  4.135622    3.090840    6.5
+14  44.5 -68.5     0.0  4.140350    3.112127    6.5
+15  44.5 -67.5     0.0  4.193284    3.341162    6.5
+16  45.5 -70.5     0.0  3.999533    2.840428    6.5
+17  45.5 -69.5     0.0  4.125743    3.012618    6.5
+18  45.5 -68.5     0.0  4.230398    3.017834    6.5
+19  45.5 -67.5     0.0  4.323574    3.057651    6.5
+20  46.5 -70.5     0.0  3.757730    2.716872    6.5
+21  46.5 -69.5     0.0  3.904739    2.657954    6.5
+22  46.5 -68.5     0.0  4.025532    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  4.234400    3.276787    6.5
+1   41.5 -72.5     0.0  4.229542    3.253754    6.5
+2   41.5 -71.5     0.0  4.198530    3.180979    6.5
+3   41.5 -70.5     0.0  3.970493    3.116461    6.5
+4   42.5 -73.5     0.0  4.079397    3.010783    6.5
+5   42.5 -72.5     0.0  4.172546    3.234723    6.5
+6   42.5 -71.5     0.0  4.228251    3.220260    6.5
+7   43.5 -72.5     0.0  3.992499    2.938345    6.5
+8   43.5 -71.5     0.0  4.124537    3.067319    6.5
+9   43.5 -70.5     0.0  4.102876    3.247847    6.5
+10  43.5 -69.5     0.0  4.060321    3.240040    6.5
+11  44.5 -71.5     0.0  3.993724    3.085697    6.5
+12  44.5 -70.5     0.0  4.149427    3.113217    6.5
+13  44.5 -69.5     0.0  4.135622    3.090840    6.5
+14  44.5 -68.5     0.0  4.140350    3.112127    6.5
+15  44.5 -67.5     0.0  4.193284    3.341162    6.5
+16  45.5 -70.5     0.0  3.999533    2.840428    6.5
+17  45.5 -69.5     0.0  4.125743    3.012618    6.5
+18  45.5 -68.5     0.0  4.230398    3.017834    6.5
+19  45.5 -67.5     0.0  4.323574    3.057651    6.5
+20  46.5 -70.5     0.0  3.757730    2.716872    6.5
+21  46.5 -69.5     0.0  3.904739    2.657954    6.5
+22  46.5 -68.5     0.0  4.025532    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  4.149085626790847
+2. K-S Test's max distance of regional SPI6:  3.699597778111223
+3. K-S Test's max distance of regional SPI36:  3.6679559506789046
+4. K-S Test max distance of regional precipitation at each month:  1.3308198352880571
+5. K-S Test of long term regional mean:  1.2971493919995647
+6. K-S Test's max distance of drought coverage:  2.5145703648099715
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  3.2568103110752795
+8. Z-test on SPI6 in all dry months:  0.1910257317668458
+8. KS test:  1.1830046128386067
+9. Annual dry month z test: 1.9374338737471892
+10. K-S Test's max distance of drought duration:  0.2827791415889305
+11. Z-test on the probability of drought initiation:  1.5857476518739813
+12. Z-test on the probability of drought termination:  0.8184630004586457
+
+The Total Score is:  25.44063839767227
+The relative bias score is 0.5177860799571078
+The RMSE score is 0.2672182220289783
+The phase shift score is 0.5861761220682121
+The interannual variability score is 0.9001349757561239
+The spatial distribution score is 0.7414108277815341
+
+For MIROC6 r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5466574082701557
+
+*****************************************************
+Test data file 28
+
+Reading pr_Amon_MPI-ESM-1-2-HAM_historical_r1i1p1f1_gn_199001-200912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_96x192_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.250674    3.276787    6.5
+1   41.5 -72.5     0.0  3.202553    3.253754    6.5
+2   41.5 -71.5     0.0  2.993559    3.180979    6.5
+3   41.5 -70.5     0.0  2.767778    3.116461    6.5
+4   42.5 -73.5     0.0  3.251531    3.010783    6.5
+5   42.5 -72.5     0.0  3.212665    3.234723    6.5
+6   42.5 -71.5     0.0  3.043315    3.220260    6.5
+7   43.5 -72.5     0.0  3.319996    2.938345    6.5
+8   43.5 -71.5     0.0  3.382450    3.067319    6.5
+9   43.5 -70.5     0.0  3.368495    3.247847    6.5
+10  43.5 -69.5     0.0  3.337795    3.240040    6.5
+11  44.5 -71.5     0.0  3.390183    3.085697    6.5
+12  44.5 -70.5     0.0  3.390076    3.113217    6.5
+13  44.5 -69.5     0.0  3.389286    3.090840    6.5
+14  44.5 -68.5     0.0  3.268637    3.112127    6.5
+15  44.5 -67.5     0.0  3.112204    3.341162    6.5
+16  45.5 -70.5     0.0  3.462617    2.840428    6.5
+17  45.5 -69.5     0.0  3.564238    3.012618    6.5
+18  45.5 -68.5     0.0  3.517521    3.017834    6.5
+19  45.5 -67.5     0.0  3.457458    3.057651    6.5
+20  46.5 -70.5     0.0  3.432332    2.716872    6.5
+21  46.5 -69.5     0.0  3.510039    2.657954    6.5
+22  46.5 -68.5     0.0  3.475541    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.250674    3.276787    6.5
+1   41.5 -72.5     0.0  3.202553    3.253754    6.5
+2   41.5 -71.5     0.0  2.993559    3.180979    6.5
+3   41.5 -70.5     0.0  2.767778    3.116461    6.5
+4   42.5 -73.5     0.0  3.251531    3.010783    6.5
+5   42.5 -72.5     0.0  3.212665    3.234723    6.5
+6   42.5 -71.5     0.0  3.043315    3.220260    6.5
+7   43.5 -72.5     0.0  3.319996    2.938345    6.5
+8   43.5 -71.5     0.0  3.382450    3.067319    6.5
+9   43.5 -70.5     0.0  3.368495    3.247847    6.5
+10  43.5 -69.5     0.0  3.337795    3.240040    6.5
+11  44.5 -71.5     0.0  3.390183    3.085697    6.5
+12  44.5 -70.5     0.0  3.390076    3.113217    6.5
+13  44.5 -69.5     0.0  3.389286    3.090840    6.5
+14  44.5 -68.5     0.0  3.268637    3.112127    6.5
+15  44.5 -67.5     0.0  3.112204    3.341162    6.5
+16  45.5 -70.5     0.0  3.462617    2.840428    6.5
+17  45.5 -69.5     0.0  3.564238    3.012618    6.5
+18  45.5 -68.5     0.0  3.517521    3.017834    6.5
+19  45.5 -67.5     0.0  3.457458    3.057651    6.5
+20  46.5 -70.5     0.0  3.432332    2.716872    6.5
+21  46.5 -69.5     0.0  3.510039    2.657954    6.5
+22  46.5 -68.5     0.0  3.475541    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  1.4838743734703377
+2. K-S Test's max distance of regional SPI6:  1.3728976129709616
+3. K-S Test's max distance of regional SPI36:  0.736537339493756
+4. K-S Test max distance of regional precipitation at each month:  0.7818566532317335
+5. K-S Test of long term regional mean:  0.4716906879998417
+6. K-S Test's max distance of drought coverage:  1.994314427263081
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.470817559840449
+8. Z-test on SPI6 in all dry months:  0.503695029491076
+8. KS test:  1.603721042052337
+9. Annual dry month z test: 0.814750230013717
+10. K-S Test's max distance of drought duration:  0.31923761691152974
+11. Z-test on the probability of drought initiation:  0.2521306207981134
+12. Z-test on the probability of drought termination:  1.026009096620017
+
+The Total Score is:  12.008599643754344
+The relative bias score is 0.7819985012867235
+The RMSE score is 0.2281373304693888
+The phase shift score is 0.5745261571799024
+The interannual variability score is 1.105619550829904
+The spatial distribution score is 0.22854622957914267
+
+For MPI-ESM-1-2-HAM r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.5244941833024084
+
+*****************************************************
+Test data file 29
+
+Reading pr_Amon_MPI-ESM1-2-HR_historical_r1i1p1f1_gn_198001-198412_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Create weight file: conservative_192x384_180x360.nc
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.232048    3.276787    6.5
+1   41.5 -72.5     0.0  3.074247    3.253754    6.5
+2   41.5 -71.5     0.0  3.034379    3.180979    6.5
+3   41.5 -70.5     0.0  2.852576    3.116461    6.5
+4   42.5 -73.5     0.0  3.593401    3.010783    6.5
+5   42.5 -72.5     0.0  3.462301    3.234723    6.5
+6   42.5 -71.5     0.0  3.383942    3.220260    6.5
+7   43.5 -72.5     0.0  3.630950    2.938345    6.5
+8   43.5 -71.5     0.0  3.631746    3.067319    6.5
+9   43.5 -70.5     0.0  3.418821    3.247847    6.5
+10  43.5 -69.5     0.0  3.299456    3.240040    6.5
+11  44.5 -71.5     0.0  3.632709    3.085697    6.5
+12  44.5 -70.5     0.0  3.779926    3.113217    6.5
+13  44.5 -69.5     0.0  3.845769    3.090840    6.5
+14  44.5 -68.5     0.0  3.671738    3.112127    6.5
+15  44.5 -67.5     0.0  3.637411    3.341162    6.5
+16  45.5 -70.5     0.0  3.803292    2.840428    6.5
+17  45.5 -69.5     0.0  3.783152    3.012618    6.5
+18  45.5 -68.5     0.0  3.719000    3.017834    6.5
+19  45.5 -67.5     0.0  3.666817    3.057651    6.5
+20  46.5 -70.5     0.0  3.612050    2.716872    6.5
+21  46.5 -69.5     0.0  3.463595    2.657954    6.5
+22  46.5 -68.5     0.0  3.559754    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.232048    3.276787    6.5
+1   41.5 -72.5     0.0  3.074247    3.253754    6.5
+2   41.5 -71.5     0.0  3.034379    3.180979    6.5
+3   41.5 -70.5     0.0  2.852576    3.116461    6.5
+4   42.5 -73.5     0.0  3.593401    3.010783    6.5
+5   42.5 -72.5     0.0  3.462301    3.234723    6.5
+6   42.5 -71.5     0.0  3.383942    3.220260    6.5
+7   43.5 -72.5     0.0  3.630950    2.938345    6.5
+8   43.5 -71.5     0.0  3.631746    3.067319    6.5
+9   43.5 -70.5     0.0  3.418821    3.247847    6.5
+10  43.5 -69.5     0.0  3.299456    3.240040    6.5
+11  44.5 -71.5     0.0  3.632709    3.085697    6.5
+12  44.5 -70.5     0.0  3.779926    3.113217    6.5
+13  44.5 -69.5     0.0  3.845769    3.090840    6.5
+14  44.5 -68.5     0.0  3.671738    3.112127    6.5
+15  44.5 -67.5     0.0  3.637411    3.341162    6.5
+16  45.5 -70.5     0.0  3.803292    2.840428    6.5
+17  45.5 -69.5     0.0  3.783152    3.012618    6.5
+18  45.5 -68.5     0.0  3.719000    3.017834    6.5
+19  45.5 -67.5     0.0  3.666817    3.057651    6.5
+20  46.5 -70.5     0.0  3.612050    2.716872    6.5
+21  46.5 -69.5     0.0  3.463595    2.657954    6.5
+22  46.5 -68.5     0.0  3.559754    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  2.2330148338631295
+2. K-S Test's max distance of regional SPI6:  1.7919926737726237
+3. K-S Test's max distance of regional SPI36:  1.885535589104015
+4. K-S Test max distance of regional precipitation at each month:  0.9066210127899889
+5. K-S Test of long term regional mean:  0.8254587039997231
+6. K-S Test's max distance of drought coverage:  1.3150913976879737
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.5058370255509357
+8. Z-test on SPI6 in all dry months:  0.024756335774037845
+8. KS test:  1.1019026505805385
+9. Annual dry month z test: 0.7920476834792136
+10. K-S Test's max distance of drought duration:  0.49252236417283446
+11. Z-test on the probability of drought initiation:  0.19835116542848746
+12. Z-test on the probability of drought termination:  1.1578088901716355
+
+The Total Score is:  13.713661626428262
+The relative bias score is 0.7265254488212136
+The RMSE score is 0.24454945070788467
+The phase shift score is 0.5339603875324146
+The interannual variability score is 0.9673609570323032
+The spatial distribution score is 0.2830006328604868
+
+For MPI-ESM1-2-HR r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.4999910546103646
+
+*****************************************************
+Test data file 30
+
+Reading pr_Amon_NorESM2-LM_historical_r1i1p1f1_gn_200001-200912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_96x144_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1950 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.275511    3.288678    6.5
+1   41.5 -72.5     0.0  3.351648    3.261617    6.5
+2   41.5 -71.5     0.0  3.391107    3.192534    6.5
+3   41.5 -70.5     0.0  3.515773    3.122736    6.5
+4   42.5 -73.5     0.0  3.038467    3.017432    6.5
+5   42.5 -72.5     0.0  3.079040    3.246118    6.5
+6   42.5 -71.5     0.0  3.076142    3.236006    6.5
+7   43.5 -72.5     0.0  3.002159    2.949661    6.5
+8   43.5 -71.5     0.0  3.014318    3.080626    6.5
+9   43.5 -70.5     0.0  3.052753    3.270239    6.5
+10  43.5 -69.5     0.0  3.052753    3.259183    6.5
+11  44.5 -71.5     0.0  2.927771    3.099246    6.5
+12  44.5 -70.5     0.0  3.031990    3.133585    6.5
+13  44.5 -69.5     0.0  3.031990    3.109015    6.5
+14  44.5 -68.5     0.0  3.068119    3.133688    6.5
+15  44.5 -67.5     0.0  3.080162    3.357510    6.5
+16  45.5 -70.5     0.0  2.956610    2.858312    6.5
+17  45.5 -69.5     0.0  2.956610    3.031171    6.5
+18  45.5 -68.5     0.0  3.005174    3.033473    6.5
+19  45.5 -67.5     0.0  3.021914    3.072608    6.5
+20  46.5 -70.5     0.0  2.886880    2.734344    6.5
+21  46.5 -69.5     0.0  2.886880    2.670677    6.5
+22  46.5 -68.5     0.0  2.947567    2.761283    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.275511    3.288678    6.5
+1   41.5 -72.5     0.0  3.351648    3.261617    6.5
+2   41.5 -71.5     0.0  3.391107    3.192534    6.5
+3   41.5 -70.5     0.0  3.515773    3.122736    6.5
+4   42.5 -73.5     0.0  3.038467    3.017432    6.5
+5   42.5 -72.5     0.0  3.079040    3.246118    6.5
+6   42.5 -71.5     0.0  3.076142    3.236006    6.5
+7   43.5 -72.5     0.0  3.002159    2.949661    6.5
+8   43.5 -71.5     0.0  3.014318    3.080626    6.5
+9   43.5 -70.5     0.0  3.052753    3.270239    6.5
+10  43.5 -69.5     0.0  3.052753    3.259183    6.5
+11  44.5 -71.5     0.0  2.927771    3.099246    6.5
+12  44.5 -70.5     0.0  3.031990    3.133585    6.5
+13  44.5 -69.5     0.0  3.031990    3.109015    6.5
+14  44.5 -68.5     0.0  3.068119    3.133688    6.5
+15  44.5 -67.5     0.0  3.080162    3.357510    6.5
+16  45.5 -70.5     0.0  2.956610    2.858312    6.5
+17  45.5 -69.5     0.0  2.956610    3.031171    6.5
+18  45.5 -68.5     0.0  3.005174    3.033473    6.5
+19  45.5 -67.5     0.0  3.021914    3.072608    6.5
+20  46.5 -70.5     0.0  2.886880    2.734344    6.5
+21  46.5 -69.5     0.0  2.886880    2.670677    6.5
+22  46.5 -68.5     0.0  2.947567    2.761283    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  0.5265542636483534
+2. K-S Test's max distance of regional SPI6:  0.8363959837100934
+3. K-S Test's max distance of regional SPI36:  0.8830022486683867
+4. K-S Test max distance of regional precipitation at each month:  0.5489001661366927
+5. K-S Test of long term regional mean:  0.23584534399992085
+6. K-S Test's max distance of drought coverage:  2.6852713161218786
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.0639584869851362
+8. Z-test on SPI6 in all dry months:  0.440725986859854
+8. KS test:  0.9722760329820656
+9. Annual dry month z test: 0.5274259958122225
+10. K-S Test's max distance of drought duration:  0.3245714723970932
+11. Z-test on the probability of drought initiation:  0.45785777621068596
+12. Z-test on the probability of drought termination:  0.24397389735429367
+
+The Total Score is:  8.98146151162973
+The relative bias score is 0.8916869391746921
+The RMSE score is 0.20299108015469672
+The phase shift score is 0.6977842654642025
+The interannual variability score is 1.2269983809323148
+The spatial distribution score is 0.7613181722285677
+
+For NorESM2-LM r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6639616530181951
+
+*****************************************************
+Test data file 31
+
+Reading pr_Amon_NorESM2-MM_historical_r1i1p1f1_gn_193001-193912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_192x288_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.317204    3.276787    6.5
+1   41.5 -72.5     0.0  3.388453    3.253754    6.5
+2   41.5 -71.5     0.0  3.421460    3.180979    6.5
+3   41.5 -70.5     0.0  3.422595    3.116461    6.5
+4   42.5 -73.5     0.0  3.202239    3.010783    6.5
+5   42.5 -72.5     0.0  3.279887    3.234723    6.5
+6   42.5 -71.5     0.0  3.301589    3.220260    6.5
+7   43.5 -72.5     0.0  3.106497    2.938345    6.5
+8   43.5 -71.5     0.0  3.191707    3.067319    6.5
+9   43.5 -70.5     0.0  3.164901    3.247847    6.5
+10  43.5 -69.5     0.0  3.117915    3.240040    6.5
+11  44.5 -71.5     0.0  3.084757    3.085697    6.5
+12  44.5 -70.5     0.0  3.118641    3.113217    6.5
+13  44.5 -69.5     0.0  3.118351    3.090840    6.5
+14  44.5 -68.5     0.0  3.115454    3.112127    6.5
+15  44.5 -67.5     0.0  3.209796    3.341162    6.5
+16  45.5 -70.5     0.0  3.007479    2.840428    6.5
+17  45.5 -69.5     0.0  3.029872    3.012618    6.5
+18  45.5 -68.5     0.0  3.087521    3.017834    6.5
+19  45.5 -67.5     0.0  3.201743    3.057651    6.5
+20  46.5 -70.5     0.0  2.935794    2.716872    6.5
+21  46.5 -69.5     0.0  2.937333    2.657954    6.5
+22  46.5 -68.5     0.0  2.989571    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.317204    3.276787    6.5
+1   41.5 -72.5     0.0  3.388453    3.253754    6.5
+2   41.5 -71.5     0.0  3.421460    3.180979    6.5
+3   41.5 -70.5     0.0  3.422595    3.116461    6.5
+4   42.5 -73.5     0.0  3.202239    3.010783    6.5
+5   42.5 -72.5     0.0  3.279887    3.234723    6.5
+6   42.5 -71.5     0.0  3.301589    3.220260    6.5
+7   43.5 -72.5     0.0  3.106497    2.938345    6.5
+8   43.5 -71.5     0.0  3.191707    3.067319    6.5
+9   43.5 -70.5     0.0  3.164901    3.247847    6.5
+10  43.5 -69.5     0.0  3.117915    3.240040    6.5
+11  44.5 -71.5     0.0  3.084757    3.085697    6.5
+12  44.5 -70.5     0.0  3.118641    3.113217    6.5
+13  44.5 -69.5     0.0  3.118351    3.090840    6.5
+14  44.5 -68.5     0.0  3.115454    3.112127    6.5
+15  44.5 -67.5     0.0  3.209796    3.341162    6.5
+16  45.5 -70.5     0.0  3.007479    2.840428    6.5
+17  45.5 -69.5     0.0  3.029872    3.012618    6.5
+18  45.5 -68.5     0.0  3.087521    3.017834    6.5
+19  45.5 -67.5     0.0  3.201743    3.057651    6.5
+20  46.5 -70.5     0.0  2.935794    2.716872    6.5
+21  46.5 -69.5     0.0  2.937333    2.657954    6.5
+22  46.5 -68.5     0.0  2.989571    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  0.8355797442842678
+2. K-S Test's max distance of regional SPI6:  0.780383906320336
+3. K-S Test's max distance of regional SPI36:  0.7659988330735061
+4. K-S Test max distance of regional precipitation at each month:  0.5614396180121491
+5. K-S Test of long term regional mean:  0.5896133599998021
+6. K-S Test's max distance of drought coverage:  1.560767812640672
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  1.5758759569719092
+8. Z-test on SPI6 in all dry months:  1.1968706121301895
+8. KS test:  2.301212415897321
+9. Annual dry month z test: 0.8167893736072905
+10. K-S Test's max distance of drought duration:  0.2505078511796614
+11. Z-test on the probability of drought initiation:  0.5446085327717055
+12. Z-test on the probability of drought termination:  0.7585340443028652
+
+The Total Score is:  11.090803597881825
+The relative bias score is 0.9066878935154582
+The RMSE score is 0.2263902199424134
+The phase shift score is 0.813656591962511
+The interannual variability score is 1.1384235011707893
+The spatial distribution score is 0.8159816262208075
+
+For NorESM2-MM r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6879216754590655
+
+*****************************************************
+Test data file 32
+
+Reading pr_Amon_SAM0-UNICON_historical_r1i1p1f1_gn_199001-199912_concat.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_192x288_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.269371    3.276787    6.5
+1   41.5 -72.5     0.0  3.328904    3.253754    6.5
+2   41.5 -71.5     0.0  3.436272    3.180979    6.5
+3   41.5 -70.5     0.0  3.518379    3.116461    6.5
+4   42.5 -73.5     0.0  3.198971    3.010783    6.5
+5   42.5 -72.5     0.0  3.353757    3.234723    6.5
+6   42.5 -71.5     0.0  3.308008    3.220260    6.5
+7   43.5 -72.5     0.0  3.196938    2.938345    6.5
+8   43.5 -71.5     0.0  3.323695    3.067319    6.5
+9   43.5 -70.5     0.0  3.243986    3.247847    6.5
+10  43.5 -69.5     0.0  3.210086    3.240040    6.5
+11  44.5 -71.5     0.0  3.163807    3.085697    6.5
+12  44.5 -70.5     0.0  3.274403    3.113217    6.5
+13  44.5 -69.5     0.0  3.300978    3.090840    6.5
+14  44.5 -68.5     0.0  3.262665    3.112127    6.5
+15  44.5 -67.5     0.0  3.416901    3.341162    6.5
+16  45.5 -70.5     0.0  3.154683    2.840428    6.5
+17  45.5 -69.5     0.0  3.303983    3.012618    6.5
+18  45.5 -68.5     0.0  3.460508    3.017834    6.5
+19  45.5 -67.5     0.0  3.449655    3.057651    6.5
+20  46.5 -70.5     0.0  3.086807    2.716872    6.5
+21  46.5 -69.5     0.0  3.105181    2.657954    6.5
+22  46.5 -68.5     0.0  3.101664    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.269371    3.276787    6.5
+1   41.5 -72.5     0.0  3.328904    3.253754    6.5
+2   41.5 -71.5     0.0  3.436272    3.180979    6.5
+3   41.5 -70.5     0.0  3.518379    3.116461    6.5
+4   42.5 -73.5     0.0  3.198971    3.010783    6.5
+5   42.5 -72.5     0.0  3.353757    3.234723    6.5
+6   42.5 -71.5     0.0  3.308008    3.220260    6.5
+7   43.5 -72.5     0.0  3.196938    2.938345    6.5
+8   43.5 -71.5     0.0  3.323695    3.067319    6.5
+9   43.5 -70.5     0.0  3.243986    3.247847    6.5
+10  43.5 -69.5     0.0  3.210086    3.240040    6.5
+11  44.5 -71.5     0.0  3.163807    3.085697    6.5
+12  44.5 -70.5     0.0  3.274403    3.113217    6.5
+13  44.5 -69.5     0.0  3.300978    3.090840    6.5
+14  44.5 -68.5     0.0  3.262665    3.112127    6.5
+15  44.5 -67.5     0.0  3.416901    3.341162    6.5
+16  45.5 -70.5     0.0  3.154683    2.840428    6.5
+17  45.5 -69.5     0.0  3.303983    3.012618    6.5
+18  45.5 -68.5     0.0  3.460508    3.017834    6.5
+19  45.5 -67.5     0.0  3.449655    3.057651    6.5
+20  46.5 -70.5     0.0  3.086807    2.716872    6.5
+21  46.5 -69.5     0.0  3.105181    2.657954    6.5
+22  46.5 -68.5     0.0  3.101664    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  0.9940517647519738
+2. K-S Test's max distance of regional SPI6:  1.0116087674522873
+3. K-S Test's max distance of regional SPI36:  1.2226519835596348
+4. K-S Test max distance of regional precipitation at each month:  0.6362982337471023
+5. K-S Test of long term regional mean:  0.5896133599998021
+6. K-S Test's max distance of drought coverage:  0.6936745833958543
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  0.7704282456307111
+8. Z-test on SPI6 in all dry months:  0.8812836398975457
+8. KS test:  1.3851920209375128
+9. Annual dry month z test: 0.39159148384835446
+10. K-S Test's max distance of drought duration:  0.2512033706844824
+11. Z-test on the probability of drought initiation:  0.1902613909768216
+12. Z-test on the probability of drought termination:  0.3852381670970459
+
+The Total Score is:  8.2706100013971
+The relative bias score is 0.8613869682146611
+The RMSE score is 0.2421385528915339
+The phase shift score is 0.6238294004936225
+The interannual variability score is 0.9931832981381554
+The spatial distribution score is 0.6714345101735514
+
+For SAM0-UNICON r1i1p1f1 model in New England Region the overall score from ILAMB paper is  0.6056852138005098
+
+*****************************************************
+Test data file 33
+
+Reading pr_Amon_CNRM-CM6-1_historical_r1i1p1f2_gr_185001-201412.nc
+
+Transfer longitude units of test data from degrees_east to degrees_west.
+Transfer precipitation units of test data from kg m-2 s-1 to mm/day.
+Transfer longitude units of observe data from degrees_east to degrees_west.
+Precipitation units of test observe is already mm/day.
+Transfer longitude units of weightfile from degrees_east to degrees_west.
+
+Interpolate model and observed data into weight file:
+
+Overwrite existing file: conservative_128x256_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+Overwrite existing file: conservative_180x360_180x360.nc 
+ You can set reuse_weights=True to save computing time.
+
+Shape file contains the following regions:
+
+{'New England Region': 0, 'Missouri Region': 1, 'Pacific Northwest Region': 2, 'Upper Colorado Region': 3, 'South Pacific Region': 4, 'Rio Grande Region': 5, 'Mid Atlantic Region': 6, 'Lower Mississippi Region': 7, 'Tennessee Region': 8, 'Ohio Region': 9, 'Texas-Gulf Region': 10, 'Upper Mississippi Region': 11, 'Alaska Region': 12, 'Great Lakes Region': 13, 'South Atlantic-Gulf Region': 14, 'Arkansas-White-Red Region': 15, 'Souris-Red-Rainy Region': 16, 'Lower Colorado Region': 17, 'Great Basin Region': 18, 'California Region': 19}
+
+The time range of test and observed data is from 1948 to 2014.
+Input time min and max should be within the range of data.
+Set data time as default due to the wrong time input.
+
+Mean precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.820089    3.276787    6.5
+1   41.5 -72.5     0.0  3.743862    3.253754    6.5
+2   41.5 -71.5     0.0  3.652882    3.180979    6.5
+3   41.5 -70.5     0.0  3.557714    3.116461    6.5
+4   42.5 -73.5     0.0  4.005226    3.010783    6.5
+5   42.5 -72.5     0.0  3.958646    3.234723    6.5
+6   42.5 -71.5     0.0  3.858345    3.220260    6.5
+7   43.5 -72.5     0.0  4.146194    2.938345    6.5
+8   43.5 -71.5     0.0  4.092682    3.067319    6.5
+9   43.5 -70.5     0.0  3.768977    3.247847    6.5
+10  43.5 -69.5     0.0  3.569762    3.240040    6.5
+11  44.5 -71.5     0.0  4.158356    3.085697    6.5
+12  44.5 -70.5     0.0  4.128240    3.113217    6.5
+13  44.5 -69.5     0.0  3.839540    3.090840    6.5
+14  44.5 -68.5     0.0  3.623111    3.112127    6.5
+15  44.5 -67.5     0.0  3.500308    3.341162    6.5
+16  45.5 -70.5     0.0  4.326777    2.840428    6.5
+17  45.5 -69.5     0.0  4.170199    3.012618    6.5
+18  45.5 -68.5     0.0  4.035436    3.017834    6.5
+19  45.5 -67.5     0.0  3.900516    3.057651    6.5
+20  46.5 -70.5     0.0  3.811381    2.716872    6.5
+21  46.5 -69.5     0.0  3.731100    2.657954    6.5
+22  46.5 -68.5     0.0  3.707331    2.751514    6.5
+
+
+
+99th percentile precipitation at each grid cell:
+
+     lat   lon  states        pr  pr_observe  month
+0   41.5 -73.5     0.0  3.820089    3.276787    6.5
+1   41.5 -72.5     0.0  3.743862    3.253754    6.5
+2   41.5 -71.5     0.0  3.652882    3.180979    6.5
+3   41.5 -70.5     0.0  3.557714    3.116461    6.5
+4   42.5 -73.5     0.0  4.005226    3.010783    6.5
+5   42.5 -72.5     0.0  3.958646    3.234723    6.5
+6   42.5 -71.5     0.0  3.858345    3.220260    6.5
+7   43.5 -72.5     0.0  4.146194    2.938345    6.5
+8   43.5 -71.5     0.0  4.092682    3.067319    6.5
+9   43.5 -70.5     0.0  3.768977    3.247847    6.5
+10  43.5 -69.5     0.0  3.569762    3.240040    6.5
+11  44.5 -71.5     0.0  4.158356    3.085697    6.5
+12  44.5 -70.5     0.0  4.128240    3.113217    6.5
+13  44.5 -69.5     0.0  3.839540    3.090840    6.5
+14  44.5 -68.5     0.0  3.623111    3.112127    6.5
+15  44.5 -67.5     0.0  3.500308    3.341162    6.5
+16  45.5 -70.5     0.0  4.326777    2.840428    6.5
+17  45.5 -69.5     0.0  4.170199    3.012618    6.5
+18  45.5 -68.5     0.0  4.035436    3.017834    6.5
+19  45.5 -67.5     0.0  3.900516    3.057651    6.5
+20  46.5 -70.5     0.0  3.811381    2.716872    6.5
+21  46.5 -69.5     0.0  3.731100    2.657954    6.5
+22  46.5 -68.5     0.0  3.707331    2.751514    6.5
+
+
+Scores:
+-------
+
+1. K-S test max distance of monthly regional precipitation:  3.471977902974285
+2. K-S Test's max distance of regional SPI6:  3.0926325176398506
+3. K-S Test's max distance of regional SPI36:  2.5778806882281455
+4. K-S Test max distance of regional precipitation at each month:  1.1519909199212242
+5. K-S Test of long term regional mean:  1.1792267199996043
+6. K-S Test's max distance of drought coverage:  2.066572196366816
+   (Drought coverage is the number of grid cells with spi6
+    less than -1 divided by the total number of grid cells.)
+7. Z-test on the proportion of dry months:  2.3112847368921337
+8. Z-test on SPI6 in all dry months:  0.46360754282556016
+8. KS test:  1.2646485931612712
+9. Annual dry month z test: 1.3114203003476874
+10. K-S Test's max distance of drought duration:  0.3127278809709802
+11. Z-test on the probability of drought initiation:  1.210312795230529
+12. Z-test on the probability of drought termination:  0.2847912229610146
+
+The Total Score is:  19.922738593722563
+The relative bias score is 0.6090986142711435
+The RMSE score is 0.2553112101367913
+The phase shift score is 0.5753065568508208
+The interannual variability score is 0.9040871859447779
+The spatial distribution score is 0.3397557381437026
+
+For CNRM-CM6-1 r1i1p1f2 model in New England Region the overall score from ILAMB paper is  0.48981175258067117
