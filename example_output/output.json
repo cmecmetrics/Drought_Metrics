@@ -16,9 +16,9 @@
       "xarray": "0.15.1",
       "xesmf": "0.3.0"
     },
-    "modeldata": "/git/cmec-driver/model/Drought_Metrics/nc/",
-    "obsdata": "/git/cmec-driver/obs/Drought_Metrics/CPC_monthly_precipitation_to_1_degree.nc",
-    "log": "/git/cmec-driver/output/Drought_Metrics//drought_metrics_log.txt",
+    "modeldata": "/cmec-driver/model/Drought_Metrics/nc/",
+    "obsdata": "/cmec-driver/obs/Drought_Metrics/precip.V1.0.mon.mean.nc",
+    "log": "/cmec-driver/output/Drought_Metrics//drought_metrics_log.txt",
     "version": "1"
   },
   "data": {

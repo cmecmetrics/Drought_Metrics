@@ -1,384 +1,406 @@
 {
-  "Dimensions": {
+  "DIMENSIONS": {
+    "dimensions": {
+      "hydrologic region": {
+        "New England Region": {}
+      },
+      "metric": {
+        "Metric A1": {
+          "long_name": "Mean Precip.",
+          "description": "Monthly mean precipitation"
+        },
+        "Metric B1": {
+          "long_name": "Season Precip.",
+          "description": "Seasonality of precipitation"
+        },
+        "Metric C1": {
+          "long_name": "Frac. Cover.",
+          "description": "Fractional area coverage of drought"
+        },
+        "Metric D1": {
+          "long_name": "Dry Frac.",
+          "description": "Proportion of dry months determined by SPI6"
+        },
+        "Metric E1": {
+          "long_name": "Intensity",
+          "description": "Intensity based on monthly SPI6"
+        },
+        "Metric F1": {
+          "long_name": "Prob. Init.",
+          "description": "Probability of drought initiation"
+        },
+        "Metric F2": {
+          "long_name": "Prob. Term.",
+          "description": "Probability of drought termination"
+        },
+        "Total Score": {
+          "long_name": "Sum of scores",
+          "description": "Overall score obtained from sum of all principal metrics"
+        }
+      },
+      "model": {
+        "SAM0-UNICON r1i1p1f1": {},
+        "BCC-CSM2-MR r1i1p1f1": {},
+        "BCC-ESM1 r1i1p1f1": {},
+        "NorESM2-LM r1i1p1f1": {},
+        "TaiESM1 r1i1p1f1": {},
+        "GISS-E2-1-H r1i1p1f1": {},
+        "NorESM2-MM r1i1p1f1": {},
+        "CAMS-CSM1-0 r1i1p1f1": {},
+        "CESM2 r1i1p1f1": {},
+        "GFDL-CM4 r1i1p1f1": {},
+        "CESM2-WACCM-FV2 r1i1p1f1": {},
+        "GISS-E2-1-G r1i1p1f1": {},
+        "MPI-ESM-1-2-HAM r1i1p1f1": {},
+        "CESM2-WACCM r1i1p1f1": {},
+        "UKESM1-0-LL r1i1p1f2": {},
+        "MPI-ESM1-2-HR r1i1p1f1": {},
+        "CAS-ESM2-0 r1i1p1f1": {},
+        "MIROC-ES2L r1i1p1f2": {},
+        "NorCPM1 r1i1p1f1": {},
+        "CESM2-FV2 r1i1p1f1": {},
+        "NESM3 r1i1p1f1": {},
+        "CNRM-ESM2-1 r1i1p1f2": {},
+        "HadGEM3-GC31-LL r1i1p1f3": {},
+        "MRI-ESM2-0 r1i1p1f1": {},
+        "CNRM-CM6-1-HR r1i1p1f2": {},
+        "GFDL-ESM4 r1i1p1f1": {},
+        "E3SM-1-1 r1i1p1f1": {},
+        "CNRM-CM6-1 r1i1p1f2": {},
+        "EC-Earth3-Veg r1i1p1f1": {},
+        "CanESM5 r1i1p1f1": {},
+        "EC-Earth3 r1i1p1f1": {},
+        "MIROC6 r1i1p1f1": {},
+        "IPSL-CM6A-LR r1i1p1f1": {}
+      }
+    },
     "json_structure": [
       "hydrologic region",
       "model",
       "metric"
-    ],
-    "hydrologic region": {
-      "New England Region": {}
-    },
-    "metric": {
-      "Metric A1": {
-        "long_name": "Mean Precip.",
-        "description": "Monthly mean precipitation"
-      },
-      "Metric B1": {
-        "long_name": "Season Precip.",
-        "description": "Seasonality of precipitation"
-      },
-      "Metric C1": {
-        "long_name": "Frac. Cover.",
-        "description": "Fractional area coverage of drought"
-      },
-      "Metric D1": {
-        "long_name": "Dry Frac.",
-        "description": "Proportion of dry months determined by SPI6"
-      },
-      "Metric E1": {
-        "long_name": "Intensity",
-        "description": "Intensity based on monthly SPI6"
-      },
-      "Metric F1": {
-        "long_name": "Prob. Init.",
-        "description": "Probability of drought initiation"
-      },
-      "Metric F2": {
-        "long_name": "Prob. Term.",
-        "description": "Probability of drought termination"
-      },
-      "Total Score": {
-        "long_name": "Sum of scores",
-        "description": "Overall score obtained from sum of all principal metrics"
-      }
-    },
-    "model": {
-      "BCC-CSM2-MR r1i1p1f1": {},
-      "SAM0-UNICON r1i1p1f1": {},
-      "NorESM2-LM r1i1p1f1": {},
-      "CAMS-CSM1-0 r1i1p1f1": {},
-      "TaiESM1 r1i1p1f1": {},
-      "BCC-ESM1 r1i1p1f1": {},
-      "NorESM2-MM r1i1p1f1": {},
-      "MPI-ESM-1-2-HAM r1i1p1f1": {},
-      "CAS-ESM2-0 r1i1p1f1": {},
-      "GFDL-CM4 r1i1p1f1": {},
-      "CESM2 r1i1p1f1": {},
-      "CESM2-WACCM-FV2 r1i1p1f1": {},
-      "GISS-E2-1-H r1i1p1f1": {},
-      "MPI-ESM1-2-HR r1i1p1f1": {},
-      "UKESM1-0-LL r1i1p1f2": {},
-      "GISS-E2-1-G r1i1p1f1": {},
-      "CESM2-WACCM r1i1p1f1": {},
-      "NorCPM1 r1i1p1f1": {},
-      "MRI-ESM2-0 r1i1p1f1": {},
-      "NESM3 r1i1p1f1": {},
-      "CNRM-ESM2-1 r1i1p1f2": {},
-      "CESM2-FV2 r1i1p1f1": {},
-      "E3SM-1-1 r1i1p1f1": {},
-      "CNRM-CM6-1-HR r1i1p1f2": {},
-      "HadGEM3-GC31-LL r1i1p1f3": {},
-      "MIROC-ES2L r1i1p1f2": {},
-      "CNRM-CM6-1 r1i1p1f2": {},
-      "GFDL-ESM4 r1i1p1f1": {},
-      "EC-Earth3-Veg r1i1p1f1": {},
-      "EC-Earth3 r1i1p1f1": {},
-      "CanESM5 r1i1p1f1": {},
-      "MIROC6 r1i1p1f1": {},
-      "IPSL-CM6A-LR r1i1p1f1": {}
-    }
+    ]
   },
-  "Results": {
+  "RESULTS": {
     "New England Region": {
       "SAM0-UNICON r1i1p1f1": {
-        "Metric A1": 0.9940517648,
-        "Metric B1": 0.6362982337,
-        "Metric C1": 0.6936745834,
-        "Metric D1": 0.7704282456,
-        "Metric E1": 1.3851920209,
-        "Metric F1": 0.190261391,
-        "Metric F2": 0.38523816710000003,
-        "Total Score": 5.0551444065
+        "Metric A1": 1.0084583121,
+        "Metric B1": 0.6196629858,
+        "Metric C1": 0.46244972230000003,
+        "Metric D1": 0.3943365827,
+        "Metric E1": 1.206609165,
+        "Metric F1": 0.0960912099,
+        "Metric F2": 0.1915708753,
+        "Total Score": 3.979178853
       },
       "BCC-CSM2-MR r1i1p1f1": {
-        "Metric A1": 0.5762618926,
+        "Metric A1": 0.4033833248,
+        "Metric B1": 0.5572808060000001,
+        "Metric C1": 0.563610599,
+        "Metric D1": 0.21509268150000002,
+        "Metric E1": 2.0,
+        "Metric F1": 0.2791160714,
+        "Metric F2": 0.5099172719,
+        "Total Score": 4.5284007547
+      },
+      "BCC-ESM1 r1i1p1f1": {
+        "Metric A1": 0.5906684399000001,
         "Metric B1": 0.5489631821000001,
-        "Metric C1": 0.722577691,
-        "Metric D1": 0.9455255742,
-        "Metric E1": 1.6745346985,
-        "Metric F1": 0.1407243312,
-        "Metric F2": 1.0256921402999999,
-        "Total Score": 5.6342795098
+        "Metric C1": 1.5029615974000001,
+        "Metric D1": 0.1792439012,
+        "Metric E1": 2.0,
+        "Metric F1": 0.2228681368,
+        "Metric F2": 0.40994627510000003,
+        "Total Score": 5.4546515325
+      },
+      "GISS-E2-1-H r1i1p1f1": {
+        "Metric A1": 1.4838743735,
+        "Metric B1": 0.6778863536,
+        "Metric C1": 0.5347074914000001,
+        "Metric D1": 0.6452780445,
+        "Metric E1": 1.8099804635,
+        "Metric F1": 0.17752832030000001,
+        "Metric F2": 0.3001552424,
+        "Total Score": 5.6294102892
+      },
+      "TaiESM1 r1i1p1f1": {
+        "Metric A1": 1.2533696164,
+        "Metric B1": 0.7485861573,
+        "Metric C1": 1.0983180904,
+        "Metric D1": 0.5377317037,
+        "Metric E1": 2.0,
+        "Metric F1": 0.0688370757,
+        "Metric F2": 0.532261877,
+        "Total Score": 6.2391045206
       },
       "NorESM2-LM r1i1p1f1": {
         "Metric A1": 0.5265542636,
-        "Metric B1": 0.5489001661,
+        "Metric B1": 0.5826786379000001,
         "Metric C1": 2.0,
-        "Metric D1": 1.063958487,
-        "Metric E1": 0.9722760330000001,
-        "Metric F1": 0.4578577762,
-        "Metric F2": 0.2439738974,
-        "Total Score": 5.8135206233000005
+        "Metric D1": 0.5771332241,
+        "Metric E1": 2.0,
+        "Metric F1": 0.4650361833,
+        "Metric F2": 0.1346415263,
+        "Total Score": 6.2860438354
+      },
+      "GFDL-CM4 r1i1p1f1": {
+        "Metric A1": 1.8440380564,
+        "Metric B1": 0.7485861573,
+        "Metric C1": 1.0983180904,
+        "Metric D1": 1.0754634074,
+        "Metric E1": 1.5634122382,
+        "Metric F1": 0.2726651405,
+        "Metric F2": 0.5773221135000001,
+        "Total Score": 7.1798052038
+      },
+      "NorESM2-MM r1i1p1f1": {
+        "Metric A1": 0.8643928389000001,
+        "Metric B1": 0.5531219940000001,
+        "Metric C1": 1.2717367362,
+        "Metric D1": 1.3622536494,
+        "Metric E1": 2.0,
+        "Metric F1": 0.3540250442,
+        "Metric F2": 0.8567520227000001,
+        "Total Score": 7.2622822854999995
       },
       "CAMS-CSM1-0 r1i1p1f1": {
-        "Metric A1": 0.9508321228000001,
-        "Metric B1": 0.5822336779,
-        "Metric C1": 1.0694149827,
-        "Metric D1": 1.330739697,
-        "Metric E1": 1.8286585389,
-        "Metric F1": 0.2399667601,
-        "Metric F2": 0.8812399153,
-        "Total Score": 6.8830856948
+        "Metric A1": 1.3686219949,
+        "Metric B1": 0.6279806098,
+        "Metric C1": 1.2283820748,
+        "Metric D1": 1.3622536494,
+        "Metric E1": 1.5201658281000001,
+        "Metric F1": 0.23839726800000002,
+        "Metric F2": 0.9505454824,
+        "Total Score": 7.2963469074
+      },
+      "CESM2 r1i1p1f1": {
+        "Metric A1": 1.5126874681,
+        "Metric B1": 0.6903627896,
+        "Metric C1": 1.8931535505000001,
+        "Metric D1": 1.2188585284,
+        "Metric E1": 1.3584460592,
+        "Metric F1": 0.7489575496,
+        "Metric F2": 0.0129511244,
+        "Total Score": 7.4354170698
       },
       "NorCPM1 r1i1p1f1": {
         "Metric A1": 2.0,
-        "Metric B1": 1.0022736885,
-        "Metric C1": 0.9538025522,
-        "Metric D1": 0.6303503828,
+        "Metric B1": 0.9773208165,
+        "Metric C1": 0.8670932292,
+        "Metric D1": 1.0037658469,
         "Metric E1": 2.0,
-        "Metric F1": 0.488531833,
-        "Metric F2": 0.08975251940000001,
-        "Total Score": 7.1647109759
-      },
-      "TaiESM1 r1i1p1f1": {
-        "Metric A1": 1.5559071100000001,
-        "Metric B1": 0.7569037813,
-        "Metric C1": 1.6041224741,
-        "Metric D1": 0.9455255742,
-        "Metric E1": 1.6828657168999999,
-        "Metric F1": 0.32154522280000003,
-        "Metric F2": 0.3616602344,
-        "Total Score": 7.2285301138
-      },
-      "BCC-ESM1 r1i1p1f1": {
-        "Metric A1": 0.8499862916,
-        "Metric B1": 0.5822336779,
-        "Metric C1": 2.0,
-        "Metric D1": 1.1906618342,
-        "Metric E1": 2.0,
-        "Metric F1": 0.3424011468,
-        "Metric F2": 0.5706724783,
-        "Total Score": 7.5359554288
-      },
-      "GISS-E2-1-H r1i1p1f1": {
-        "Metric A1": 2.0,
-        "Metric B1": 0.7860154652,
-        "Metric C1": 0.563610599,
-        "Metric D1": 1.7509732855,
-        "Metric E1": 0.9598210146,
-        "Metric F1": 0.2761530687,
-        "Metric F2": 1.3473873834,
-        "Total Score": 7.6839608165
+        "Metric F1": 0.5944888245000001,
+        "Metric F2": 0.0568200535,
+        "Total Score": 7.4994887708
       },
       "UKESM1-0-LL r1i1p1f2": {
         "Metric A1": 2.0,
-        "Metric B1": 0.8317623971,
-        "Metric C1": 1.1416727518,
-        "Metric D1": 1.5058370256,
-        "Metric E1": 1.1250889789,
-        "Metric F1": 0.5391775510000001,
-        "Metric F2": 0.5934610365,
-        "Total Score": 7.7369997409
-      },
-      "NorESM2-MM r1i1p1f1": {
-        "Metric A1": 0.8355797443,
-        "Metric B1": 0.5614396180000001,
-        "Metric C1": 1.5607678126,
-        "Metric D1": 1.575875957,
-        "Metric E1": 2.0,
-        "Metric F1": 0.5446085328,
-        "Metric F2": 0.7585340443,
-        "Total Score": 7.836805709
-      },
-      "CAS-ESM2-0 r1i1p1f1": {
-        "Metric A1": 1.7720053197999999,
-        "Metric B1": 0.6820451656000001,
-        "Metric C1": 1.3584460592,
-        "Metric D1": 1.575875957,
-        "Metric E1": 1.5579004409000001,
-        "Metric F1": 0.8847151296,
-        "Metric F2": 0.0888373205,
-        "Total Score": 7.9198253925
-      },
-      "MPI-ESM1-2-HR r1i1p1f1": {
-        "Metric A1": 2.0,
-        "Metric B1": 0.9066210128000001,
-        "Metric C1": 1.3150913977,
-        "Metric D1": 1.5058370256,
-        "Metric E1": 1.1019026506,
-        "Metric F1": 0.1983511654,
-        "Metric F2": 1.1578088902,
-        "Total Score": 8.1856121422
-      },
-      "CESM2 r1i1p1f1": {
-        "Metric A1": 1.6999725832,
-        "Metric B1": 0.6862039776000001,
-        "Metric C1": 2.0,
-        "Metric D1": 1.5408564913,
-        "Metric E1": 1.4975513563,
-        "Metric F1": 0.7688732757000001,
-        "Metric F2": 0.24843490710000002,
-        "Total Score": 8.4418925911
-      },
-      "GFDL-CM4 r1i1p1f1": {
-        "Metric A1": 1.9304773402,
-        "Metric B1": 0.7735390293000001,
-        "Metric C1": 1.2428336286000001,
-        "Metric D1": 1.575875957,
-        "Metric E1": 1.4866239501,
-        "Metric F1": 0.1478175031,
-        "Metric F2": 1.3325598076,
-        "Total Score": 8.4897272158
-      },
-      "MPI-ESM-1-2-HAM r1i1p1f1": {
-        "Metric A1": 1.4838743735,
-        "Metric B1": 0.7818566532,
-        "Metric C1": 1.9943144273,
-        "Metric D1": 1.4708175598,
-        "Metric E1": 1.6037210421,
-        "Metric F1": 0.2521306208,
-        "Metric F2": 1.0260090966,
-        "Total Score": 8.6127237733
-      },
-      "CESM2-WACCM-FV2 r1i1p1f1": {
-        "Metric A1": 1.2965892584,
-        "Metric B1": 0.5988689259000001,
-        "Metric C1": 2.0,
-        "Metric D1": 1.6809343541000001,
-        "Metric E1": 2.0,
-        "Metric F1": 0.5527125987,
-        "Metric F2": 0.7716317355000001,
-        "Total Score": 8.9007368726
-      },
-      "CESM2-WACCM r1i1p1f1": {
-        "Metric A1": 1.9016642456000001,
-        "Metric B1": 0.8192859611000001,
-        "Metric C1": 2.0,
-        "Metric D1": 2.0,
-        "Metric E1": 1.1434633613,
-        "Metric F1": 0.8612964206,
-        "Metric F2": 0.6821788,
-        "Total Score": 9.4078887886
+        "Metric B1": 0.7901742772,
+        "Metric C1": 1.0260603213,
+        "Metric D1": 1.2188585284,
+        "Metric E1": 1.7077607601,
+        "Metric F1": 0.3425464762,
+        "Metric F2": 0.6216539733,
+        "Total Score": 7.7070543364
       },
       "GISS-E2-1-G r1i1p1f1": {
         "Metric A1": 2.0,
-        "Metric B1": 0.8151271491000001,
-        "Metric C1": 1.531864705,
-        "Metric D1": 1.7509732855,
+        "Metric B1": 0.7901742772,
+        "Metric C1": 0.9248994445000001,
+        "Metric D1": 1.1830097482,
         "Metric E1": 2.0,
-        "Metric F1": 0.6708609286,
-        "Metric F2": 0.6475077178,
-        "Total Score": 9.4163337861
+        "Metric F1": 0.3977820013,
+        "Metric F2": 0.49790026800000003,
+        "Total Score": 7.7937657392
+      },
+      "CESM2-WACCM-FV2 r1i1p1f1": {
+        "Metric A1": 1.1525237852,
+        "Metric B1": 0.5822336779,
+        "Metric C1": 2.0,
+        "Metric D1": 1.3622536494,
+        "Metric E1": 2.0,
+        "Metric F1": 0.23839726800000002,
+        "Metric F2": 0.8567520227000001,
+        "Total Score": 8.1921604032
+      },
+      "MPI-ESM1-2-HR r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 0.9606855686,
+        "Metric C1": 1.1416727518,
+        "Metric D1": 1.4339512099,
+        "Metric E1": 1.5844443185000001,
+        "Metric F1": 0.47511291240000003,
+        "Metric F2": 0.6465051706,
+        "Total Score": 8.2423719319
+      },
+      "CESM2-WACCM r1i1p1f1": {
+        "Metric A1": 1.8152249617,
+        "Metric B1": 0.7943330892,
+        "Metric C1": 1.9509597658,
+        "Metric D1": 1.6848926717000001,
+        "Metric E1": 1.1994216197,
+        "Metric F1": 0.7803997370000001,
+        "Metric F2": 0.4080548544,
+        "Total Score": 8.6332866995
       },
       "CNRM-ESM2-1 r1i1p1f2": {
         "Metric A1": 2.0,
-        "Metric B1": 1.0105913124,
-        "Metric C1": 1.7486380123,
-        "Metric D1": 1.9610900798,
-        "Metric E1": 1.5945569218,
-        "Metric F1": 0.85424829,
-        "Metric F2": 0.5640654364000001,
-        "Total Score": 9.7331900527
-      },
-      "NESM3 r1i1p1f1": {
-        "Metric A1": 2.0,
-        "Metric B1": 1.0521794323,
-        "Metric C1": 2.0,
-        "Metric D1": 1.6459148884,
-        "Metric E1": 1.8908248091000002,
-        "Metric F1": 0.5500168729,
-        "Metric F2": 0.7347292203,
-        "Total Score": 9.8736652229
-      },
-      "CNRM-CM6-1 r1i1p1f2": {
-        "Metric A1": 2.0,
-        "Metric B1": 1.1519909199,
-        "Metric C1": 2.0,
-        "Metric D1": 2.0,
-        "Metric E1": 1.2646485932,
-        "Metric F1": 1.2103127952000001,
-        "Metric F2": 0.28479122300000004,
-        "Total Score": 9.9117435313
-      },
-      "CNRM-CM6-1-HR r1i1p1f2": {
-        "Metric A1": 2.0,
-        "Metric B1": 1.0189089364,
-        "Metric C1": 1.5463162588000001,
-        "Metric D1": 2.0,
-        "Metric E1": 2.0,
-        "Metric F1": 1.0889454198,
-        "Metric F2": 0.3203100273,
-        "Total Score": 9.9744806423
-      },
-      "HadGEM3-GC31-LL r1i1p1f3": {
-        "Metric A1": 2.0,
-        "Metric B1": 1.0313853723,
-        "Metric C1": 1.5607678126,
-        "Metric D1": 2.0,
-        "Metric E1": 2.0,
-        "Metric F1": 0.8706271550000001,
-        "Metric F2": 0.7379382064000001,
-        "Total Score": 10.2007185464
-      },
-      "MRI-ESM2-0 r1i1p1f1": {
-        "Metric A1": 2.0,
-        "Metric B1": 0.844238833,
-        "Metric C1": 2.0,
-        "Metric D1": 2.0,
-        "Metric E1": 1.7943938664,
-        "Metric F1": 0.9840895252,
-        "Metric F2": 0.6666126995,
-        "Total Score": 10.2893349241
-      },
-      "CESM2-FV2 r1i1p1f1": {
-        "Metric A1": 1.6135332993,
-        "Metric B1": 0.6612511057,
-        "Metric C1": 2.0,
-        "Metric D1": 2.0,
-        "Metric E1": 2.0,
-        "Metric F1": 0.7136851906,
-        "Metric F2": 1.3918536586,
-        "Total Score": 10.3803232542
-      },
-      "CanESM5 r1i1p1f1": {
-        "Metric A1": 2.0,
-        "Metric B1": 1.127038048,
-        "Metric C1": 1.9076051043,
-        "Metric D1": 2.0,
-        "Metric E1": 1.2032888316,
-        "Metric F1": 1.2374601685,
-        "Metric F2": 0.9417458755,
-        "Total Score": 10.4171380279
+        "Metric B1": 1.0604970562,
+        "Metric C1": 1.4885100435,
+        "Metric D1": 1.6848926717000001,
+        "Metric E1": 1.5835060709,
+        "Metric F1": 0.7803997370000001,
+        "Metric F2": 0.4080548544,
+        "Total Score": 9.0058604338
       },
       "MIROC-ES2L r1i1p1f2": {
         "Metric A1": 2.0,
-        "Metric B1": 1.1644673559,
-        "Metric C1": 2.0,
-        "Metric D1": 1.8560316827,
-        "Metric E1": 1.59430585,
-        "Metric F1": 0.1164287231,
-        "Metric F2": 1.7889077057,
-        "Total Score": 10.5201413174
+        "Metric B1": 1.13119686,
+        "Metric C1": 1.6330255817000001,
+        "Metric D1": 1.2547073087,
+        "Metric E1": 1.5767677472,
+        "Metric F1": 0.1185533275,
+        "Metric F2": 1.3874367238,
+        "Total Score": 9.101687549
       },
-      "E3SM-1-1 r1i1p1f1": {
+      "MPI-ESM-1-2-HAM r1i1p1f1": {
+        "Metric A1": 1.6135332993,
+        "Metric B1": 0.8026507132,
+        "Metric C1": 1.8064442276000001,
+        "Metric D1": 1.2547073087,
+        "Metric E1": 2.0,
+        "Metric F1": 0.1765506389,
+        "Metric F2": 1.4788569731,
+        "Total Score": 9.1327431607
+      },
+      "CNRM-CM6-1-HR r1i1p1f2": {
         "Metric A1": 2.0,
-        "Metric B1": 0.7319509094000001,
+        "Metric B1": 1.0272265604,
+        "Metric C1": 1.5607678126,
+        "Metric D1": 1.6131951112,
+        "Metric E1": 2.0,
+        "Metric F1": 0.8903983917,
+        "Metric F2": 0.1368283821,
+        "Total Score": 9.2284162579
+      },
+      "CAS-ESM2-0 r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 0.8151271491000001,
+        "Metric C1": 1.9220566582,
+        "Metric D1": 1.5773463309,
+        "Metric E1": 2.0,
+        "Metric F1": 0.6583171657,
+        "Metric F2": 0.4998343249,
+        "Total Score": 9.4726816288
+      },
+      "NESM3 r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 1.0896087401,
+        "Metric C1": 1.9943144273,
+        "Metric D1": 1.5773463309,
+        "Metric E1": 1.9820374882,
+        "Metric F1": 0.6008664890000001,
+        "Metric F2": 0.5988031846,
+        "Total Score": 9.8429766601
+      },
+      "CNRM-CM6-1 r1i1p1f2": {
+        "Metric A1": 2.0,
+        "Metric B1": 1.2434847836,
+        "Metric C1": 1.9220566582,
+        "Metric D1": 1.9358341334,
+        "Metric E1": 1.4987690587,
+        "Metric F1": 1.0244088603,
+        "Metric F2": 0.24492255040000002,
+        "Total Score": 9.8694760445
+      },
+      "HadGEM3-GC31-LL r1i1p1f3": {
+        "Metric A1": 2.0,
+        "Metric B1": 0.9981148765000001,
+        "Metric C1": 1.5174131512,
+        "Metric D1": 1.8641365729000001,
+        "Metric E1": 1.9580160682,
+        "Metric F1": 0.5074018546,
+        "Metric F2": 1.0271537559,
+        "Total Score": 9.8722362792
+      },
+      "CESM2-FV2 r1i1p1f1": {
+        "Metric A1": 1.3542154476000001,
+        "Metric B1": 0.6446158577000001,
         "Metric C1": 2.0,
         "Metric D1": 2.0,
         "Metric E1": 2.0,
-        "Metric F1": 1.2374601685,
-        "Metric F2": 0.9417458755,
-        "Total Score": 10.9111569534
+        "Metric F1": 0.4045117581,
+        "Metric F2": 1.5477014015,
+        "Total Score": 9.951044465
       },
-      "MIROC6 r1i1p1f1": {
+      "GFDL-ESM4 r1i1p1f1": {
         "Metric A1": 2.0,
-        "Metric B1": 1.3308198353,
+        "Metric B1": 0.9731620046,
+        "Metric C1": 1.6763802432000001,
+        "Metric D1": 2.0,
+        "Metric E1": 2.0,
+        "Metric F1": 1.1559550174,
+        "Metric F2": 0.3759620191,
+        "Total Score": 10.1814592843
+      },
+      "CanESM5 r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 1.135355672,
+        "Metric C1": 1.4740584897,
+        "Metric D1": 2.0,
+        "Metric E1": 1.5848537356999999,
+        "Metric F1": 0.9415477815000001,
+        "Metric F2": 1.117255006,
+        "Total Score": 10.2530706849
+      },
+      "MRI-ESM2-0 r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 0.9565267566000001,
         "Metric C1": 2.0,
         "Metric D1": 2.0,
-        "Metric E1": 1.1830046128,
-        "Metric F1": 1.5857476519,
-        "Metric F2": 0.8184630005,
-        "Total Score": 10.9180351005
+        "Metric E1": 1.9874801949,
+        "Metric F1": 1.0955723266,
+        "Metric F2": 0.4099046195,
+        "Total Score": 10.4494838976
       },
       "EC-Earth3-Veg r1i1p1f1": {
         "Metric A1": 2.0,
-        "Metric B1": 0.9856384405,
+        "Metric B1": 0.9398915087,
         "Metric C1": 2.0,
         "Metric D1": 2.0,
         "Metric E1": 2.0,
-        "Metric F1": 0.8867750347000001,
-        "Metric F2": 1.1861916216,
-        "Total Score": 11.0586050968
+        "Metric F1": 0.8765477561,
+        "Metric F2": 1.029581773,
+        "Total Score": 10.8460210378
+      },
+      "E3SM-1-1 r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 0.7860154652,
+        "Metric C1": 2.0,
+        "Metric D1": 2.0,
+        "Metric E1": 2.0,
+        "Metric F1": 1.1773240957,
+        "Metric F2": 0.9213654524,
+        "Total Score": 10.8847050133
+      },
+      "MIROC6 r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 1.3058669634,
+        "Metric C1": 2.0,
+        "Metric D1": 2.0,
+        "Metric E1": 1.5805979523,
+        "Metric F1": 1.4672466832,
+        "Metric F2": 0.5974468955000001,
+        "Total Score": 10.9511584944
+      },
+      "IPSL-CM6A-LR r1i1p1f1": {
+        "Metric A1": 2.0,
+        "Metric B1": 1.6344131102000001,
+        "Metric C1": 2.0,
+        "Metric D1": 2.0,
+        "Metric E1": 1.3374661972,
+        "Metric F1": 1.5241200659,
+        "Metric F2": 0.5004482217,
+        "Total Score": 10.9964475951
       },
       "EC-Earth3 r1i1p1f1": {
         "Metric A1": 2.0,
@@ -386,31 +408,11 @@
         "Metric C1": 2.0,
         "Metric D1": 2.0,
         "Metric E1": 2.0,
-        "Metric F1": 1.1768711763,
-        "Metric F2": 0.9141624083000001,
-        "Total Score": 11.0683544011
-      },
-      "GFDL-ESM4 r1i1p1f1": {
-        "Metric A1": 2.0,
-        "Metric B1": 0.9897972525000001,
-        "Metric C1": 2.0,
-        "Metric D1": 2.0,
-        "Metric E1": 2.0,
-        "Metric F1": 1.1220363451,
-        "Metric F2": 1.0479422729,
-        "Total Score": 11.1597758705
-      },
-      "IPSL-CM6A-LR r1i1p1f1": {
-        "Metric A1": 2.0,
-        "Metric B1": 1.5595544945,
-        "Metric C1": 1.9798628734000001,
-        "Metric D1": 2.0,
-        "Metric E1": 2.0,
-        "Metric F1": 1.5285956089,
-        "Metric F2": 0.8526509883000001,
-        "Total Score": 11.9206639651
+        "Metric F1": 0.8271694487,
+        "Metric F2": 1.3159914698000001,
+        "Total Score": 11.120481735
       }
     }
   },
-  "Provenance": "Metrics generated 2021-01-05T00:29:54.907865+00:00"
+  "PROVENANCE": "Metrics generated 2021-01-05T18:44:55.812186+00:00"
 }
