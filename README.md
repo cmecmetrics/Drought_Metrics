@@ -45,11 +45,16 @@ The following options are used when running drought_metrics.py. If using the cme
 **Different grids:** If the observation grid is different from the model grid, the observations must be interpolated to the model grid. The weightfile is a netCDF file that has the model grid.  
 `python drought_metrics.py -interpolation True -wgt_path <path to model file> <other options>`  
 
-**Reuse principal metrics:** To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
-`python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`  
-
 ### Models
 Monthly precipitation output should be in [CF-compliant](https://cfconventions.org/) netCDF files that conform to the standards for the CMIP6 project. Required dimensions are latitude, longitude, time, and precipitation flux "pr". The published analysis uses CMIP6 output.  
+
+### Principal Metrics
+The user has the option to reuse the results of a previous Principal Metrics analysis or to generate new principal metrics. 
+
+To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
+`python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`  
+
+If cmec-driver is used to run the package, the user can place the 'output_principal_metrics_column_defined' file in the drought metrics folder and set `pfa=${CMEC_CODE_DIR}/output_principal_metrics_column_defined` in cmec_drought_metrics.sh
 
 ## Contents  
 ### Scripts  
