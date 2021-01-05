@@ -13,7 +13,7 @@ This file can also be referenced if creating an environment in another manner.
 `cd` to the cloned Drought_Metrics directory. Use the command line to run drought_metrics.py:  
 `python drought_metrics.py <-options>`  
 
-To see all options:  
+To see all options (help):  
 `python drought_metrics.py -h`  
 
 ### Run with CMEC driver (recommended)  
@@ -31,19 +31,26 @@ Your results will be written to cmec-driver/output/Drought_Metrics. Open cmec-dr
 
 Results will be overwritten the next time cmec-driver is run with the same output path. To save results, either copy the output/Drought_Metrics folder to a new location or provide a unique output folder path when running cmec-driver.  
 
+### Required flags
+The following flags are always required to run the Drought Metrics package:
+- test_path: Model data directory
+- obs_path: Observation file path
+- hu_name: Name of evaluation region
+- shp_path: Watershed boundary file path
+
+### Optional flags
+Use these flags to specify additional files and settings:
+- test_pr: model precipitation variable name (default "pr")
+- obs_pr: observation precipitation variable name (default "pr")
+- wgt_path: netcdf file with grid for interpolation (default '')
+- out_path: output directory path (default '.')
+- interpolation: True to interpolate inputs (default False)
+- pfa: Path to existing principal metrics results (default None)
+
 ## Data  
 
 ### Observations  
 This analysis was designed to use the CPC Unified Gauge-Based Analysis of Daily Precipitation over CONUS. This dataset is available from [NOAA PSL](https://psl.noaa.gov/data/gridded/data.unified.daily.conus.html). For best results, at least 50 years of data should be used.  
-
-#### Command line options  
-The following options are used when running drought_metrics.py. If using the cmec interface, these changes should be made in Drought_Metrics/cmec_drought_metrics.sh.  
-
-**Precipitation variable not called "pr":** Use the flag `-obs_pr` to set the variable name.  
-`python drought_metrics.py -obs_pr "precip variable name" <other options>`  
-
-**Different grids:** If the observation grid is different from the model grid, the observations must be interpolated to the model grid. The weightfile is a netCDF file that has the model grid.  
-`python drought_metrics.py -interpolation True -wgt_path <path to model file> <other options>`  
 
 ### Models
 Monthly precipitation output should be in [CF-compliant](https://cfconventions.org/) netCDF files that conform to the standards for the CMIP6 project. Required dimensions are latitude, longitude, time, and precipitation flux "pr". The published analysis uses CMIP6 output.  
@@ -54,7 +61,10 @@ The user has the option to reuse the results of a previous Principal Metrics ana
 To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
 `python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`  
 
-If cmec-driver is used to run the package, the user can place the 'output_principal_metrics_column_defined' file in the drought metrics folder and set `pfa=${CMEC_CODE_DIR}/output_principal_metrics_column_defined` in cmec_drought_metrics.sh
+### Watershed Boundaries
+This analysis requires a shapefile containing watershed boundaries. The boundary features must contain the fields "Name" and "geometry".  
+
+The example boundaries provided in Drought_Metrics/HU are for watersheds in the US at the 2-digit level, based on data obtained from the U.S. Geological Survey and the U.S. Department of Agriculture, Natural Resources Conservation Service. More information [here](https://www.usgs.gov/core-science-systems/ngp/national-hydrography/watershed-boundary-dataset?qt-science_support_page_related_con=4#qt-science_support_page_related_con).
 
 ## Contents  
 ### Scripts  
