@@ -11,9 +11,9 @@ logpath=${outpath}/drought_metrics_log.txt
 
 # Optional settings (Add or delete flags from L22 drought_metrics.py command as needed):
 obspr="precip" # -obs_pr
-intrp=True # -interpolation
+intrp=True # -interpolation (True/False)
 wgtpath=${CMEC_MODEL_DATA}/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc # -wgt_path
-pfa=${CMEC_CODE_DIR}/output_principal_metrics_column_defined
+pfa=${CMEC_CODE_DIR}/output_principal_metrics_column_defined # -pfa (path or None)
 
 cd $CMEC_WK_DIR
 echo "Running drought metrics"
