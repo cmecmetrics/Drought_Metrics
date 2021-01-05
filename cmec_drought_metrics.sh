@@ -3,8 +3,7 @@
 # Change file names as needed for region, obs, and shp.
 # See settings.json for more information about input data.
 region="New England Region"
-#obspath=$CMEC_OBS_DATA/precip.V1.0.mon.mean.nc
-obspath=${CMEC_OBS_DATA}/CPC_monthly_precipitation_to_1_degree.nc
+obspath=${CMEC_OBS_DATA}/precip.V1.0.mon.mean.nc
 shppath=${CMEC_OBS_DATA}/HU/WBDHU2.shp
 testpath=${CMEC_MODEL_DATA}/
 outpath=${CMEC_WK_DIR}/
