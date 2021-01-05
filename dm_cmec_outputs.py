@@ -144,11 +144,11 @@ def write_output_json(test_path, obs_path, log_path, hu_name, out_path='.'):
             'filename': m2,
             'long_name': m2.replace('_',' ')[:-5],
             'description': m2d},
-        'prncpl': {
+        'principal': {
             'filename': m3,
             'long_name': m3.replace('_',' ')[:-5],
             'description': m3d},
-        'prncpl cmec': {
+        'principal cmec': {
             'filename': m4,
             'long_name': m4.replace('_',' ')[:-5],
             'description': m4d}}
