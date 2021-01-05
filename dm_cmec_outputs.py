@@ -206,7 +206,7 @@ def write_cmec_json(hu_name,out_path='.'):
              'Total Score': {
                 'long_name': 'Sum of scores',
                 'description': 'Overall score obtained from sum of all principal metrics'},}
-    cmec_json['Provenance'] = 'Metrics generated ' + datetime.now(timezone.utc).isoformat()
+    cmec_json['PROVENANCE'] = 'Metrics generated ' + datetime.now(timezone.utc).isoformat()
     cmec_json['DIMENSIONS']['json_structure'] = json_structure
     cmec_json['DIMENSIONS']['dimensions']['hydrologic region'] = region
     cmec_json['DIMENSIONS']['dimensions']['metric'] = metric
