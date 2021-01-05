@@ -166,7 +166,7 @@ def write_cmec_json(hu_name,out_path='.'):
     rgn_str = str(hu_name).replace(' ','_')
     f = out_path + '/all_metrics_in_' + rgn_str + '.json'
     multi_model_table = pd.read_json(f).transpose()
-    cmec_json = {'Dimensions': {},'Results': {}, 'Provenance': ''}
+    cmec_json = {'DIMENSIONS': {'dimensions':{}},'RESULTS': {}, 'PROVENANCE': ''}
     json_structure = ['hydrologic region', 'model', 'metric']
     region = {hu_name: {}}
     model = {item: {} for item in multi_model_table.columns.tolist()}
@@ -207,17 +207,17 @@ def write_cmec_json(hu_name,out_path='.'):
                 'long_name': 'Sum of scores',
                 'description': 'Overall score obtained from sum of all principal metrics'},}
     cmec_json['Provenance'] = 'Metrics generated ' + datetime.now(timezone.utc).isoformat()
-    cmec_json['Dimensions']['json_structure'] = json_structure
-    cmec_json['Dimensions']['hydrologic region'] = region
-    cmec_json['Dimensions']['metric'] = metric
-    cmec_json['Dimensions']['model'] = model
+    cmec_json['DIMENSIONS']['json_structure'] = json_structure
+    cmec_json['DIMENSIONS']['dimensions']['hydrologic region'] = region
+    cmec_json['DIMENSIONS']['dimensions']['metric'] = metric
+    cmec_json['DIMENSIONS']['dimensions']['model'] = model
 
     # Arrange results hierarchically
     # index[0] is hydrologic region which is unwanted
     ind1 = multi_model_table.index[1]
     ind2 = multi_model_table.index[-1]
     for rgn in region:
-        cmec_json['Results'].update({rgn: multi_model_table[ind1:ind2].to_dict()})
+        cmec_json['RESULTS'].update({rgn: multi_model_table[ind1:ind2].to_dict()})
 
     filepath = out_path + '/all_metrics_in_' + rgn_str + '_cmec.json'
     with open(filepath,'w') as f:
@@ -226,17 +226,17 @@ def write_cmec_json(hu_name,out_path='.'):
     # Do similar thing for principal metrics json, reusing above json
     f = out_path + '/principal_metrics_in_' + rgn_str + '.json'
     principal = pd.read_json(f).transpose()
-    cmec_json['Results'] = {}
+    cmec_json['RESULTS'] = {}
     prnc_metric = {}
     for pm in principal.index:
         if pm != 'hydrologic region':
             prnc_metric[pm] = metric[pm]
-    cmec_json['Dimensions']['metric'] = prnc_metric
+    cmec_json['DIMENSIONS']['dimensions']['metric'] = prnc_metric
 
     ind1 = principal.index[1]
     ind2 = principal.index[-1]
     for rgn in region:
-        cmec_json['Results'].update({rgn: principal[ind1:ind2].to_dict()})
+        cmec_json['RESULTS'].update({rgn: principal[ind1:ind2].to_dict()})
 
     filepath = out_path + '/principal_metrics_in_' + rgn_str + '_cmec.json'
     with open(filepath,'w') as f:
