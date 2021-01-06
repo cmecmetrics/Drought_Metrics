@@ -1,13 +1,12 @@
 # Drought_Metrics  
 Including codes about reading, interpolating, masking NetCDF data of GCMs and calculating metrics to evaluate models' performance on droughts.  
 
-## How to run this package  
-Use git to clone this repository. There are two ways to run the evaluation.  
-
-### Environment  
+## Environment  
 If using conda, an environment can be created using drought_metrics.yml:  
 `conda env create -f drought_metrics.yml`  
-This file can also be referenced if creating an environment in another manner.  
+
+## How to run this package  
+Use git to clone this repository. There are two ways to run the evaluation.  
 
 ### Run from Drought_Metrics directory  
 `cd` to the cloned Drought_Metrics directory. Use the command line to run drought_metrics.py:  
@@ -22,8 +21,8 @@ From the cmec-driver directory:
 - Create the following directories: "obs", "model", and "output"  
 - Copy your model data to model/Drought_Metrics  
 - Copy your observations and shapefiles to obs/Drought_Metrics  
-- Change the filenames in \<path to Drought Metrics\>/cmec_drought_metrics.sh as needed  
-- Run the following commands:  
+- `cd` to \<path to Drought Metrics\>. Change filenames and settings in cmec_drought_metrics.sh as needed.  
+- `cd` back to cmec-driver. Run the following commands:  
 `python src/cmec-driver.py register <path to Drought Metrics>`  
 `python src/cmec-driver.py run -obs obs/Drought_Metrics model/Drought_Metrics output Drought_Metrics`  
 
@@ -60,6 +59,7 @@ The user has the option to reuse the results of a previous Principal Metrics ana
 
 To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
 `python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`  
+By default, cmec_drought_metrics.sh expects the principal metrics file to be placed in the Drought Metrics code folder. However, the user can overwrite this.
 
 ### Watershed Boundaries
 This analysis requires a shapefile containing watershed boundaries. The boundary features must contain the fields "Name" and "geometry".  
@@ -79,6 +79,9 @@ drought_metrics.yml: Environment file
 
 ### Templates  
 Tempelates of observational data, model data, weightfile used in interpolation, shapefile defining the evaluation regions and plots are provided. More information can be found in settings.json.  
+
+### Example outputs
+The folder 'example_output' contains the results from running the Drought Metrics code via cmec-driver while reusing existing principal metrics.
 
 ## NOTE  
 
