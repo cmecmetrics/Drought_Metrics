@@ -1,5 +1,4 @@
 {
-    "coordinates": {},
     "obslist": {
         "obs_name": "precip",
         "frequency": "mon",
@@ -14,14 +13,13 @@
         "driver": "cmec_drought_metrics.sh",
         "name": "Drought_Metrics",
         "long_name": "Drought Metrics Package",
-        "runtime": {"Drought_Metrics": 1}
+        "runtime": {"Drought_Metrics": 1, "python3": ["affine", "basemap", "cartopy", "climate-indices", "esmpy", "geopandas", "matplotlib", "netcdf4", "numpy", "pandas", "rasterio", "scikit-learn", "scipy", "shapely", "xarray", "xesmf"]}
     },
     "varlist": {
-        "pr": {
-            "name": "precipitation_flux",
-            "frequency": "mon",
-            "units": "kg m-2 s-1"
-        }
+        "varname": "pr",
+        "name": "precipitation_flux",
+        "frequency": "mon",
+        "units": "kg m-2 s-1"
     },
     "supporting_data": {
         "hydrologic_units": {
