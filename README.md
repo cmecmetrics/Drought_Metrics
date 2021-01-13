@@ -5,6 +5,7 @@ This package is also a demonstration of using the CMEC format.
 ## Environment  
 If using conda, an environment can be created using drought_metrics.yml:  
 `conda env create -f drought_metrics.yml`  
+`conda activate drought_metrics`
 
 ## How to run this package  
 Use git to clone this repository. There are two ways to run the evaluation.  
