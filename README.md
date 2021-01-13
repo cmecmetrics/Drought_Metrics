@@ -1,6 +1,6 @@
 # Drought_Metrics  
-Codes for reading, interpolating, and masking NetCDF data from GCMs for calculating metrics to evaluate models' performance on droughts.  
-This package is a demonstration of using the CMEC format.
+This package produces metrics to evaluate models' performance on drought relative to observations.  
+This package is also a demonstration of using the CMEC format.
 
 ## Environment  
 If using conda, an environment can be created using drought_metrics.yml:  
