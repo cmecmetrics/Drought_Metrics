@@ -31,5 +31,13 @@
         "weightfile": {
             "description": "netCDF containing destination grid for interpolation"
         }
+    },
+    "default_parameters": {
+        "hu_name": "New England Region",
+        "interpolation": "False",
+        "obs_path": "${CMEC_OBS_DATA}/CPC_monthly_precipitation_to_1_degree.nc",
+        "shp_path": "${CMEC_OBS_DATA}/HU/WBDHU2.shp",
+        "wgt_path": "${CMEC_MODEL_DATA}/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc",
+        "pfa": "${CMEC_CODE_DIR}/output_principal_metrics_column_defined"
     }
 }

@@ -2,16 +2,18 @@
 
 Driver that runs the drought metrics evaluation.
 
+Use:
+python drought_metrics.py settings_file.yaml
+
 Parameters:
 -----------
+    Parameters are stored in a yaml file provided as the single argument
+    to this script.
+
     test_path : str
         GCM file directory. Can contain multiple files.
-    test_pr : str
-        Precipitation variable name in test files (default 'pr')
     obs_path : str
         Path to observations file
-    obs_pr : str
-        Precipitation variable name in observations (default 'pr')
     wgt_path : str
         Weightfile path
     hu_name : str
@@ -26,41 +28,43 @@ Parameters:
         Path to principal metrics file
 
 """
-import argparse
+import json
 import os
+import sys
 from evaluation import evaluation
 
-parser = argparse.ArgumentParser(description='Get parameters for drought metrics')
-parser.add_argument('-test_path', help='GCM file directory')
-parser.add_argument('-test_pr', default='pr', help='Precipitation variable name')
-parser.add_argument('-obs_path', help='Observational file')
-parser.add_argument('-obs_pr', default='pr', help='Precipitation  variable name')
-parser.add_argument('-wgt_path', default='', help='Weightfile for interpolation')
-parser.add_argument('-hu_name', help='Evaluation region in shapefile')
-parser.add_argument('-shp_path', help='Shapefile path')
-parser.add_argument('-out_path', default='.', help='Output directory')
-parser.add_argument('-interpolation', default=False, help='True to interpolate data')
-parser.add_argument('-pfa', default=None, help='Path for existing PFA results file.')
+# Get CMEC environment variables
+test_path = os.getenv("CMEC_MODEL_DATA")
+obs_path = os.getenv("CMEC_OBS_DATA")
+out_path = os.getenv("CMEC_WK_DIR")
 
-args = parser.parse_args()
+# Get user settings
+user_settings_json = sys.argv[1]
+with open(user_settings_json) as config_file:
+    user_settings = json.load(config_file).get("Drought_Metrics")
+# Get any environment variables
+for setting in user_settings:
+    user_settings[setting] = os.path.expandvars(user_settings[setting])
+# User settings to global variables
+globals().update(user_settings)
 
 # Loop over all files under TEST_PATH and conduct data analysis.
 x = evaluation()
 x.evaluate_multi_model(
-    args.test_path, args.test_pr, args.obs_path, args.obs_pr, args.wgt_path,
-    args.hu_name, args.shp_path, args.out_path, interpolation=args.interpolation)
+    test_path, obs_path, wgt_path, hu_name,
+    shp_path, out_path, interpolation=interpolation)
 
 # Conduct the PFA to get Principal Metrics within the region defined.
 # The column names of pricipal metrics are saved at 'output_principal_metrics_column_defined'.
-if args.pfa is None:
-    pfa_path = args.out_path + "/output_principal_metrics_column_defined"
-    x.PFA(out_path=args.out_path, column_name=pfa_path)
+if pfa is None:
+    pfa_path = out_path + "/output_principal_metrics_column_defined"
+    x.PFA(out_path=out_path, column_name=pfa_path)
 else:
-    pfa_path = args.pfa
+    pfa_path = pfa
 
 # Make sure get the name of pricipal metrics defined by PFA firstly.
 # (Here I provide a template named 'output_principal_metrics_column_defined').
 # Select the principal metrics defined at 'output_principal_metrics_column_defined' and make plots
-x.PM_selection(out_path=args.out_path, column_name=pfa_path)
-x.result_analysis(out_path=args.out_path, column_name=pfa_path, upper_limit=2)
-x.make_taylor_diagram(args.out_path)
+x.PM_selection(out_path=out_path, column_name=pfa_path)
+x.result_analysis(out_path=out_path, column_name=pfa_path, upper_limit=2)
+x.make_taylor_diagram(out_path)
