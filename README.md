@@ -8,58 +8,47 @@ If using conda, an environment can be created using drought_metrics.yml:
 ## How to run this package  
 Use git to clone this repository. There are two ways to run the evaluation.  
 
-### Run from Drought_Metrics directory  
-`cd` to the cloned Drought_Metrics directory. Use the command line to run drought_metrics.py:  
-`python drought_metrics.py <-options>`  
-
-To see all options (help):  
-`python drought_metrics.py -h`  
-
-### Run with CMEC driver (recommended)  
+### Run with CMEC driver 
 Follow the instructions here to install cmec-driver: https://github.com/cmecmetrics/cmec-driver  
 From the cmec-driver directory:  
 - Create the following directories: "obs", "model", and "output"  
-- Copy your model data to model/Drought_Metrics  
-- Copy your observations and shapefiles to obs/Drought_Metrics  
-- `cd` to \<path to Drought Metrics\>. Change filenames and settings in cmec_drought_metrics.sh as needed.  
-- `cd` back to cmec-driver. Run the following commands:  
-`python src/cmec-driver.py register <path to Drought Metrics>`  
-`python src/cmec-driver.py run -obs obs/Drought_Metrics model/Drought_Metrics output Drought_Metrics`  
+- Copy your model data to model/ 
+- Copy your observations to obs/
+- Register the module:
+  `python cmec-driver.py register <path to Drought Metrics>`
+- (Optional) Edit settings in config/cmec.json
+- Run the module:
+`python cmec-driver.py run -obs obs/ model/ output Drought_Metrics`  
 
 Your results will be written to cmec-driver/output/Drought_Metrics. Open cmec-driver/output/Drought_Metrics/index.html with your browser to view the generated metrics files and plots.  
 
 Results will be overwritten the next time cmec-driver is run with the same output path. To save results, either copy the output/Drought_Metrics folder to a new location or provide a unique output folder path when running cmec-driver.  
 
-### Required flags
-The following flags are always required to run the Drought Metrics package:
-- test_path: Model data directory
-- obs_path: Observation file path
-- hu_name: Name of evaluation region
-- shp_path: Watershed boundary file path
+The user settings can be modified in cmec-driver/config/cmec.json after the package is registered.
 
-### Optional flags
-Use these flags to specify additional files and settings:
-- test_pr: model precipitation variable name (default "pr")
-- obs_pr: observation precipitation variable name (default "pr")
-- wgt_path: netcdf file with grid for interpolation (default '')
-- out_path: output directory path (default '.')
-- interpolation: True to interpolate inputs (default False)
-- pfa: Path to existing principal metrics results (default None)
+### User settings
+The following files and settings can be changed by the user:
+- obs_path: Observation file path (default: '$CMEC_OBS_DATA/precip.V1.0.mon.mean.nc')
+- hu_name: Name of evaluation region (default: 'New England Region')
+- shp_path: Watershed boundary file path (default: 'HU/WBDHU2.shp')
+- wgt_path: netcdf file with grid for interpolation (default 'data/weightfile/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc')
+- interpolation: true to interpolate inputs (default true)
+- pfa: Path to existing principal metrics results (default 'output_principal_metrics_column_defined')
+- run_pfa: Set to true to generate new PFA analysis (default false)
 
 ## Data  
 
 ### Observations  
-This analysis was designed to use the CPC Unified Gauge-Based Analysis of Daily Precipitation over CONUS. This dataset is available from [NOAA PSL](https://psl.noaa.gov/data/gridded/data.unified.daily.conus.html). For best results, at least 50 years of data should be used.  
+This analysis was designed to use the CPC Unified Gauge-Based Analysis of Daily Precipitation over CONUS. This dataset is available from [NOAA PSL](https://psl.noaa.gov/data/gridded/data.unified.daily.conus.html) (download the monthly mean file precip.V1.0.mon.mean.nc). For best results, at least 50 years of data should be used.  
 
 ### Models
-Monthly precipitation output should be in [CF-compliant](https://cfconventions.org/) netCDF files that conform to the standards for the CMIP6 project. Required dimensions are latitude, longitude, time, and precipitation flux "pr". The published analysis uses CMIP6 output.  
+Monthly precipitation output should be in [CF-compliant](https://cfconventions.org/) netCDF files that conform to the standards for the CMIP6 project. Required dimensions are latitude, longitude, time, and precipitation flux. The Drought Metrics package assumes that there will be a single precipitation variable in each file and that its variable name contains the letters "pr".
 
 ### Principal Metrics
 The user has the option to reuse the results of a previous Principal Metrics analysis or to generate new principal metrics. 
 
-To use the results of an old PFA analysis, set the optional `-pfa` flag to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
-`python drought_metrics.py -pfa path/to/output_principal_metrics_column_defined`  
-By default, cmec_drought_metrics.sh expects the principal metrics file to be placed in the Drought Metrics code folder. However, the user can overwrite this.
+To use the results of an old PFA analysis, set the optional `pfa` key to the path for those PFA results (by default named 'output_principal_metrics_column_defined').  
+By default, cmec_drought_metrics.sh expects the principal metrics file to be placed in the Drought Metrics code folder.
 
 ### Watershed Boundaries
 This analysis requires a shapefile containing watershed boundaries. The boundary features must contain the fields "Name" and "geometry".  
