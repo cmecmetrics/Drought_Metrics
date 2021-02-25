@@ -34,26 +34,31 @@ import sys
 from evaluation import evaluation
 
 # Set defaults
-interpolation = False
+hu_name = "New England Region"
+interpolation = True
+run_pfa = False
 shp_path = "./HU/WBDHU2.shp"
 wgt_path = "./data/weightfile/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc"
 pfa = "./output_principal_metrics_column_defined"
 
 # Get CMEC environment variables
 test_path = os.getenv("CMEC_MODEL_DATA")
-obs_path = os.getenv("CMEC_OBS_DATA")
+obs_path = os.path.join(os.getenv("CMEC_OBS_DATA"),"precip.V1.0.mon.mean.nc")
 out_path = os.getenv("CMEC_WK_DIR")
 
-# Get user settings
+# Get user settings from cmec interface
 user_settings_json = os.path.expandvars('$CMEC_CONFIG_DIR/cmec.json')
-with open(user_settings_json) as config_file:
-    user_settings = json.load(config_file).get("Drought_Metrics")
-# Get any environment variables and check settings type
-for setting in user_settings:
-    if isinstance(user_settings[setting], str):
-        user_settings[setting] = os.path.expandvars(user_settings[setting])
-# User settings to global variables
-globals().update(user_settings)
+try:
+    with open(user_settings_json) as config_file:
+        user_settings = json.load(config_file).get("Drought_Metrics")
+    # Get any environment variables and check settings type
+    for setting in user_settings:
+        if isinstance(user_settings[setting], str):
+            user_settings[setting] = os.path.expandvars(user_settings[setting])
+    # User settings to global variables
+    globals().update(user_settings)
+except:
+    print("Could not load settings from " + str(user_settings_json) + ". Using defaults")
 
 # Loop over all files under TEST_PATH and conduct data analysis.
 x = evaluation()
@@ -63,7 +68,7 @@ x.evaluate_multi_model(
 
 # Conduct the PFA to get Principal Metrics within the region defined.
 # The column names of pricipal metrics are saved at 'output_principal_metrics_column_defined'.
-if pfa is None:
+if run_pfa:
     pfa_path = out_path + "/output_principal_metrics_column_defined"
     x.PFA(out_path=out_path, column_name=pfa_path)
 else:
