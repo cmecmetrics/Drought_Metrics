@@ -34,6 +34,6 @@
     },
     "default_parameters": {
         "hu_name": "New England Region",
-        "obs_path": "${CMEC_OBS_DATA}/CPC_monthly_precipitation_to_1_degree.nc",
+        "obs_path": "${CMEC_OBS_DATA}/CPC_monthly_precipitation_to_1_degree.nc"
     }
 }
