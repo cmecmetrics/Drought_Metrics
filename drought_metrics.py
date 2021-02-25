@@ -33,24 +33,24 @@ import os
 import sys
 from evaluation import evaluation
 
+# Set defaults
+interpolation = False
+shp_path = "./HU/WBDHU2.shp"
+wgt_path = "./data/weightfile/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc"
+pfa = "./output_principal_metrics_column_defined"
+
 # Get CMEC environment variables
 test_path = os.getenv("CMEC_MODEL_DATA")
 obs_path = os.getenv("CMEC_OBS_DATA")
 out_path = os.getenv("CMEC_WK_DIR")
 
 # Get user settings
-user_settings_json = sys.argv[1]
+user_settings_json = os.path.expandvars('$CMEC_CONFIG_DIR/cmec.json')
 with open(user_settings_json) as config_file:
     user_settings = json.load(config_file).get("Drought_Metrics")
 # Get any environment variables and check settings type
 for setting in user_settings:
-    if setting in ["hu_name", "obs_path", "shp_path", "wgt_path"]:
-        if not isinstance(user_settings[setting], str):
-            print("Warning: setting '" + setting + "' should be type string.")
-    elif setting == "interpolation":
-        if not isinstance(user_settings[setting], bool):
-            print("Warning: setting 'interpolation' should be type bool.")
-    if (user_settings[setting], str):
+    if isinstance(user_settings[setting], str):
         user_settings[setting] = os.path.expandvars(user_settings[setting])
 # User settings to global variables
 globals().update(user_settings)

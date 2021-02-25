@@ -34,10 +34,6 @@
     },
     "default_parameters": {
         "hu_name": "New England Region",
-        "interpolation": false,
         "obs_path": "${CMEC_OBS_DATA}/CPC_monthly_precipitation_to_1_degree.nc",
-        "shp_path": "${CMEC_CODE_DIR}/HU/WBDHU2.shp",
-        "wgt_path": "${CMEC_CODE_DIR}/data/weightfile/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc",
-        "pfa": "${CMEC_CODE_DIR}/output_principal_metrics_column_defined"
     }
 }
