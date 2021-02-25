@@ -42,9 +42,16 @@ out_path = os.getenv("CMEC_WK_DIR")
 user_settings_json = sys.argv[1]
 with open(user_settings_json) as config_file:
     user_settings = json.load(config_file).get("Drought_Metrics")
-# Get any environment variables
+# Get any environment variables and check settings type
 for setting in user_settings:
-    user_settings[setting] = os.path.expandvars(user_settings[setting])
+    if setting in ["hu_name", "obs_path", "shp_path", "wgt_path", "pfa"]:
+        if not isinstance(user_settings[setting], str):
+            print("Warning: setting '" + setting + "' should be type string.")
+        else:
+            user_settings[setting] = os.path.expandvars(user_settings[setting])
+    elif setting == "interpolation":
+        if not isinstance(user_settings[setting], bool):
+            print("Warning: setting 'interpolation' should be type bool.")
 # User settings to global variables
 globals().update(user_settings)
 

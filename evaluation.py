@@ -95,11 +95,13 @@ class evaluation():
     def read_test_data(self,test_path):
         self.test = xarray.open_dataset(test_path)
         # find precipitation variable
-        for pr_var in self.test.data_vars:
-            if 'pr' in pr_var:
-                self.test['pr'] = self.test[pr_var]
-            else:
-                raise DroughtMetricsError("No precipitation variable found in test data")
+        found = False
+        for nc_var in self.test.data_vars:
+            if 'pr' in nc_var:
+                self.test['pr'] = self.test[nc_var]
+                found = True
+        if not found:
+            raise DroughtMetricsError("No precipitation variable found in test data")
         if self.test.lon.units == 'degrees_east':
             self.test = self.test.assign_coords({"lon": (((self.test.lon + 180) % 360) - 180)})
             print('Transfer longitude units of test data from degrees_east to degrees_west.')
@@ -107,7 +109,7 @@ class evaluation():
             print('Longitude units of test data is already degrees_west.')
 
         if self.test.pr.units == 'kg m-2 s-1':
-            self.test['pr'] = self.test['pr']* 86400
+            self.test['pr'] = self.test['pr'] * 86400
             print('Transfer precipitation units of test data from kg m-2 s-1 to mm/day.')
         elif self.test.pr.units == 'mm/day':
             print('Precipitation units of test data is already mm/day.')
@@ -124,11 +126,13 @@ class evaluation():
     def read_observe_data(self,observe_path):
         self.observe = xarray.open_dataset(observe_path)
         # find precipitation variable
-        for pr_var in self.observe.data_vars:
-            if 'pr' in pr_var:
-                self.observe['pr'] = self.observe[pr_var]
-            else:
-                raise DroughtMetricsError("No precipitation variable found in observations")
+        found = False
+        for nc_var in self.observe.data_vars:
+            if 'pr' in nc_var:
+                self.observe['pr'] = self.observe[nc_var]
+                found = True
+        if not found:
+            raise DroughtMetricsError("No precipitation variable found in observations")
         # transfer lon from 0to360 into -180to180
         if self.observe.lon.units == 'degrees_east':
             self.observe = self.observe.assign_coords(
