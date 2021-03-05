@@ -62,15 +62,15 @@ This analysis requires a shapefile containing watershed boundaries. The boundary
 The example boundaries provided in Drought_Metrics/HU are for watersheds in the US at the 2-digit level, based on data obtained from the U.S. Geological Survey and the U.S. Department of Agriculture, Natural Resources Conservation Service. More information [here](https://www.usgs.gov/core-science-systems/ngp/national-hydrography/watershed-boundary-dataset?qt-science_support_page_related_con=4#qt-science_support_page_related_con).
 
 ## Contents
-### Scripts
-evaluation.py: Evaluation class which computes drought metrics.
-drought_metrics.py: Driver for evaluation.py
-dm_cmec_outputs.py: Functions for creating CMEC outputs
-cmec_drought_metrics.sh: CMEC driver script
+### Scripts. 
+evaluation.py: Evaluation class which computes drought metrics.  
+drought_metrics.py: Driver for evaluation.py.  
+dm_cmec_outputs.py: Functions for creating CMEC outputs.  
+cmec_drought_metrics.sh: CMEC driver script. 
 
 ### Settings
-settings.json: CMEC settings file
-drought_metrics.yml: Environment file
+settings.json: CMEC settings file.  
+drought_metrics.yml: Environment file. 
 
 ### Templates
 Tempelates of observational data, model data, weightfile used in interpolation, shapefile defining the evaluation regions and plots are provided. More information can be found in settings.json.
