@@ -152,9 +152,9 @@ class evaluation():
             raise DroughtMetricsError("Obs precipitation units must be in kg m-2 s-1 or mm/day")
         self.observe = self.observe.sortby(['lat','lon'])
 
-    def read_weightfile(self,weightfile_path,interpolation = False):
+    def read_weightfile(self,weightfile_path,interpolation=False):
         ##read weightfile data (the destination file used in interpolation)
-        # if data are already interpolated, set the interpolation = False to skip the interpolation
+        # if data are already interpolated, set the interpolation=False to skip the interpolation
         if interpolation:
             self.weightfile = xarray.open_dataset(weightfile_path)
             # transfer lon from 0to360 into -180to180
@@ -172,7 +172,7 @@ class evaluation():
         else:
             self.weightfile = np.nan
 
-    def interpolate(self,test,observe,weightfile,interpolation = False,interpolate_type = 'conservative'):
+    def interpolate(self,test,observe,weightfile,interpolation=False,interpolate_type = 'conservative'):
         #or use bilinear by setting interpolate_type = 'bilinear'
         if interpolation:
             # set lat_b and lon_b

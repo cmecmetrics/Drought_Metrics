@@ -33,7 +33,7 @@ import os
 import sys
 from evaluation import evaluation
 
-# Set defaults
+# Set defaults based on demo data
 hu_name = "New England Region"
 interpolation = True
 run_pfa = False
@@ -43,7 +43,7 @@ pfa = "./output_principal_metrics_column_defined"
 
 # Get CMEC environment variables
 test_path = os.getenv("CMEC_MODEL_DATA")
-obs_path = os.path.join(os.getenv("CMEC_OBS_DATA"),"precip.V1.0.mon.mean.nc")
+obs_path = os.getenv("CMEC_OBS_DATA")
 out_path = os.getenv("CMEC_WK_DIR")
 
 # Get user settings from cmec interface
@@ -57,8 +57,10 @@ try:
             user_settings[setting] = os.path.expandvars(user_settings[setting])
     # User settings to global variables
     globals().update(user_settings)
-except:
-    print("Could not load settings from " + str(user_settings_json) + ". Using defaults")
+    obs_path = os.path.join(obs_path, obs_file_name)
+except json.decoder.JSONDecodeError:
+    print("*** Could not load settings from " + str(user_settings_json) + ". Using defaults ***\n")
+    obs_path = os.path.join(obs_path, "precip.V1.0.mon.mean.nc")
 
 # Loop over all files under TEST_PATH and conduct data analysis.
 x = evaluation()
@@ -69,9 +71,11 @@ x.evaluate_multi_model(
 # Conduct the PFA to get Principal Metrics within the region defined.
 # The column names of pricipal metrics are saved at 'output_principal_metrics_column_defined'.
 if run_pfa:
+    print("Running Principal Features Analysis")
     pfa_path = out_path + "/output_principal_metrics_column_defined"
     x.PFA(out_path=out_path, column_name=pfa_path)
 else:
+    print("Using principal features from " + str(pfa_path))
     pfa_path = pfa
 
 # Make sure get the name of pricipal metrics defined by PFA firstly.
