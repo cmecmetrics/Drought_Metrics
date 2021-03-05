@@ -35,11 +35,20 @@ def add_matrix_NaNs(regridder):
     regridder.weights = scipy.sparse.coo_matrix(M)
     return regridder
 
+class DroughtMetricsError(Exception):
+    """Errors related to Drought Metrics module requirements.
+    Args:
+        message (str): Explanation of the error
+    """
+    def __init__(self, message):
+        super(DroughtMetricsError, self).__init__(message)
+        self.message = message
+
 
 class evaluation():
     # init
     def __init__(self):
-        print('Drought Metrics\n---------------\n' + 
+        print('Drought Metrics\n---------------\n' +
             'This is a package to evaluate precipitation simulation\n'
             + 'performance based on test and observed datasets\n')
 
@@ -83,10 +92,16 @@ class evaluation():
         return z
 
     #evaluate functions
-    def read_test_data(self,test_path,test_pr_name):
+    def read_test_data(self,test_path):
         self.test = xarray.open_dataset(test_path)
-        self.test['pr'] = self.test[test_pr_name]
-
+        # find precipitation variable
+        found = False
+        for nc_var in self.test.data_vars:
+            if 'pr' in nc_var:
+                self.test['pr'] = self.test[nc_var]
+                found = True
+        if not found:
+            raise DroughtMetricsError("No precipitation variable found in test data")
         if self.test.lon.units == 'degrees_east':
             self.test = self.test.assign_coords({"lon": (((self.test.lon + 180) % 360) - 180)})
             print('Transfer longitude units of test data from degrees_east to degrees_west.')
@@ -94,10 +109,12 @@ class evaluation():
             print('Longitude units of test data is already degrees_west.')
 
         if self.test.pr.units == 'kg m-2 s-1':
-            self.test['pr'] = self.test['pr']* 86400
+            self.test['pr'] = self.test['pr'] * 86400
             print('Transfer precipitation units of test data from kg m-2 s-1 to mm/day.')
+        elif self.test.pr.units == 'mm/day':
+            print('Precipitation units of test data is already mm/day.')
         else:
-            print("Precipitation units of test data is already mm/day.")
+            raise DroughtMetricsError('Test precipitation units must be in kg m-2 s-1 or mm/day')
 
         self.test = self.test.sortby(['lat','lon'])
         #assign model name, change if other attribute indicates data's model name
@@ -106,9 +123,16 @@ class evaluation():
         #if test.model indicates model name
         #self.model_name = self.test.model
 
-    def read_observe_data(self,observe_path,observe_pr_name):
+    def read_observe_data(self,observe_path):
         self.observe = xarray.open_dataset(observe_path)
-        self.observe['pr'] = self.observe[observe_pr_name]
+        # find precipitation variable
+        found = False
+        for nc_var in self.observe.data_vars:
+            if 'pr' in nc_var:
+                self.observe['pr'] = self.observe[nc_var]
+                found = True
+        if not found:
+            raise DroughtMetricsError("No precipitation variable found in observations")
         # transfer lon from 0to360 into -180to180
         if self.observe.lon.units == 'degrees_east':
             self.observe = self.observe.assign_coords(
@@ -122,13 +146,15 @@ class evaluation():
         if self.observe.pr.units == 'kg m-2 s-1':
             self.observe['pr'] = self.observe['pr'] * 86400
             print('Transfer precipitation units of observe data from kg m-2 s-1 to mm/day.')
+        elif self.observe.pr.units == 'mm/day':
+            print("Precipitation units of observations is already mm/day.")
         else:
-            print("Precipitation units of test observe is already mm/day.")
+            raise DroughtMetricsError("Obs precipitation units must be in kg m-2 s-1 or mm/day")
         self.observe = self.observe.sortby(['lat','lon'])
 
-    def read_weightfile(self,weightfile_path,interpolation = False):
+    def read_weightfile(self,weightfile_path,interpolation=False):
         ##read weightfile data (the destination file used in interpolation)
-        # if data are already interpolated, set the interpolation = False to skip the interpolation
+        # if data are already interpolated, set the interpolation=False to skip the interpolation
         if interpolation:
             self.weightfile = xarray.open_dataset(weightfile_path)
             # transfer lon from 0to360 into -180to180
@@ -146,7 +172,7 @@ class evaluation():
         else:
             self.weightfile = np.nan
 
-    def interpolate(self,test,observe,weightfile,interpolation = False,interpolate_type = 'conservative'):
+    def interpolate(self,test,observe,weightfile,interpolation=False,interpolate_type = 'conservative'):
         #or use bilinear by setting interpolate_type = 'bilinear'
         if interpolation:
             # set lat_b and lon_b
@@ -792,21 +818,8 @@ class evaluation():
         print("10. K-S Test's max distance of drought duration: ",
             self.dry_dutaion_max_distance_score)
 
-        #if use z test
-        #n1 = len(self.test_consecutive_regional_dry_month)
-        #n2 = len(self.observe_consecutive_regional_dry_month)
-        #mu1 = self.test_consecutive_regional_dry_month.duration.mean()
-        #mu2 = self.observe_consecutive_regional_dry_month.duration.mean()
-        #std1 = self.test_consecutive_regional_dry_month.duration.std()
-        #std2 = self.observe_consecutive_regional_dry_month.duration.std()
-        #self.z_consecutive_dry_month = abs((mu1-mu2)/math.sqrt(pow(std1,2)/n1 + pow(std2,2)/n2))
-        #The z-score associated with a 5% alpha level / 2 is 1.96.
-        #z_threshold = 1.96
-        #self.consecutive_dry_month_score_z = self.z_consecutive_dry_month/z_threshold
-        #print('The score of z test', self.consecutive_dry_month_score_z)
-
         #Drought probability
-        #11.Z-test on the probability of drought initiation
+        #11. Z-test on the probability of drought initiation
         #Drought initiation
         self.n_test_non_dry = len(
             self.test_regional_dry_month[
@@ -1256,19 +1269,19 @@ class evaluation():
         self.principal_metrics_json = self.principal_metrics.set_index('model').to_json(f, indent=2)
 
     # Loop over all NetCDF files under a directory and make the plots
-    def evaluate_multi_model(self,test_path,test_pr_name,observe_path,observe_pr_name,weightfile_path,hu_name,shp_path,out_path=".",interpolation=False):
+    def evaluate_multi_model(self,test_path,observe_path,weightfile_path,hu_name,shp_path,out_path=".",interpolation=False):
         file_num = 0
         fileList = os.listdir(test_path)
 
         for file in fileList:
             if file.endswith(".nc"):
-                test_path_file = test_path + file
+                test_path_file = os.path.join(test_path,file)
                 file_num = file_num + 1
                 print('\n*****************************************************')
                 print('Test data file ' + str(file_num) + '\n')
                 print('Reading ' + file + '\n')
-                self.read_test_data(test_path_file,test_pr_name)
-                self.read_observe_data(observe_path,observe_pr_name)
+                self.read_test_data(test_path_file)
+                self.read_observe_data(observe_path)
                 self.read_weightfile(weightfile_path,interpolation)
                 self.interpolate(
                     self.test,self.observe,self.weightfile,interpolation,

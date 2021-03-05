@@ -31,5 +31,8 @@
         "weightfile": {
             "description": "netCDF containing destination grid for interpolation"
         }
+    },
+    "default_parameters": {
+        "hu_name": "New England Region"
     }
 }

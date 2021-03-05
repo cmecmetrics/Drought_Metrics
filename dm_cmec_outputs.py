@@ -13,11 +13,13 @@ Parameters:
     out_path : string
         path to output directory
 """
-import argparse
 from datetime import datetime, timezone
 import json
 import pandas as pd
 from pathlib import Path
+import os
+import sys
+import yaml
 
 def get_env():
     import affine
@@ -294,19 +296,21 @@ def make_html(hu_name, out_path='.'):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Get parameters for cmec output files')
-    parser.add_argument('-test_path', help='GCM file directory')
-    parser.add_argument('-obs_path', help='Observational file')
-    parser.add_argument('-log_path', help='Log file')
-    parser.add_argument('-hu_name', help='Evaluation region in shapefile')
-    parser.add_argument('-out_path', help='Output directory')
-    args = parser.parse_args()
+    # Get CMEC environment variables
+    test_path = os.getenv("CMEC_MODEL_DATA")
+    obs_path = os.getenv("CMEC_OBS_DATA")
+    out_path = os.getenv("CMEC_WK_DIR")
+    log_path = os.path.join(out_path,"drought_metrics_log.txt")
 
-    test_path = args.test_path
-    obs_path = args.obs_path
-    log_path = args.log_path
-    hu_name = args.hu_name
-    out_path = args.out_path
+    # Get user settings
+    user_settings_yaml = sys.argv[1]
+    with open(user_settings_yaml) as config_file:
+        user_settings = yaml.safe_load(config_file).get("Drought_Metrics")
+    # Get any environment variables
+    for setting in user_settings:
+        user_settings[setting] = os.path.expandvars(user_settings[setting])
+    # User settings to global variables
+    globals().update(user_settings)
 
     write_output_json(test_path, obs_path, log_path, hu_name, out_path)
     write_cmec_json(hu_name, out_path)
