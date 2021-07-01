@@ -12,6 +12,7 @@ import matplotlib as mpl
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
+import netCDF4
 import numpy as np
 import pandas as pd
 from rasterio import features

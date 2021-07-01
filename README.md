@@ -2,21 +2,38 @@
 Including codes about reading, interpolating, masking NetCDF data of GCMs and calculating metrics to evaluate models' performance on droughts.
 
 ## Environment
-If using conda, an environment can be created using drought_metrics.yml:
-`conda env create -f drought_metrics.yml`
+Users must have a conda environment named "_CMEC_drought_metrics" to run this module. A conda package manager such as Miniconda or Anaconda can be used to accomplish this. The environment requirements and two strategies for creating this environment are provided below.
+
+Packages: Python 3.6 is recommended. The required packages are affine, basemap, cartopy, esmpy, geopandas, matplotlib, netcdf4, numpy, pandas, rasterio, scikit-learn, scipy, shapely, xarray, xesmf, and climate-indices.
+
+Create from yml: A conda environment can be created using drought_metrics.yml on the command line. The resulting environment may not work on all systems:   
+`conda env create -f drought_metrics.yml`  
+
+Create via command line: It is recommended that conda and the conda-forge channel are used to install all packages **except** climate-indices, geopandas, rasterio, and scikit-learn. Use pip to install these four packages afterwards. For example:  
+`conda create -n _CMEC_drought_metrics --no-default-packages python=3.6`  
+`conda activate _CMEC_drought_metrics`  
+`conda install -c conda-forge affine basemap cartopy esmpy matplotlib netcdf4 numpy pandas pip scipy shapely xarray xesmf`  
+`pip install climate-indices rasterio geopandas scikit-learn`  
 
 ## How to run this package
-Use git to clone this repository. The CMEC driver will run the module from this codebase.
+Use git to clone this repository. CMEC driver will run the module from this codebase.
 
 ### CMEC driver
-Follow the instructions here to install cmec-driver: https://github.com/cmecmetrics/cmec-driver
-From the cmec-driver directory:
-- Create the following directories: "obs", "model", and "output"
-- Copy (or link) your model files to model/
-- Copy (or link) your observational file to obs/
+Follow the instructions here to install cmec-driver: https://github.com/cmecmetrics/cmec-driver.  
+CMEC driver version must be "20210617" or later. Please pull the latest version if you have an existing cmec-driver repo.
+
+Set-up steps in the cmec-driver directory:
+- Activate any Python 3 environment.
+- Create the following directories: "obs", "model", and "output".
+- Copy (or link) your model files into model/.
+- Copy (or link) your observational file into obs/.
+- (Only for first-time cmec-driver users) Register your conda environment information. Your conda executable is the file that gets sourced to activate conda (usually conda.sh) and your environment root is the folder containing your '\_CMEC_drought_metrics' environment:  
+`python cmec-driver.py setup -conda_source <path_to_conda_executable> -env_root <path_to_environment_root>`  
 - Register the module:
-  `python cmec-driver.py register <path to Drought Metrics repository>`
-- (Optional) Edit settings in config/cmec.json
+  `python cmec-driver.py register <path to Drought Metrics repository>`  
+
+Running Drought Metrics:
+- (Optional) Edit settings in config/cmec.json under "Drought_Metrics"
 - Run the module:
 `python cmec-driver.py run -obs obs/ model/ output/ Drought_Metrics`
 
@@ -29,7 +46,7 @@ Results will be overwritten the next time cmec-driver is run with the same outpu
 #### Customizations
 The user settings can be modified in cmec-driver/config/cmec.json after the package is registered.
 
-The directory names "obs", "model", and "output" are recommended with cmec-driver but not required. The observations file should be located in the observations folder passed to cmec-driver, and the model files should be located in the model folder passed to cmec-driver.
+The directory names "obs", "model", and "output" are recommended with cmec-driver but not required. The observations file should be located in the directory passed to cmec-driver via the "obs" flag, and the model files should be located in the directory passed to cmec-driver as a required positional argument after "run".
 
 ### User settings
 The following files and settings can be changed by the user in cmec.json:
@@ -52,9 +69,9 @@ Monthly precipitation output should be in [CF-compliant](https://cfconventions.o
 ### Principal Metrics
 The user has the option to reuse the results of a previous Principal Features Analysis or to generate new principal metrics.
 
-To use the results of an old PFA analysis, set the optional `pfa` key to the path for those PFA results (by default named 'output_principal_metrics_column_defined').
+To use the results of an old PFA analysis, set the optional `pfa` key to the absolute path for those PFA results.
 
-By default, cmec_drought_metrics.sh expects the principal metrics file to be placed in the Drought Metrics code folder.
+By default, Drought Metrics uses the principal metrics file 'output_principal_metrics_column_defined' found in the Drought Metrics code folder.
 
 ### Watershed Boundaries
 This analysis requires a shapefile containing watershed boundaries. The boundary features must contain the fields "Name" and "geometry".
@@ -62,7 +79,7 @@ This analysis requires a shapefile containing watershed boundaries. The boundary
 The example boundaries provided in Drought_Metrics/HU are for watersheds in the US at the 2-digit level, based on data obtained from the U.S. Geological Survey and the U.S. Department of Agriculture, Natural Resources Conservation Service. More information [here](https://www.usgs.gov/core-science-systems/ngp/national-hydrography/watershed-boundary-dataset?qt-science_support_page_related_con=4#qt-science_support_page_related_con).
 
 ## Contents
-### Scripts. 
+### Scripts 
 evaluation.py: Evaluation class which computes drought metrics.  
 drought_metrics.py: Driver for evaluation.py.  
 dm_cmec_outputs.py: Functions for creating CMEC outputs.  
