@@ -168,7 +168,7 @@ def write_cmec_json(hu_name,out_path='.'):
     rgn_str = str(hu_name).replace(' ','_')
     f = out_path + '/all_metrics_in_' + rgn_str + '.json'
     multi_model_table = pd.read_json(f).transpose()
-    cmec_json = {'DIMENSIONS': {'dimensions':{}},'RESULTS': {}, 'PROVENANCE': ''}
+    cmec_json = {'SCHEMA': {}, 'DIMENSIONS': {'dimensions':{}},'RESULTS': {}, 'PROVENANCE': ''}
     json_structure = ['hydrologic region', 'model', 'metric']
     region = {hu_name: {}}
     model = {item: {} for item in multi_model_table.columns.tolist()}
@@ -208,6 +208,7 @@ def write_cmec_json(hu_name,out_path='.'):
              'Total Score': {
                 'long_name': 'Sum of scores',
                 'description': 'Overall score obtained from sum of all principal metrics'},}
+    cmec_json['SCHEMA'] = {'name': 'CMEC', 'version': 'v1', 'package': 'ASoP'}
     cmec_json['PROVENANCE'] = 'Metrics generated ' + datetime.now(timezone.utc).isoformat()
     cmec_json['DIMENSIONS']['json_structure'] = json_structure
     cmec_json['DIMENSIONS']['dimensions']['hydrologic region'] = region

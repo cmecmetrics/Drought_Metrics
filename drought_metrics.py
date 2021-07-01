@@ -40,6 +40,7 @@ run_pfa = False
 shp_path = "./HU/WBDHU2.shp"
 wgt_path = "./data/weightfile/interpolated_pr_Amon_E3SM-1-1_historical_r1i1p1f1_gr_187001-200912.nc"
 pfa = "./output_principal_metrics_column_defined"
+obs_file_name = "precip.V1.0.mon.mean.nc"
 
 # Get CMEC environment variables
 test_path = os.getenv("CMEC_MODEL_DATA")
@@ -59,8 +60,8 @@ try:
     globals().update(user_settings)
     obs_path = os.path.join(obs_path, obs_file_name)
 except json.decoder.JSONDecodeError:
-    print("*** Could not load settings from " + str(user_settings_json) + ". Using defaults ***\n")
-    obs_path = os.path.join(obs_path, "precip.V1.0.mon.mean.nc")
+    print("*** Could not load settings from " + str(user_settings_json) + ". File may not be valid JSON. Using defaults ***\n")
+    obs_path = os.path.join(obs_path, obs_file_name)
 
 # Loop over all files under TEST_PATH and conduct data analysis.
 x = evaluation()
@@ -75,7 +76,7 @@ if run_pfa:
     pfa_path = out_path + "/output_principal_metrics_column_defined"
     x.PFA(out_path=out_path, column_name=pfa_path)
 else:
-    print("Using principal features from " + str(pfa_path))
+    print("Using principal features from " + str(pfa))
     pfa_path = pfa
 
 # Make sure get the name of pricipal metrics defined by PFA firstly.

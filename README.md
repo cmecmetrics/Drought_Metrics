@@ -2,21 +2,33 @@
 Including codes about reading, interpolating, masking NetCDF data of GCMs and calculating metrics to evaluate models' performance on droughts.
 
 ## Environment
-If using conda, an environment can be created using drought_metrics.yml:
-`conda env create -f drought_metrics.yml`
+Python 3.6 is recommended. The required packages are affine, basemap, cartopy, esmpy, geopandas, matplotlib, netcdf4, numpy, pandas, rasterio, scikit-learn, scipy, shapely, xarray, xesmf, and climate-indices.
+
+A conda environment can be created using drought_metrics.yml:
+`conda env create -f drought_metrics.yml`. The resulting environment may not work on all systems. 
+
+If creating an environment from scratch, it is recommended that conda and the conda-forge channel are used to install all packages **except** climate-indices, geopandas, rasterio, and scikit-learn. Use pip to install these four packages afterwards. For example:
+`conda create -n _CMEC_drought_metrics --no-default-packages python=3.6`
+`conda activate _CMEC_drought_metrics`
+`conda install -c conda-forge affine basemap cartopy esmpy matplotlib netcdf4 numpy pandas pip scipy shapely xarray xesmf`
+`pip install climate-indices rasterio geopandas scikit-learn`
 
 ## How to run this package
-Use git to clone this repository. The CMEC driver will run the module from this codebase.
+Use git to clone this repository. CMEC driver will run the module from this codebase.
 
 ### CMEC driver
 Follow the instructions here to install cmec-driver: https://github.com/cmecmetrics/cmec-driver
-From the cmec-driver directory:
-- Create the following directories: "obs", "model", and "output"
-- Copy (or link) your model files to model/
-- Copy (or link) your observational file to obs/
+Set-up steps in the cmec-driver directory:
+- Activate any Python 3 environment.
+- Create the following directories: "obs", "model", and "output".
+- Copy (or link) your model files into model/.
+- Copy (or link) your observational file into obs/.
+- (Only for first-time cmec-driver users) Register your conda environment information. Your conda executable is the file that gets sourced to activate conda (usually conda.sh) and your environment root is the folder containing your '\_CMEC_drought_metrics' environment.  
+`python cmec-driver.py setup -conda_source <path_to_conda_executable> -env_root <path_to_environment_root>`  
 - Register the module:
   `python cmec-driver.py register <path to Drought Metrics repository>`
-- (Optional) Edit settings in config/cmec.json
+Running Drought Metrics:
+- (Optional) Edit settings in config/cmec.json under "Drought_Metrics"
 - Run the module:
 `python cmec-driver.py run -obs obs/ model/ output/ Drought_Metrics`
 
