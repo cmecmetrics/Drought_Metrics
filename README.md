@@ -2,12 +2,14 @@
 Including codes about reading, interpolating, masking NetCDF data of GCMs and calculating metrics to evaluate models' performance on droughts.
 
 ## Environment
-Python 3.6 is recommended. The required packages are affine, basemap, cartopy, esmpy, geopandas, matplotlib, netcdf4, numpy, pandas, rasterio, scikit-learn, scipy, shapely, xarray, xesmf, and climate-indices.
+Users must have a conda environment named "_CMEC_drought_metrics" to run this module. A conda package manager such as Miniconda or Anaconda can be used to accomplish this. The environment requirements and two strategies for creating this environment are provided below.
 
-A conda environment can be created using drought_metrics.yml:
-`conda env create -f drought_metrics.yml`. The resulting environment may not work on all systems. 
+Packages: Python 3.6 is recommended. The required packages are affine, basemap, cartopy, esmpy, geopandas, matplotlib, netcdf4, numpy, pandas, rasterio, scikit-learn, scipy, shapely, xarray, xesmf, and climate-indices.
 
-If creating an environment from scratch, it is recommended that conda and the conda-forge channel are used to install all packages **except** climate-indices, geopandas, rasterio, and scikit-learn. Use pip to install these four packages afterwards. For example:  
+Create from yml: A conda environment can be created using drought_metrics.yml on the command line. The resulting environment may not work on all systems:   
+`conda env create -f drought_metrics.yml`  
+
+Create via command line: It is recommended that conda and the conda-forge channel are used to install all packages **except** climate-indices, geopandas, rasterio, and scikit-learn. Use pip to install these four packages afterwards. For example:  
 `conda create -n _CMEC_drought_metrics --no-default-packages python=3.6`  
 `conda activate _CMEC_drought_metrics`  
 `conda install -c conda-forge affine basemap cartopy esmpy matplotlib netcdf4 numpy pandas pip scipy shapely xarray xesmf`  
@@ -43,7 +45,7 @@ Results will be overwritten the next time cmec-driver is run with the same outpu
 #### Customizations
 The user settings can be modified in cmec-driver/config/cmec.json after the package is registered.
 
-The directory names "obs", "model", and "output" are recommended with cmec-driver but not required. The observations file should be located in the observations folder passed to cmec-driver, and the model files should be located in the model folder passed to cmec-driver.
+The directory names "obs", "model", and "output" are recommended with cmec-driver but not required. The observations file should be located in the directory passed to cmec-driver via the "obs" flag, and the model files should be located in the directory passed to cmec-driver as a required positional argument after "run".
 
 ### User settings
 The following files and settings can be changed by the user in cmec.json:
@@ -66,9 +68,9 @@ Monthly precipitation output should be in [CF-compliant](https://cfconventions.o
 ### Principal Metrics
 The user has the option to reuse the results of a previous Principal Features Analysis or to generate new principal metrics.
 
-To use the results of an old PFA analysis, set the optional `pfa` key to the path for those PFA results (by default named 'output_principal_metrics_column_defined').
+To use the results of an old PFA analysis, set the optional `pfa` key to the absolute path for those PFA results.
 
-By default, cmec_drought_metrics.sh expects the principal metrics file to be placed in the Drought Metrics code folder.
+By default, Drought Metrics uses the principal metrics file 'output_principal_metrics_column_defined' found in the Drought Metrics code folder.
 
 ### Watershed Boundaries
 This analysis requires a shapefile containing watershed boundaries. The boundary features must contain the fields "Name" and "geometry".
