@@ -19,7 +19,8 @@ Create via command line: It is recommended that conda and the conda-forge channe
 Use git to clone this repository. CMEC driver will run the module from this codebase.
 
 ### CMEC driver
-Follow the instructions here to install cmec-driver: https://github.com/cmecmetrics/cmec-driver  
+Follow the instructions here to install cmec-driver: https://github.com/cmecmetrics/cmec-driver.  
+CMEC driver version must be "20210617" or later. Please pull the latest version if you have an existing cmec-driver repo.
 
 Set-up steps in the cmec-driver directory:
 - Activate any Python 3 environment.
