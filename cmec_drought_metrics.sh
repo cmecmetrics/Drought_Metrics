@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Needed for local MPI issues
-export MPICH_INTERFACE_HOSTNAME=localhost
-
 source ${CONDA_SOURCE}
 conda activate ${CONDA_ENV_ROOT}/_CMEC_drought_metrics
 
