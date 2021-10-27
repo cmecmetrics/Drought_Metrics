@@ -307,12 +307,15 @@ if __name__ == "__main__":
     user_settings_yaml = sys.argv[1]
     with open(user_settings_yaml) as config_file:
         user_settings = yaml.safe_load(config_file).get("Drought_Metrics")
-    # Get any environment variables
+    # Get any environment variables in paths
     for setting in user_settings:
-        user_settings[setting] = os.path.expandvars(user_settings[setting])
+        try:
+            user_settings[setting] = os.path.expandvars(user_settings[setting])
+        except TypeError:
+            pass
     # User settings to global variables
     globals().update(user_settings)
 
     write_output_json(test_path, obs_path, log_path, hu_name, out_path)
     write_cmec_json(hu_name, out_path)
-    make_html(hu_name, out_path)
+    #make_html(hu_name, out_path)
