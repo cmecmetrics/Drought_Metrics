@@ -84,4 +84,9 @@ else:
 # Select the principal metrics defined at 'output_principal_metrics_column_defined' and make plots
 x.PM_selection(out_path=out_path, column_name=pfa_path)
 x.result_analysis(out_path=out_path, column_name=pfa_path, upper_limit=2)
-x.make_taylor_diagram(out_path)
+try:
+    x.make_taylor_diagram(out_path)
+except Exception as e:
+    print("Could not generate Taylor Diagram.")
+    print(e)
+
